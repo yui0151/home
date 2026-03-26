@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="家庭管理中心">
+<meta name="theme-color" content="#fdf8f3">
+<title>🏡 家庭管理中心</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --milk:#fdf8f3;--cream:#f5ece0;--latte:#e8d5bc;--caramel:#c9a97a;
+  --brown:#8b6343;--deep:#5c3d1e;--text:#3d2b1a;--muted:#a08060;
+  --white:#fffefb;--shadow:rgba(139,99,67,.13);
+  --gs:#8aba88;--gb:#eaf6e8;--rs:#d08888;--rb:#fceaea;
+  --ys:#c8a050;--yb:#fdf5e0;--bs:#7a9fc0;--bb:#eaf3fb;
+  --r:14px;--rsm:10px;--rlg:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Zen Kaku Gothic New',sans-serif;background:var(--milk);color:var(--text);min-height:100vh;padding-bottom:40px;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 8%,rgba(201,169,122,.08),transparent 50%),radial-gradient(ellipse at 85% 92%,rgba(139,99,67,.05),transparent 50%);pointer-events:none;z-index:0;}
+
+/* LOGIN */
+#loginScreen{position:fixed;inset:0;background:var(--milk);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;}
+.login-box{background:var(--white);border-radius:var(--rlg);padding:34px 28px;width:100%;max-width:380px;box-shadow:0 8px 40px var(--shadow);text-align:center;}
+.login-icon{font-size:56px;display:block;margin-bottom:8px;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+.login-title{font-family:'Noto Serif TC',serif;font-size:23px;color:var(--deep);font-weight:500;margin-bottom:3px;}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:28px;line-height:1.75;}
+.login-label{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.5px;text-align:left;display:block;margin-bottom:6px;text-transform:uppercase;}
+.login-in{width:100%;padding:13px 16px;border:1.5px solid var(--latte);border-radius:var(--r);background:var(--cream);font-family:'Zen Kaku Gothic New',sans-serif;font-size:20px;color:var(--text);outline:none;text-align:center;letter-spacing:5px;font-weight:700;margin-bottom:14px;transition:border-color .2s;}
+.login-in:focus{border-color:var(--caramel);background:var(--white);}
+.login-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--caramel),var(--brown));color:white;border:none;border-radius:var(--r);font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px;}
+.login-btn:active{opacity:.85;}
+.login-hint{font-size:12px;color:var(--muted);line-height:1.8;}
+.login-hint b{color:var(--brown);}
+.login-err{color:#c05050;font-size:12px;margin-bottom:8px;min-height:16px;}
+
+/* HEADER */
+#app{display:none;position:relative;z-index:1;}
+.header{background:var(--white);border-bottom:1.5px solid var(--latte);padding:14px 18px 13px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px var(--shadow);}
+.header-row{display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'Noto Serif TC',serif;font-size:19px;font-weight:500;color:var(--deep);display:flex;flex-direction:column;}
+.logo-main{display:flex;align-items:center;gap:7px;}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--gs);flex-shrink:0;animation:pulse 2s infinite;}
+.sync-dot.off{background:var(--latte);animation:none;}
+.sync-dot.err{background:var(--rs);animation:none;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.logo-sub{font-size:11px;color:var(--muted);font-family:'Zen Kaku Gothic New',sans-serif;margin-top:1px;padding-left:1px;}
+.date-pill{font-size:11px;color:var(--muted);background:var(--cream);border:1px solid var(--latte);border-radius:20px;padding:4px 11px;}
+
+/* CONTENT */
+.content{padding:16px 18px;}
+
+/* GREETING */
+.greeting{background:linear-gradient(120deg,#fffaf4,var(--cream));border:1px solid var(--latte);border-radius:var(--rlg);padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:16px;position:relative;overflow:hidden;}
+.greeting::after{content:'';position:absolute;right:-16px;top:-16px;width:100px;height:100px;background:radial-gradient(circle,rgba(201,169,122,.12),transparent 70%);pointer-events:none;}
+.greet-icon{font-size:30px;flex-shrink:0;}
+.greet-text .greet-title{font-family:'Noto Serif TC',serif;font-size:15px;color:var(--deep);font-weight:500;margin-bottom:2px;}
+.greet-text .greet-sub{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* SECTION */
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px;}
+.sec-title{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:5px;}
+.sec-title::before{content:'';display:block;width:3px;height:12px;background:var(--caramel);border-radius:2px;}
+.loading-txt{font-size:12px;color:var(--muted);}
+
+/* APP CARDS */
+.app-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:4px;}
+.app-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--rlg);padding:16px 12px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;overflow:hidden;transition:transform .12s,box-shadow .12s;cursor:pointer;}
+.app-card:active{transform:scale(.96);}
+.app-card-emoji{font-size:30px;}
+.app-card-name{font-size:11px;font-weight:700;color:var(--brown);text-align:center;line-height:1.3;}
+.app-card-sub{font-size:10px;color:var(--muted);text-align:center;line-height:1.4;}
+.app-badge{position:absolute;top:8px;right:8px;background:var(--rs);color:white;font-size:9px;font-weight:700;border-radius:10px;padding:2px 5px;min-width:16px;text-align:center;}
+.app-badge.yellow{background:var(--ys);}
+.app-badge.green{background:var(--gs);}
+
+/* ALERT CARDS */
+.alert-list{display:flex;flex-direction:column;gap:8px;}
+.alert-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);padding:12px 14px;display:flex;align-items:flex-start;gap:11px;cursor:pointer;transition:transform .1s;}
+.alert-card:active{transform:scale(.985);}
+.alert-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;}
+.alert-card{position:relative;overflow:hidden;}
+.alert-card.urgent::before{background:var(--rs);}
+.alert-card.warn::before{background:var(--ys);}
+.alert-card.info::before{background:var(--gs);}
+.alert-icon{font-size:22px;flex-shrink:0;margin-top:1px;}
+.alert-body{flex:1;min-width:0;}
+.alert-name{font-size:13px;font-weight:700;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.alert-meta{font-size:11px;color:var(--muted);margin-top:2px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.alert-right{text-align:right;flex-shrink:0;}
+.alert-amount{font-size:13px;font-weight:700;color:var(--deep);}
+.alert-src{font-size:10px;color:var(--muted);margin-top:2px;}
+.badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;}
+.bdg-red{background:var(--rb);color:var(--rs);}
+.bdg-yellow{background:var(--yb);color:var(--ys);}
+.bdg-green{background:var(--gb);color:#4a8848;}
+.bdg-blue{background:var(--bb);color:var(--bs);}
+.bdg-brown{background:var(--cream);color:var(--brown);}
+
+/* STAT ROW */
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.stat-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);padding:13px 15px;}
+.stat-lbl{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:4px;}
+.stat-val{font-size:20px;font-weight:700;color:var(--deep);font-family:'Noto Serif TC',serif;line-height:1.1;}
+.stat-val small{font-size:11px;font-weight:400;color:var(--muted);font-family:'Zen Kaku Gothic New',sans-serif;}
+.stat-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* EMPTY */
+.empty{text-align:center;padding:24px 20px;color:var(--muted);}
+.empty-icon{font-size:30px;display:block;margin-bottom:6px;}
+
+/* CODE PILL */
+.code-pill{font-size:11px;color:var(--muted);background:var(--cream);border:1px solid var(--latte);border-radius:20px;padding:3px 10px;cursor:pointer;white-space:nowrap;}
+
+/* TOAST */
+.toast-wrap{position:fixed;bottom:24px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;z-index:500;}
+.toast-item{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--latte);color:var(--text);font-size:13px;padding:10px 16px 10px 12px;border-radius:24px;box-shadow:0 4px 20px var(--shadow);opacity:0;transform:translateY(16px) scale(.95);transition:all .28s cubic-bezier(.34,1.56,.64,1);pointer-events:none;max-width:calc(100vw - 40px);}
+.toast-item.show{opacity:1;transform:translateY(0) scale(1);}
+.toast-item.removing{opacity:0;transform:translateY(-8px) scale(.95);transition:all .2s ease-in;}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.app-card{animation:fadeUp .3s ease both;}
+.app-card:nth-child(1){animation-delay:.04s;}
+.app-card:nth-child(2){animation-delay:.08s;}
+.app-card:nth-child(3){animation-delay:.12s;}
+.alert-card{animation:fadeUp .3s ease both;}
+.alert-card:nth-child(1){animation-delay:.05s;}
+.alert-card:nth-child(2){animation-delay:.09s;}
+.alert-card:nth-child(3){animation-delay:.13s;}
+.alert-card:nth-child(4){animation-delay:.17s;}
+.alert-card:nth-child(5){animation-delay:.21s;}
+.stat-card{animation:fadeUp .3s ease both;}
+
+/* DIVIDER */
+.app-source-label{font-size:10px;color:var(--muted);text-align:center;padding:6px 0 2px;letter-spacing:.3px;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <span class="login-icon">🏡</span>
+    <div class="login-title">家庭管理中心</div>
+    <div class="login-sub">三個 app 的提醒與捷徑，<br>全部集中在這裡 🐧🐰👗</div>
+    <label class="login-label">家庭代號</label>
+    <input class="login-in" id="roomInput" placeholder="例：myfamily" maxlength="20"
+      onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="login-err" id="loginErr"></div>
+    <button class="login-btn" onclick="doLogin()">進入家庭管理中心 →</button>
+    <div class="login-hint">
+      與三個 app 輸入<b>相同代號</b>即可同步資料<br>
+      家務秘書・庫存管家・小嘟衣櫃 🏡
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="header">
+    <div class="header-row">
+      <div class="logo">
+        <div class="logo-main">
+          <span class="sync-dot" id="syncDot"></span>
+          🏡 家庭管理中心
+        </div>
+        <div class="logo-sub">家務秘書・庫存管家・小嘟衣櫃</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;">
+        <span class="code-pill" id="codePill" onclick="copyCode()"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- GREETING -->
+    <div class="greeting">
+      <div class="greet-icon" id="greetIcon">🌸</div>
+      <div class="greet-text">
+        <div class="greet-title" id="greetTitle">歡迎回來！</div>
+        <div class="greet-sub" id="greetSub">正在讀取各 app 的資料...</div>
+      </div>
+    </div>
+
+    <!-- STAT ROW -->
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-lbl">💳 每月固定支出</div>
+        <div class="stat-val" id="stat-monthly">$—<small>/月</small></div>
+        <div class="stat-sub">訂閱 + 繳費合計</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">⚡ 本週待辦</div>
+        <div class="stat-val" id="stat-due" style="color:var(--rs)">—<small>項</small></div>
+        <div class="stat-sub">到期 / 低庫存</div>
+      </div>
+    </div>
+
+    <!-- APP SHORTCUTS -->
+    <div class="sec-hd"><div class="sec-title">快速進入</div></div>
+    <div class="app-grid">
+      <a class="app-card" href="https://yui0151.github.io/home/" target="_blank">
+        <div id="badge-sec" class="app-badge" style="display:none;"></div>
+        <div class="app-card-emoji">🐧</div>
+        <div class="app-card-name">家務秘書</div>
+        <div class="app-card-sub" id="sub-sec">訂閱・繳費・汰換</div>
+      </a>
+      <a class="app-card" href="https://bright-entremet-ef731b.netlify.app/" target="_blank">
+        <div id="badge-inv" class="app-badge yellow" style="display:none;"></div>
+        <div class="app-card-emoji">🐰</div>
+        <div class="app-card-name">庫存管家</div>
+        <div class="app-card-sub" id="sub-inv">家庭庫存追蹤</div>
+      </a>
+      <a class="app-card" href="https://beautiful-tulumba-267d36.netlify.app/" target="_blank">
+        <div class="app-card-emoji">👗</div>
+        <div class="app-card-name">小嘟衣櫃</div>
+        <div class="app-card-sub" id="sub-ward">小嘟的電子衣櫃</div>
+      </a>
+    </div>
+
+    <!-- ALERTS -->
+    <div class="sec-hd">
+      <div class="sec-title">重要提醒</div>
+      <span class="loading-txt" id="alertLoading">讀取中...</span>
+    </div>
+    <div class="alert-list" id="alertList">
+      <div class="empty"><span class="empty-icon">⏳</span><p>正在從各 app 讀取資料…</p></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getFirestore, doc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey:"AIzaSyAy0QKDrORa_VSecvEbeUxjMkRU4jd-QEM",
+  authDomain:"five-year-diary-d7e00.firebaseapp.com",
+  projectId:"five-year-diary-d7e00",
+  storageBucket:"five-year-diary-d7e00.firebasestorage.app",
+  messagingSenderId:"298457239349",
+  appId:"1:298457239349:web:9183353d8ad790076c867c"
+});
+const db = getFirestore(app);
+
+window._fbReady = true;
+window._listenAll = function(code, callbacks) {
+  const unsubs = [];
+  // 家務秘書
+  unsubs.push(onSnapshot(doc(db,'home_sec_v2',code), snap => {
+    if(snap.exists()) callbacks.sec(snap.data());
+  }));
+  // 庫存管家
+  unsubs.push(onSnapshot(doc(db,'inventory',code), snap => {
+    if(snap.exists()) callbacks.inv(snap.data());
+  }));
+  // 小嘟衣櫃 (新 Firebase 版本)
+  unsubs.push(onSnapshot(doc(db,'wardrobe_v1',code), snap => {
+    if(snap.exists()) callbacks.ward(snap.data());
+  }));
+  return unsubs;
+};
+if(window._onFbReady) window._onFbReady();
+</script>
+
+<script>
+'use strict';
+
+var roomCode = '';
+var secData = null, invData = null, wardData = null;
+var loadedCount = 0;
+
+// APP URLS
+var APP_URLS = {
+  sec:  'https://cute-melba-523b6f.netlify.app/',
+  inv:  'https://bright-entremet-ef731b.netlify.app/',
+  ward: 'https://beautiful-tulumba-267d36.netlify.app/'
+};
+
+// LOGIN
+function doLogin(){
+  var v = document.getElementById('roomInput').value.trim().toLowerCase().replace(/\s+/g,'');
+  var err = document.getElementById('loginErr');
+  if(!v||v.length<2){ err.textContent='代號至少 2 個字元'; return; }
+  err.textContent=''; roomCode=v;
+  localStorage.setItem('dash_last_room',v);
+  enterApp();
+}
+window.doLogin = doLogin;
+
+function enterApp(){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('codePill').textContent='🏠 '+roomCode.toUpperCase();
+  renderGreeting();
+  if(window._fbReady) startListen();
+  else window._onFbReady = startListen;
+}
+
+function startListen(){
+  setSyncDot('off');
+  window._listenAll(roomCode, {
+    sec: function(data){
+      secData = data; loadedCount++;
+      setSyncDot('on');
+      renderAll();
+    },
+    inv: function(data){
+      invData = data; loadedCount++;
+      renderAll();
+    },
+    ward: function(data){
+      wardData = data; loadedCount++;
+      renderAll();
+    }
+  });
+  // After 4s if still loading, show partial results
+  setTimeout(function(){
+    if(loadedCount < 3){
+      document.getElementById('alertLoading').textContent='';
+      renderAll();
+    }
+  }, 4000);
+}
+
+function setSyncDot(s){
+  document.getElementById('syncDot').className='sync-dot'+(s==='off'?' off':s==='err'?' err':'');
+}
+
+window.copyCode = function(){
+  if(navigator.clipboard) navigator.clipboard.writeText(roomCode).then(function(){ showToast('代號已複製！'); });
+  else showToast('代號：'+roomCode.toUpperCase());
+};
+
+// GREETING
+function renderGreeting(){
+  var h=new Date().getHours();
+  var icons  = ['🌙','⭐','🌙','⭐','🌸','☀️','☀️','☀️','☀️','☀️','☀️','🌿','🍱','🍱','☀️','🌿','🌿','🌿','🌙','🌙','🌙','🌙','🌙','🌙'];
+  var titles = ['夜深了，好好休息','深夜還在看帳單？','夜深了，好好休息','快去睡覺了！','早安！新的一天','早安！充滿活力','早安！','早安！','早安！','早安！','早安！','午前時光','午安！吃飯了嗎？','午安！','下午好！','下午好！','下午好！','傍晚了～','晚上好！','晚安～','夜晚時光','夜晚時光','深夜了～','夜深了～'];
+  document.getElementById('greetIcon').textContent = icons[h];
+  document.getElementById('greetTitle').textContent = titles[h];
+  document.getElementById('greetSub').textContent = '正在讀取各 app 的資料…';
+}
+
+// MAIN RENDER
+function renderAll(){
+  if(loadedCount >= 3) document.getElementById('alertLoading').textContent='';
+  renderAlerts();
+  renderStats();
+  renderAppSubtitles();
+}
+
+// DAYS UNTIL
+function daysUntil(dt){
+  if(!dt) return 999;
+  var d=new Date(dt),t=new Date();
+  t.setHours(0,0,0,0); d.setHours(0,0,0,0);
+  return Math.round((d-t)/86400000);
+}
+function calcMaintDue(item){
+  if(item.due) return item.due;
+  if(item.lastDate&&item.interval){
+    var d=new Date(item.lastDate); d.setDate(d.getDate()+parseInt(item.interval));
+    return d.toISOString().slice(0,10);
+  }
+  return null;
+}
+function dueBadge(d){
+  if(d<0)  return '<span class="badge bdg-red">逾期</span>';
+  if(d<=3) return '<span class="badge bdg-red">⚡ '+d+'天後</span>';
+  if(d<=7) return '<span class="badge bdg-yellow">⏰ '+d+'天後</span>';
+  return '<span class="badge bdg-blue">'+d+'天後</span>';
+}
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// RENDER ALERTS
+function renderAlerts(){
+  var alerts = [];
+
+  // ── 家務秘書 alerts ──
+  if(secData && secData.items){
+    var CYCLES={monthly:1,yearly:12,quarterly:3,onetime:0,bimonthly:2};
+    secData.items.forEach(function(item){
+      var dt = item.type==='maint' ? calcMaintDue(item) : item.due;
+      if(!dt) return;
+      var d = daysUntil(dt);
+      if(d > 14) return;
+      var urgency = d<=3?'urgent':d<=7?'warn':'info';
+      var amtStr = (item.type==='sub'||item.type==='bill') ? '$'+((item.price||0)).toLocaleString() : '';
+      var cycleStr = (item.type==='sub'||item.type==='bill') ? '/'+(({monthly:'月',yearly:'年',quarterly:'季',onetime:'次',bimonthly:'兩月'})[item.cycle]||'月') : (item.interval?item.interval+'天/次':'');
+      alerts.push({
+        urgency: urgency, days: d,
+        icon: item.emoji||'💳',
+        name: item.name,
+        badge: dueBadge(d),
+        amount: amtStr, cycle: cycleStr,
+        src: item.type==='maint'?'🔧 汰換':item.type==='bill'?'🧾 繳費':'💳 訂閱',
+        srcLabel: '家務秘書',
+        url: APP_URLS.sec
+      });
+    });
+  }
+
+  // ── 庫存管家 alerts ──
+  if(invData && invData.items){
+    invData.items.forEach(function(item){
+      if(item.qty <= (item.minStock||1)){
+        alerts.push({
+          urgency: item.qty===0?'urgent':'warn', days: 0,
+          icon: item.emoji||'📦',
+          name: item.name,
+          badge: item.qty===0?'<span class="badge bdg-red">已用完</span>':'<span class="badge bdg-yellow">庫存低</span>',
+          amount: '剩 '+item.qty+' 個', cycle:'',
+          src: '🐰 庫存',
+          srcLabel: '庫存管家',
+          url: APP_URLS.inv
+        });
+      }
+    });
+  }
+
+  // ── 衣櫃 alerts（若有 Firebase 同步）──
+  if(wardData && wardData.clothes){
+    var total = wardData.clothes.length;
+    var cur = wardData.clothes.filter(function(c){ return c.status==='當季'; }).length;
+    // 只在有衣物但全是過季時提示
+    if(total > 0 && cur === 0){
+      alerts.push({
+        urgency: 'info', days: 999,
+        icon: '👗',
+        name: '小嘟衣櫃',
+        badge: '<span class="badge bdg-blue">提醒</span>',
+        amount: '共 '+total+' 件', cycle:'',
+        src: '👗 衣櫃',
+        srcLabel: '小嘟衣櫃',
+        url: APP_URLS.ward
+      });
+    }
+  }
+
+  // Sort: urgent first, then by days
+  alerts.sort(function(a,b){
+    var order={'urgent':0,'warn':1,'info':2};
+    if(order[a.urgency]!==order[b.urgency]) return order[a.urgency]-order[b.urgency];
+    return a.days-b.days;
+  });
+
+  var list = document.getElementById('alertList');
+  if(!alerts.length){
+    if(loadedCount===0){
+      list.innerHTML='<div class="empty"><span class="empty-icon">⏳</span><p>正在從各 app 讀取資料…</p></div>';
+    } else {
+      list.innerHTML='<div class="empty"><span class="empty-icon">🎉</span><p>太棒了！目前沒有需要注意的項目<br>所有事情都在控制中 ✨</p></div>';
+      document.getElementById('greetSub').textContent='一切都很好！沒有待辦提醒 🎉';
+    }
+    return;
+  }
+
+  // Update greeting sub
+  var urgent = alerts.filter(function(a){ return a.urgency==='urgent'; }).length;
+  var warn   = alerts.filter(function(a){ return a.urgency==='warn'; }).length;
+  var parts = [];
+  if(urgent) parts.push('<b>'+urgent+'項</b>緊急');
+  if(warn)   parts.push('<b>'+warn+'項</b>需留意');
+  document.getElementById('greetSub').innerHTML = parts.length ? '目前有 '+parts.join('、')+' 的事項 📋' : '一切都很正常 ✨';
+
+  list.innerHTML = alerts.slice(0,12).map(function(a){
+    return '<div class="alert-card '+a.urgency+'" onclick="window.open(\''+a.url+'\',\'_blank\')">'
+      +'<div class="alert-icon">'+a.icon+'</div>'
+      +'<div class="alert-body">'
+      +'<div class="alert-name">'+esc(a.name)+'</div>'
+      +'<div class="alert-meta">'+a.src+' '+a.badge+'</div>'
+      +'</div>'
+      +(a.amount?'<div class="alert-right"><div class="alert-amount">'+esc(a.amount)+'</div><div class="alert-src">'+a.cycle+'</div></div>':'')
+      +'</div>';
+  }).join('');
+}
+
+// RENDER STATS
+function renderStats(){
+  var monthly = 0;
+  var dueCount = 0;
+  var CYC_MO={monthly:1,yearly:12,quarterly:3,onetime:0,bimonthly:2};
+
+  if(secData && secData.items){
+    secData.items.forEach(function(item){
+      if(item.type==='sub'&&item.status==='active') monthly += (item.price||0)/(CYC_MO[item.cycle]||1);
+      if(item.type==='bill') monthly += (item.price||0)/(CYC_MO[item.cycle]||1);
+      var dt = item.type==='maint'?calcMaintDue(item):item.due;
+      if(dt && daysUntil(dt)<=7) dueCount++;
+    });
+  }
+  if(invData && invData.items){
+    invData.items.forEach(function(item){ if(item.qty<=(item.minStock||1)) dueCount++; });
+  }
+
+  document.getElementById('stat-monthly').innerHTML='$'+Math.round(monthly)+'<small>/月</small>';
+  document.getElementById('stat-due').innerHTML=dueCount+'<small>項</small>';
+
+  // Update badge on app cards
+  if(secData){
+    var secAlerts=(secData.items||[]).filter(function(i){ var dt=i.type==='maint'?calcMaintDue(i):i.due; return dt&&daysUntil(dt)<=7; }).length;
+    var b=document.getElementById('badge-sec');
+    if(secAlerts>0){b.style.display='block';b.textContent=secAlerts;} else b.style.display='none';
+  }
+  if(invData){
+    var invAlerts=(invData.items||[]).filter(function(i){ return i.qty<=(i.minStock||1); }).length;
+    var b=document.getElementById('badge-inv');
+    if(invAlerts>0){b.style.display='block';b.textContent=invAlerts;} else b.style.display='none';
+  }
+}
+
+// RENDER APP SUBTITLES
+function renderAppSubtitles(){
+  if(secData && secData.items){
+    var act=(secData.items||[]).filter(function(i){ return i.type==='sub'&&i.status==='active'; }).length;
+    var bills=(secData.items||[]).filter(function(i){ return i.type==='bill'; }).length;
+    document.getElementById('sub-sec').textContent=act+'訂閱・'+bills+'繳費項目';
+  }
+  if(invData && invData.items){
+    var low=(invData.items||[]).filter(function(i){ return i.qty<=(i.minStock||1); }).length;
+    var total=(invData.items||[]).length;
+    document.getElementById('sub-inv').textContent=total+'項庫存'+(low?'・'+low+'需補貨':'・補貨充足');
+  }
+  if(wardData && wardData.clothes){
+    var total=(wardData.clothes||[]).length;
+    var cur=(wardData.clothes||[]).filter(function(c){ return c.status==='當季'; }).length;
+    document.getElementById('sub-ward').textContent=total+'件・當季'+cur+'件';
+  }
+}
+
+// TOAST
+var toastT;
+function showToast(msg){
+  var wrap=document.getElementById('toastWrap');
+  var el=document.createElement('div');
+  el.className='toast-item';
+  el.innerHTML='<span>🏡</span><span>'+msg+'</span>';
+  wrap.appendChild(el);
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.classList.add('show'); }); });
+  setTimeout(function(){ el.classList.add('removing'); setTimeout(function(){ if(el.parentNode) el.remove(); },220); },2500);
+}
+
+// INIT
+var saved = localStorage.getItem('dash_last_room');
+if(saved){ document.getElementById('roomInput').value=saved; roomCode=saved; enterApp(); }
+</script>
+</body>
+</html>
