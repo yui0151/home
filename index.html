@@ -115,7 +115,57 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* CODE PILL */
 .code-pill{font-size:11px;color:var(--muted);background:var(--cream);border:1px solid var(--latte);border-radius:20px;padding:3px 10px;cursor:pointer;white-space:nowrap;}
 
-/* TOAST */
+/* TODO */
+.todo-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);overflow:hidden;margin-bottom:4px;}
+.todo-input-row{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--cream);}
+.todo-input{flex:1;border:none;background:transparent;font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;color:var(--text);outline:none;}
+.todo-input::placeholder{color:var(--latte);}
+.todo-add-btn{width:28px;height:28px;border-radius:8px;background:var(--caramel);color:white;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1;}
+.todo-list{max-height:280px;overflow-y:auto;}
+.todo-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--cream);transition:background .12s;}
+.todo-item:last-child{border-bottom:none;}
+.todo-item.done .todo-text{text-decoration:line-through;color:var(--muted);opacity:.65;}
+.todo-check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--latte);background:var(--cream);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--gs);transition:all .15s;}
+.todo-check.checked{background:var(--gb);border-color:var(--gs);}
+.todo-text{flex:1;font-size:13px;color:var(--text);}
+.todo-who{font-size:10px;color:var(--muted);background:var(--cream);border-radius:10px;padding:1px 6px;flex-shrink:0;}
+.todo-del{border:none;background:none;color:var(--latte);font-size:16px;cursor:pointer;padding:0 2px;line-height:1;transition:color .12s;}
+.todo-del:hover{color:var(--rs);}
+/* MEMO */
+.memo-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);overflow:hidden;}
+.memo-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--cream);}
+.memo-title{font-size:12px;color:var(--muted);font-weight:600;}
+.memo-save{font-size:11px;color:var(--brown);background:var(--cream);border:1px solid var(--latte);border-radius:20px;padding:3px 10px;cursor:pointer;font-family:'Zen Kaku Gothic New',sans-serif;}
+.memo-ta{width:100%;border:none;background:transparent;font-family:'Zen Kaku Gothic New',sans-serif;font-size:13px;color:var(--text);padding:12px 14px;resize:none;outline:none;min-height:90px;line-height:1.7;}
+/* ANNIVERSARY */
+.anni-list{display:flex;flex-direction:column;gap:8px;}
+.anni-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);padding:12px 14px;display:flex;align-items:center;gap:11px;position:relative;overflow:hidden;}
+.anni-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;}
+.anni-card.soon::before{background:var(--rs);}
+.anni-card.coming::before{background:var(--ys);}
+.anni-card.normal::before{background:var(--gs);}
+.anni-icon{font-size:22px;flex-shrink:0;}
+.anni-info{flex:1;}
+.anni-name{font-size:13px;font-weight:700;color:var(--text);}
+.anni-date{font-size:11px;color:var(--muted);margin-top:2px;}
+.anni-right{text-align:right;flex-shrink:0;}
+.anni-days{font-size:13px;font-weight:700;color:var(--deep);}
+.anni-countdown{font-size:10px;color:var(--muted);}
+.anni-add-row{display:flex;gap:8px;margin-top:10px;}
+.anni-btn{flex:1;padding:10px;background:var(--cream);border:1px solid var(--latte);border-radius:var(--rsm);font-family:'Zen Kaku Gothic New',sans-serif;font-size:13px;color:var(--brown);cursor:pointer;font-weight:600;}
+/* MODAL extra */
+.modal-overlay{position:fixed;inset:0;background:rgba(61,43,26,.42);z-index:200;display:none;align-items:flex-end;backdrop-filter:blur(3px);}
+.modal-overlay.show{display:flex;}
+.modal-sheet{background:var(--white);border-radius:22px 22px 0 0;padding:20px 18px 40px;width:100%;}
+.modal-handle2{width:36px;height:4px;background:var(--latte);border-radius:2px;margin:0 auto 16px;}
+.modal-title2{font-family:'Noto Serif TC',serif;font-size:17px;color:var(--deep);margin-bottom:16px;}
+.mfield{margin-bottom:12px;}
+.mfield label{font-size:11px;color:var(--muted);font-weight:600;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.3px;}
+.mfield input,.mfield select{width:100%;padding:11px 13px;background:var(--cream);border:1.5px solid var(--latte);border-radius:var(--rsm);color:var(--text);font-family:'Zen Kaku Gothic New',sans-serif;font-size:13px;outline:none;}
+.mfield input:focus{border-color:var(--caramel);background:var(--white);}
+.mbtns{display:flex;gap:8px;margin-top:14px;}
+.mbtn-c2{flex:1;padding:12px;border-radius:var(--rsm);font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;background:var(--cream);color:var(--muted);}
+.mbtn-s2{flex:1;padding:12px;border-radius:var(--rsm);font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;background:linear-gradient(135deg,var(--caramel),var(--brown));color:white;}
 .toast-wrap{position:fixed;bottom:24px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;z-index:500;}
 .toast-item{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--latte);color:var(--text);font-size:13px;padding:10px 16px 10px 12px;border-radius:24px;box-shadow:0 4px 20px var(--shadow);opacity:0;transform:translateY(16px) scale(.95);transition:all .28s cubic-bezier(.34,1.56,.64,1);pointer-events:none;max-width:calc(100vw - 40px);}
 .toast-item.show{opacity:1;transform:translateY(0) scale(1);}
@@ -201,6 +251,15 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
     </div>
 
+    <!-- ALERTS - 最上面最重要 -->
+    <div class="sec-hd">
+      <div class="sec-title">⚡ 重要提醒</div>
+      <span class="loading-txt" id="alertLoading">讀取中...</span>
+    </div>
+    <div class="alert-list" id="alertList">
+      <div class="empty"><span class="empty-icon">⏳</span><p>正在讀取資料…</p></div>
+    </div>
+
     <!-- APP SHORTCUTS -->
     <div class="sec-hd"><div class="sec-title">快速進入</div></div>
     <div class="app-grid">
@@ -223,15 +282,61 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </a>
     </div>
 
-    <!-- ALERTS -->
-    <div class="sec-hd">
-      <div class="sec-title">重要提醒</div>
-      <span class="loading-txt" id="alertLoading">讀取中...</span>
-    </div>
-    <div class="alert-list" id="alertList">
-      <div class="empty"><span class="empty-icon">⏳</span><p>正在從各 app 讀取資料…</p></div>
+    <!-- TODO -->
+    <div class="sec-hd"><div class="sec-title">✅ 家庭待辦</div></div>
+    <div class="todo-card">
+      <div class="todo-input-row">
+        <input class="todo-input" id="todoInput" placeholder="新增待辦事項…" onkeydown="if(event.key==='Enter')addTodo()">
+        <button class="todo-add-btn" onclick="addTodo()">＋</button>
+      </div>
+      <div class="todo-list" id="todoList">
+        <div class="empty" style="padding:18px;"><p>還沒有待辦事項 🌿</p></div>
+      </div>
     </div>
 
+    <!-- MEMO -->
+    <div class="sec-hd"><div class="sec-title">📝 快速備忘</div></div>
+    <div class="memo-card">
+      <div class="memo-header">
+        <span class="memo-title">隨手記事（兩人共用）</span>
+        <button class="memo-save" onclick="saveMemo()">儲存</button>
+      </div>
+      <textarea class="memo-ta" id="memoTa" placeholder="寫下任何想記的事…&#10;購物清單、聯絡事項、寶寶成長記錄…"></textarea>
+    </div>
+
+    <!-- ANNIVERSARY -->
+    <div class="sec-hd">
+      <div class="sec-title">🎂 重要紀念日</div>
+      <button class="sec-more" onclick="openAnniModal()">＋ 新增</button>
+    </div>
+    <div class="anni-list" id="anniList">
+      <div class="empty"><p>還沒有紀念日，點右上角新增 🎉</p></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ANNIVERSARY MODAL -->
+<div class="modal-overlay" id="anniModal" onclick="maybeCloseModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle2"></div>
+    <div class="modal-title2" id="anniModalTitle">🎂 新增紀念日</div>
+    <div class="mfield"><label>名稱</label><input id="anni-name" placeholder="例：小嘟生日、結婚紀念日"></div>
+    <div class="mfield"><label>日期（月/日）</label><input id="anni-date" type="date"></div>
+    <div class="mfield"><label>圖示</label>
+      <select id="anni-icon">
+        <option value="🎂">🎂 生日</option>
+        <option value="💍">💍 結婚紀念日</option>
+        <option value="👶">👶 寶寶相關</option>
+        <option value="❤️">❤️ 情人節/戀愛</option>
+        <option value="🏠">🏠 搬家/入厝</option>
+        <option value="⭐">⭐ 其他重要日子</option>
+      </select>
+    </div>
+    <div class="mbtns">
+      <button class="mbtn-c2" onclick="closeAnniModal()">取消</button>
+      <button class="mbtn-s2" onclick="saveAnni()">儲存</button>
+    </div>
   </div>
 </div>
 
@@ -240,7 +345,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getFirestore, doc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
 const app = initializeApp({
   apiKey:"AIzaSyAy0QKDrORa_VSecvEbeUxjMkRU4jd-QEM",
@@ -253,20 +358,13 @@ const app = initializeApp({
 const db = getFirestore(app);
 
 window._fbReady = true;
+window._fbSetDash = (code, data) => setDoc(doc(db,'dashboard_v1',code), data, {merge:true});
 window._listenAll = function(code, callbacks) {
   const unsubs = [];
-  // 家務秘書
-  unsubs.push(onSnapshot(doc(db,'home_sec_v2',code), snap => {
-    if(snap.exists()) callbacks.sec(snap.data());
-  }));
-  // 庫存管家
-  unsubs.push(onSnapshot(doc(db,'inventory',code), snap => {
-    if(snap.exists()) callbacks.inv(snap.data());
-  }));
-  // 小嘟衣櫃 (新 Firebase 版本)
-  unsubs.push(onSnapshot(doc(db,'wardrobe_v1',code), snap => {
-    if(snap.exists()) callbacks.ward(snap.data());
-  }));
+  unsubs.push(onSnapshot(doc(db,'home_sec_v2',code), snap => { if(snap.exists()) callbacks.sec(snap.data()); }));
+  unsubs.push(onSnapshot(doc(db,'inventory',code),   snap => { if(snap.exists()) callbacks.inv(snap.data()); }));
+  unsubs.push(onSnapshot(doc(db,'wardrobe_v1',code), snap => { if(snap.exists()) callbacks.ward(snap.data()); }));
+  unsubs.push(onSnapshot(doc(db,'dashboard_v1',code), snap => { if(snap.exists()) callbacks.dash(snap.data()); }));
   return unsubs;
 };
 if(window._onFbReady) window._onFbReady();
@@ -308,6 +406,9 @@ function enterApp(){
   document.getElementById('app').style.display='block';
   document.getElementById('codePill').textContent='🏠 '+roomCode.toUpperCase();
   updateAppLinks();
+  loadDashLocal();
+  renderTodos();
+  renderAnnis();
   renderGreeting();
   if(window._fbReady) startListen();
   else window._onFbReady = startListen;
@@ -316,28 +417,120 @@ function enterApp(){
 function startListen(){
   setSyncDot('off');
   window._listenAll(roomCode, {
-    sec: function(data){
-      secData = data; loadedCount++;
-      setSyncDot('on');
-      renderAll();
-    },
-    inv: function(data){
-      invData = data; loadedCount++;
-      renderAll();
-    },
-    ward: function(data){
-      wardData = data; loadedCount++;
-      renderAll();
+    sec: function(data){ secData=data; loadedCount++; setSyncDot('on'); renderAll(); },
+    inv: function(data){ invData=data; loadedCount++; renderAll(); },
+    ward:function(data){ wardData=data; loadedCount++; renderAll(); },
+    dash:function(data){
+      // sync todos, memo, anni from firebase (only if newer)
+      if(data.todos)   { todos=data.todos; renderTodos(); }
+      if(data.memo!==undefined){ document.getElementById('memoTa').value=data.memo; }
+      if(data.annis)   { annis=data.annis; renderAnnis(); }
     }
   });
-  // After 4s if still loading, show partial results
-  setTimeout(function(){
-    if(loadedCount < 3){
-      document.getElementById('alertLoading').textContent='';
-      renderAll();
-    }
-  }, 4000);
+  setTimeout(function(){ if(loadedCount<3){ document.getElementById('alertLoading').textContent=''; renderAll(); } },4000);
 }
+
+// ── DASH DATA (todos / memo / anni) ──
+var todos=[], annis=[], dashSaveTimer=null;
+
+function loadDashLocal(){
+  try{ todos=JSON.parse(localStorage.getItem('dash_todos_'+roomCode)||'[]'); }catch(e){ todos=[]; }
+  try{ annis=JSON.parse(localStorage.getItem('dash_annis_'+roomCode)||'[]'); }catch(e){ annis=[]; }
+  var m=localStorage.getItem('dash_memo_'+roomCode)||'';
+  document.getElementById('memoTa').value=m;
+}
+
+function saveDash(){
+  var memo=document.getElementById('memoTa').value;
+  localStorage.setItem('dash_todos_'+roomCode, JSON.stringify(todos));
+  localStorage.setItem('dash_annis_'+roomCode, JSON.stringify(annis));
+  localStorage.setItem('dash_memo_'+roomCode, memo);
+  // debounce Firebase push
+  clearTimeout(dashSaveTimer);
+  dashSaveTimer=setTimeout(function(){
+    if(window._fbSetDash) window._fbSetDash(roomCode,{todos:todos,memo:memo,annis:annis,updatedAt:Date.now()}).catch(function(){});
+  },800);
+}
+
+// ── TODOS ──
+function renderTodos(){
+  var list=document.getElementById('todoList');
+  if(!todos.length){ list.innerHTML='<div class="empty" style="padding:18px;"><p>還沒有待辦事項 🌿</p></div>'; return; }
+  list.innerHTML=todos.map(function(t){
+    return '<div class="todo-item'+(t.done?' done':'')+'">'
+      +'<div class="todo-check'+(t.done?' checked':'')+'" onclick="toggleTodo(\''+t.id+'\')">'+(t.done?'✓':'')+'</div>'
+      +'<span class="todo-text">'+esc(t.text)+'</span>'
+      +(t.who?'<span class="todo-who">'+esc(t.who)+'</span>':'')
+      +'<button class="todo-del" onclick="delTodo(\''+t.id+'\')">×</button>'
+      +'</div>';
+  }).join('');
+}
+window.addTodo=function(){
+  var inp=document.getElementById('todoInput'), text=inp.value.trim();
+  if(!text) return;
+  todos.push({id:Date.now().toString(),text:text,done:false,who:''});
+  inp.value=''; saveDash(); renderTodos(); showToast('待辦已新增 ✓');
+};
+window.toggleTodo=function(id){
+  todos=todos.map(function(t){ return t.id===id?Object.assign({},t,{done:!t.done}):t; });
+  saveDash(); renderTodos();
+};
+window.delTodo=function(id){
+  todos=todos.filter(function(t){ return t.id!==id; });
+  saveDash(); renderTodos();
+};
+
+// ── MEMO ──
+window.saveMemo=function(){
+  saveDash(); showToast('備忘已儲存 ✓');
+};
+document.getElementById('memoTa') && document.getElementById('memoTa').addEventListener('blur', function(){ saveDash(); });
+
+// ── ANNIVERSARY ──
+function daysUntilAnni(mmdd){
+  var now=new Date(), y=now.getFullYear();
+  var parts=mmdd.split('-');
+  var mo=parseInt(parts[1]||parts[0])-1, d=parseInt(parts[2]||parts[1]);
+  var next=new Date(y,mo,d);
+  if(next<now){ next=new Date(y+1,mo,d); }
+  var diff=Math.round((next-now)/86400000);
+  return diff;
+}
+function renderAnnis(){
+  var list=document.getElementById('anniList');
+  if(!annis.length){ list.innerHTML='<div class="empty"><p>還沒有紀念日，點右上角新增 🎉</p></div>'; return; }
+  var sorted=annis.slice().sort(function(a,b){ return daysUntilAnni(a.date)-daysUntilAnni(b.date); });
+  list.innerHTML=sorted.map(function(a){
+    var d=daysUntilAnni(a.date);
+    var cls=d<=7?'soon':d<=30?'coming':'normal';
+    var label=d===0?'🎉 今天！':d+'天後';
+    return '<div class="anni-card '+cls+'">'
+      +'<div class="anni-icon">'+a.icon+'</div>'
+      +'<div class="anni-info"><div class="anni-name">'+esc(a.name)+'</div><div class="anni-date">📅 '+a.date.slice(5)+'</div></div>'
+      +'<div class="anni-right"><div class="anni-days">'+label+'</div>'
+      +'<button style="border:none;background:none;color:var(--latte);cursor:pointer;font-size:13px;" onclick="delAnni(\''+a.id+'\')">×</button>'
+      +'</div></div>';
+  }).join('');
+}
+window.openAnniModal=function(){
+  document.getElementById('anni-name').value='';
+  document.getElementById('anni-date').value='';
+  document.getElementById('anni-icon').value='🎂';
+  document.getElementById('anniModal').classList.add('show');
+};
+window.closeAnniModal=function(){ document.getElementById('anniModal').classList.remove('show'); };
+window.maybeCloseModal=function(e){ if(e.target.id==='anniModal') closeAnniModal(); };
+window.saveAnni=function(){
+  var name=document.getElementById('anni-name').value.trim();
+  var date=document.getElementById('anni-date').value;
+  if(!name||!date){ showToast('請填寫名稱和日期'); return; }
+  annis.push({id:Date.now().toString(),name:name,date:date,icon:document.getElementById('anni-icon').value});
+  saveDash(); renderAnnis(); closeAnniModal(); showToast('紀念日已新增 🎉');
+};
+window.delAnni=function(id){
+  annis=annis.filter(function(a){ return a.id!==id; });
+  saveDash(); renderAnnis();
+};
 
 function setSyncDot(s){
   document.getElementById('syncDot').className='sync-dot'+(s==='off'?' off':s==='err'?' err':'');
@@ -400,7 +593,7 @@ function renderAlerts(){
       var dt = item.type==='maint' ? calcMaintDue(item) : item.due;
       if(!dt) return;
       var d = daysUntil(dt);
-      if(d > 14) return;
+      if(d > 7) return;  // 只顯示7天內
       var urgency = d<=3?'urgent':d<=7?'warn':'info';
       var amtStr = (item.type==='sub'||item.type==='bill') ? '$'+((item.price||0)).toLocaleString() : '';
       var cycleStr = (item.type==='sub'||item.type==='bill') ? '/'+(({monthly:'月',yearly:'年',quarterly:'季',onetime:'次',bimonthly:'兩月'})[item.cycle]||'月') : (item.interval?item.interval+'天/次':'');
@@ -480,7 +673,7 @@ function renderAlerts(){
   if(warn)   parts.push('<b>'+warn+'項</b>需留意');
   document.getElementById('greetSub').innerHTML = parts.length ? '目前有 '+parts.join('、')+' 的事項 📋' : '一切都很正常 ✨';
 
-  list.innerHTML = alerts.slice(0,12).map(function(a){
+  list.innerHTML = alerts.slice(0,5).map(function(a){
     return '<div class="alert-card '+a.urgency+'" onclick="window.open(\''+a.url+'\',\'_blank\')">'
       +'<div class="alert-icon">'+a.icon+'</div>'
       +'<div class="alert-body">'
