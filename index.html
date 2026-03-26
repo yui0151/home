@@ -204,19 +204,19 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <!-- APP SHORTCUTS -->
     <div class="sec-hd"><div class="sec-title">快速進入</div></div>
     <div class="app-grid">
-      <a class="app-card" href="https://yui0151.github.io/home/" target="_blank">
+      <a class="app-card" id="link-sec" href="#" target="_blank">
         <div id="badge-sec" class="app-badge" style="display:none;"></div>
         <div class="app-card-emoji">🐧</div>
         <div class="app-card-name">家務秘書</div>
         <div class="app-card-sub" id="sub-sec">訂閱・繳費・汰換</div>
       </a>
-      <a class="app-card" href="https://bright-entremet-ef731b.netlify.app/" target="_blank">
+      <a class="app-card" id="link-inv" href="#" target="_blank">
         <div id="badge-inv" class="app-badge yellow" style="display:none;"></div>
         <div class="app-card-emoji">🐰</div>
         <div class="app-card-name">庫存管家</div>
         <div class="app-card-sub" id="sub-inv">家庭庫存追蹤</div>
       </a>
-      <a class="app-card" href="https://beautiful-tulumba-267d36.netlify.app/" target="_blank">
+      <a class="app-card" id="link-ward" href="#" target="_blank">
         <div class="app-card-emoji">👗</div>
         <div class="app-card-name">小嘟衣櫃</div>
         <div class="app-card-sub" id="sub-ward">小嘟的電子衣櫃</div>
@@ -286,6 +286,12 @@ var APP_URLS = {
   ward: 'https://yui0151.github.io/wardrobe/'
 };
 
+function updateAppLinks(){
+  document.getElementById('link-sec').href  = APP_URLS.sec  + '?code=' + roomCode;
+  document.getElementById('link-inv').href  = APP_URLS.inv  + '?code=' + roomCode;
+  document.getElementById('link-ward').href = APP_URLS.ward + '?code=' + roomCode;
+}
+
 // LOGIN
 function doLogin(){
   var v = document.getElementById('roomInput').value.trim().toLowerCase().replace(/\s+/g,'');
@@ -301,6 +307,7 @@ function enterApp(){
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('app').style.display='block';
   document.getElementById('codePill').textContent='🏠 '+roomCode.toUpperCase();
+  updateAppLinks();
   renderGreeting();
   if(window._fbReady) startListen();
   else window._onFbReady = startListen;
