@@ -10,7 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --milk:#fdf8f3;--cream:#f5ece0;--latte:#e8d5bc;--caramel:#c9a97a;
+  --milk:#fdf8f3;--cream:#f5ece0;--latte:#e8d5bc;
+  --moon:#c9a97a;--moon2:#a07848;--moon-light:#fdf0dc;--moon-soft:#f7e8c8;
   --brown:#8b6343;--deep:#5c3d1e;--text:#3d2b1a;--muted:#a08060;
   --white:#fffefb;--shadow:rgba(139,99,67,.13);
   --gs:#8aba88;--gb:#eaf6e8;--rs:#d08888;--rb:#fceaea;
@@ -30,8 +31,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .login-sub{font-size:13px;color:var(--muted);margin-bottom:28px;line-height:1.75;}
 .login-label{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.5px;text-align:left;display:block;margin-bottom:6px;text-transform:uppercase;}
 .login-in{width:100%;padding:13px 16px;border:1.5px solid var(--latte);border-radius:var(--r);background:var(--cream);font-family:'Zen Kaku Gothic New',sans-serif;font-size:20px;color:var(--text);outline:none;text-align:center;letter-spacing:5px;font-weight:700;margin-bottom:14px;transition:border-color .2s;}
-.login-in:focus{border-color:var(--caramel);background:var(--white);}
-.login-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--caramel),var(--brown));color:white;border:none;border-radius:var(--r);font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px;}
+.login-in:focus{border-color:var(--moon);background:var(--white);}
+.login-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--moon),var(--moon2));color:white;border:none;border-radius:var(--r);font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px;}
 .login-btn:active{opacity:.85;}
 .login-hint{font-size:12px;color:var(--muted);line-height:1.8;}
 .login-hint b{color:var(--brown);}
@@ -56,7 +57,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* SECTION */
 .sec-hd{display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px;}
 .sec-title{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:5px;}
-.sec-title::before{content:'';display:block;width:3px;height:12px;background:var(--caramel);border-radius:2px;}
+.sec-title::before{content:'';display:block;width:3px;height:12px;background:var(--moon);border-radius:2px;}
 .sec-more{font-size:12px;color:var(--brown);background:none;border:none;cursor:pointer;font-family:'Zen Kaku Gothic New',sans-serif;}
 .loading-txt{font-size:12px;color:var(--muted);}
 
@@ -67,18 +68,17 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .greet-text .greet-title{font-family:'Noto Serif TC',serif;font-size:15px;color:var(--deep);font-weight:500;margin-bottom:2px;}
 .greet-text .greet-sub{font-size:12px;color:var(--muted);line-height:1.6;}
 
-/* WEATHER + LUCKY ROW */
-.info-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;}
-.info-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);padding:13px 14px;}
-.info-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.3px;margin-bottom:6px;}
-.weather-main{display:flex;align-items:center;gap:8px;}
-.weather-icon{font-size:26px;line-height:1;}
-.weather-temp{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:500;color:var(--deep);}
-.weather-desc{font-size:11px;color:var(--muted);margin-top:2px;}
-.lucky-text{font-size:12px;color:var(--brown);line-height:1.6;font-style:italic;}
-.lucky-refresh{font-size:10px;color:var(--muted);margin-top:6px;cursor:pointer;display:inline-block;}
+/* WEATHER CARD - full width */
+.weather-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);padding:14px 16px;margin-bottom:4px;}
+.weather-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.weather-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.3px;margin-bottom:6px;}
+.weather-icon-big{font-size:36px;line-height:1;flex-shrink:0;}
+.weather-info{flex:1;}
+.weather-temp{font-family:'Noto Serif TC',serif;font-size:28px;font-weight:500;color:var(--deep);line-height:1;}
+.weather-desc{font-size:11px;color:var(--muted);margin-top:3px;}
+.weather-hint{font-size:12px;color:var(--brown);background:var(--moon-light);border:1px solid var(--moon-soft);border-radius:var(--rsm);padding:8px 12px;line-height:1.6;font-style:italic;}
 
-/* ALERT CARD - simplified warm style */
+/* ALERT CARD */
 .alert-list{display:flex;flex-direction:column;gap:8px;}
 .alert-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);padding:13px 15px;display:flex;align-items:center;gap:12px;cursor:pointer;position:relative;overflow:hidden;transition:transform .1s;}
 .alert-card:active{transform:scale(.985);}
@@ -105,7 +105,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .todo-input-row{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--cream);}
 .todo-input{flex:1;border:none;background:transparent;font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;color:var(--text);outline:none;}
 .todo-input::placeholder{color:var(--latte);}
-.todo-add-btn{width:28px;height:28px;border-radius:8px;background:var(--caramel);color:white;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.todo-add-btn{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--moon),var(--moon2));color:white;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .todo-list{max-height:260px;overflow-y:auto;}
 .todo-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--cream);transition:all .2s;}
 .todo-item:last-child{border-bottom:none;}
@@ -116,12 +116,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .todo-del{border:none;background:none;color:var(--latte);font-size:15px;cursor:pointer;padding:3px;transition:color .12s;flex-shrink:0;}
 .todo-del:hover{color:var(--rs);}
 
-/* MEMO */
-.memo-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);overflow:hidden;}
-.memo-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--cream);}
-.memo-title-txt{font-size:12px;color:var(--muted);font-weight:600;}
-.memo-save-btn{font-size:11px;color:var(--brown);background:var(--cream);border:1px solid var(--latte);border-radius:20px;padding:3px 10px;cursor:pointer;font-family:'Zen Kaku Gothic New',sans-serif;}
-.memo-ta{width:100%;border:none;background:transparent;font-family:'Zen Kaku Gothic New',sans-serif;font-size:13px;color:var(--text);padding:12px 14px;resize:none;outline:none;min-height:90px;line-height:1.7;}
+/* MEMO - sticky note style */
+.memo-card{background:#fdf8e1;border:1px solid #e8d88a;border-radius:var(--rlg);overflow:hidden;box-shadow:2px 3px 10px rgba(180,160,80,.12);}
+.memo-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid rgba(200,180,80,.2);}
+.memo-title-txt{font-size:12px;color:#8a7830;font-weight:600;}
+.memo-save-btn{font-size:11px;color:#7a6820;background:rgba(200,180,60,.15);border:1px solid rgba(200,180,60,.3);border-radius:20px;padding:3px 10px;cursor:pointer;font-family:'Zen Kaku Gothic New',sans-serif;}
+.memo-ta{width:100%;border:none;background:transparent;font-family:'Zen Kaku Gothic New',sans-serif;font-size:13px;color:#5a4a20;padding:12px 14px;resize:none;outline:none;min-height:90px;line-height:1.8;}
 
 /* ANNIVERSARY */
 .anni-list{display:flex;flex-direction:column;gap:8px;}
@@ -146,10 +146,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .mfield{margin-bottom:12px;}
 .mfield label{font-size:11px;color:var(--muted);font-weight:600;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.3px;}
 .mfield input,.mfield select{width:100%;padding:11px 13px;background:var(--cream);border:1.5px solid var(--latte);border-radius:var(--rsm);color:var(--text);font-family:'Zen Kaku Gothic New',sans-serif;font-size:13px;outline:none;transition:border-color .2s;}
-.mfield input:focus,.mfield select:focus{border-color:var(--caramel);background:var(--white);}
+.mfield input:focus,.mfield select:focus{border-color:var(--moon);background:var(--white);}
 .mbtns{display:flex;gap:8px;margin-top:16px;}
 .mbtn-c{flex:1;padding:12px;border-radius:var(--rsm);font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;background:var(--cream);color:var(--muted);}
-.mbtn-s{flex:1;padding:12px;border-radius:var(--rsm);font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;background:linear-gradient(135deg,var(--caramel),var(--brown));color:white;}
+.mbtn-s{flex:1;padding:12px;border-radius:var(--rsm);font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;background:linear-gradient(135deg,var(--moon),var(--moon2));color:white;}
 
 /* CONFIRM DIALOG */
 .confirm-overlay{position:fixed;inset:0;background:rgba(61,43,26,.42);z-index:300;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(3px);}
@@ -182,7 +182,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .alert-card:nth-child(1){animation-delay:.03s;}
 .alert-card:nth-child(2){animation-delay:.08s;}
 .alert-card:nth-child(3){animation-delay:.13s;}
-.info-card{animation:fadeUp .32s ease both;}
+.weather-card{animation:fadeUp .3s ease both;}
 </style>
 </head>
 <body>
@@ -228,23 +228,17 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
     </div>
 
-    <!-- WEATHER + LUCKY -->
-    <div class="info-row">
-      <div class="info-card">
-        <div class="info-label">🌤 今日居家天氣</div>
-        <div class="weather-main">
-          <span class="weather-icon" id="wIcon">—</span>
-          <div>
-            <div class="weather-temp" id="wTemp">—°</div>
-            <div class="weather-desc" id="wDesc">讀取中</div>
-          </div>
+    <!-- WEATHER - full width with hint -->
+    <div class="weather-card">
+      <div class="weather-label">嘟嘟家氣象台 📡</div>
+      <div class="weather-top">
+        <span class="weather-icon-big" id="wIcon">—</span>
+        <div class="weather-info">
+          <div class="weather-temp" id="wTemp">—°C</div>
+          <div class="weather-desc" id="wDesc">讀取中</div>
         </div>
       </div>
-      <div class="info-card">
-        <div class="info-label">🍀 今日生活小語</div>
-        <div class="lucky-text" id="luckyText">—</div>
-        <span class="lucky-refresh" onclick="newLucky()">換一句 ↻</span>
-      </div>
+      <div class="weather-hint" id="wHint">☁️ 讀取天氣中...</div>
     </div>
 
     <!-- ALERTS -->
@@ -290,11 +284,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
     </div>
 
-    <!-- MEMO -->
+    <!-- MEMO - sticky note -->
     <div class="sec-hd"><div class="sec-title">📝 隨手備忘</div></div>
     <div class="memo-card">
       <div class="memo-header">
-        <span class="memo-title-txt">兩人共用記事本</span>
+        <span class="memo-title-txt">🌻 兩人共用記事本</span>
         <button class="memo-save-btn" onclick="saveMemo()">儲存</button>
       </div>
       <textarea class="memo-ta" id="memoTa" placeholder="寫下任何想記的事…&#10;購物清單、小嘟的成長紀錄、聯絡備忘…"></textarea>
@@ -341,10 +335,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="confirm-box">
     <div class="confirm-icon">🗑️</div>
     <div class="confirm-title">確定要移除嗎？</div>
-    <div class="confirm-msg" id="confirmMsg">這項待辦事項將會從清單中移除。</div>
+    <div class="confirm-msg" id="confirmMsg"></div>
     <div class="confirm-btns">
       <button class="cbtn-c" onclick="closeConfirm()">再想想</button>
-      <button class="cbtn-ok" id="confirmOkBtn" onclick="doConfirm()">移除</button>
+      <button class="cbtn-ok" onclick="doConfirm()">移除</button>
     </div>
   </div>
 </div>
@@ -389,8 +383,8 @@ var APP_URLS={
   ward:'https://yui0151.github.io/wardrobe/'
 };
 
-// ── LUCKY QUOTES ──
-var LUCKY=[
+// ── WARM QUOTES for greeting ──
+var WARM_QUOTES=[
   '家，是世界上最溫暖的地方 🏡',
   '今天記得抱抱身邊的人 🤗',
   '小事做好，大事自然順 ✨',
@@ -407,9 +401,50 @@ var LUCKY=[
   '冰箱裡的食材，是對家人的愛 🥦',
   '睡前互道晚安，是最好的習慣 🌙',
 ];
-var luckyIdx = Math.floor(Math.random()*LUCKY.length);
-function showLucky(){ document.getElementById('luckyText').textContent=LUCKY[luckyIdx]; }
-window.newLucky=function(){ luckyIdx=(luckyIdx+1)%LUCKY.length; showLucky(); };
+
+// ── WEATHER HINTS by condition ──
+var WEATHER_HINTS={
+  cold:[
+    '外面涼涼的，多穿件衣服喔 🧣',
+    '今天適合抱抱取暖 ☕',
+    '別忘了幫小嘟加件外套！',
+    '涼意來了，記得把棉被拿出來 🛏️',
+    '冷冷的天，來杯熱可可吧 🍫',
+  ],
+  hot:[
+    '今天太陽公公太熱情了 💦',
+    '記得多喝水、做好防曬喔！',
+    '外面熱呼呼，待在室內最舒服 🌬️',
+    '天氣這麼熱，冰箱裡有冰水嗎？ 🧊',
+    '記得幫小嘟防曬，出門抹防曬乳☀️',
+  ],
+  rainy:[
+    '聽，是下雨的聲音 ☂️',
+    '出門記得帶傘，別淋濕了！',
+    '下雨天也要有好心情 🌈',
+    '雨天適合待在家裡喝茶 ☕',
+    '記得把窗戶關好，防止潮濕 🪟',
+  ],
+  sunny:[
+    '陽光真好！今天適合曬棉被 ☀️',
+    '是個適合帶小嘟去散步的好日子 🌿',
+    '今天天氣滿分，出發吧！',
+    '晴空萬里，心情也要晴朗喔 😊',
+    '這麼好的天，把家裡通風一下吧 🌬️',
+  ],
+  cloudy:[
+    '陰天也是舒服的一天 🌥️',
+    '不冷不熱，是出門的好時機 🚶',
+    '雲朵遮住了太陽，但遮不住好心情 ☁️',
+    '帶把傘出門保險一些喔 🌂',
+  ],
+  default:[
+    '不管天氣如何，家裡永遠最溫暖 🏡',
+    '今天也要好好照顧自己和家人 💛',
+  ]
+};
+
+function getRandHint(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 
 // ── WEATHER ──
 async function loadWeather(){
@@ -417,25 +452,30 @@ async function loadWeather(){
     var r=await fetch('https://wttr.in/Taipei?format=j1');
     var d=await r.json();
     var cur=d.current_condition[0];
-    var temp=cur.temp_C, hum=cur.humidity;
+    var temp=parseInt(cur.temp_C), hum=cur.humidity;
     var code=parseInt(cur.weatherCode);
-    var icon='🌤️';
-    if(code===113) icon='☀️';
-    else if(code<=116) icon='⛅';
-    else if(code<=122) icon='☁️';
-    else if(code<=143) icon='🌫️';
-    else if(code<=200) icon='⛈️';
-    else if(code<=260) icon='🌧️';
-    else if(code<=350) icon='🌨️';
+    var icon='🌤️', hintKey='default';
+    if(code===113){ icon='☀️'; hintKey='sunny'; }
+    else if(code<=116){ icon='⛅'; hintKey='cloudy'; }
+    else if(code<=122){ icon='☁️'; hintKey='cloudy'; }
+    else if(code<=143){ icon='🌫️'; hintKey='cloudy'; }
+    else if(code<=200){ icon='⛈️'; hintKey='rainy'; }
+    else if(code<=260){ icon='🌧️'; hintKey='rainy'; }
+    else if(code<=350){ icon='🌨️'; hintKey='cold'; }
+    if(temp<=19) hintKey='cold';
+    else if(temp>=30) hintKey='hot';
     document.getElementById('wIcon').textContent=icon;
     document.getElementById('wTemp').textContent=temp+'°C';
-    document.getElementById('wDesc').textContent='台北・濕度'+hum+'%';
-    // weather-connected greeting
-    updateGreetingWeather(icon, parseInt(temp));
+    document.getElementById('wDesc').textContent='台北・濕度 '+hum+'%';
+    document.getElementById('wHint').textContent=getRandHint(WEATHER_HINTS[hintKey]||WEATHER_HINTS.default);
+    // greeting sub = warm quote (no alert count)
+    var quoteIdx=Math.floor(Math.random()*WARM_QUOTES.length);
+    document.getElementById('greetSub').textContent=WARM_QUOTES[quoteIdx];
   }catch(e){
     document.getElementById('wIcon').textContent='🌡️';
     document.getElementById('wTemp').textContent='—';
-    document.getElementById('wDesc').textContent='無法取得';
+    document.getElementById('wDesc').textContent='無法取得天氣';
+    document.getElementById('wHint').textContent='不管天氣如何，家裡永遠最溫暖 🏡';
   }
 }
 
@@ -446,16 +486,9 @@ function renderGreeting(){
   var titles=['夜深了，好好休息','深夜了～','夜深了～','快去睡喔','早安！','早安！新的一天開始','早安！','早安！','早安！','早安！','早安！','午前時光','午安！吃飯了嗎？','午安！','下午好！','下午好！','下午好！','傍晚了～','晚上好！','晚安～','夜晚時光','夜晚時光','深夜了～','夜深了～'];
   document.getElementById('greetIcon').textContent=icons[h];
   document.getElementById('greetTitle').textContent=titles[h];
-  document.getElementById('greetSub').textContent='讀取家裡的狀況中…';
-}
-function updateGreetingWeather(icon, temp){
-  var h=new Date().getHours();
-  var extra='';
-  if(icon==='🌧️'||icon==='⛈️') extra='今天下雨，記得帶傘 ☂️';
-  else if(temp>=33) extra='天氣很熱，多補充水分 💧';
-  else if(temp<=15) extra='天氣涼，記得加件外套 🧥';
-  else if(icon==='☀️') extra='今天天氣好，適合曬棉被 ☀️';
-  if(extra) document.getElementById('greetSub').textContent=extra;
+  // show random warm quote before weather loads
+  var q=WARM_QUOTES[Math.floor(Math.random()*WARM_QUOTES.length)];
+  document.getElementById('greetSub').textContent=q;
 }
 
 // ── FIREBASE SYNC ──
@@ -495,7 +528,6 @@ function enterApp(){
   renderGreeting();
   loadDashLocal();
   renderTodos(); renderAnnis();
-  showLucky();
   loadWeather();
   if(window._fbReady) startListen();
   else window._onFbReady=startListen;
@@ -512,13 +544,12 @@ function updateAppLinks(){
   document.getElementById('link-ward').href = APP_URLS.ward + '?code='+roomCode;
 }
 
-// ── ALERTS (warm summary style) ──
+// ── ALERTS ──
 function renderAlerts(){
   document.getElementById('alertLoading').textContent='';
   var list=document.getElementById('alertList');
   var msgs=[];
 
-  // 家務秘書：費用到期
   if(secData && secData.items){
     var dueItems=secData.items.filter(function(i){
       var dt=i.type==='maint'?(i.due||(function(){if(!i.lastDate||!i.interval)return null;var d=new Date(i.lastDate);d.setDate(d.getDate()+parseInt(i.interval));return d.toISOString().slice(0,10);})()) : i.due;
@@ -529,20 +560,14 @@ function renderAlerts(){
     if(billDue.length>0) msgs.push({urgency:billDue.some(function(i){return daysUntil(i.due)<=3;})?'urgent':'warn', icon:'💸', msg:'有 '+billDue.length+' 項費用快到期了，記得繳費喔！', url:APP_URLS.sec});
     if(maintDue.length>0) msgs.push({urgency:'warn', icon:'🔧', msg:'有 '+maintDue.length+' 項備品需要汰換了 🛠️', url:APP_URLS.sec});
   }
-
-  // 庫存管家：低庫存
   if(invData && invData.items){
     var low=invData.items.filter(function(i){ return i.qty<=(i.minStock||1); });
     if(low.length>0) msgs.push({urgency:low.some(function(i){return i.qty===0;})?'urgent':'warn', icon:'🛒', msg:'有 '+low.length+' 項東西快用完了，該去補貨囉！', url:APP_URLS.inv});
   }
-
-  // 小嘟衣櫃：有新衣服
   if(wardData && wardData.clothes){
     var recent=wardData.clothes.filter(function(c){ return c.status==='恩典牌'; });
     if(recent.length>0) msgs.push({urgency:'info', icon:'👗', msg:'發現了 '+recent.length+' 件新衣服，快去幫小嘟穿搭吧！', url:APP_URLS.ward});
   }
-
-  // 紀念日提醒
   annis.forEach(function(a){
     var d=daysUntilAnni(a.date);
     if(d<=7) msgs.push({urgency:d<=2?'urgent':'warn', icon:a.icon, msg:(d===0?'今天是 '+a.name+'！🎉':'再 '+d+' 天就是 '+a.name+' 了 🎊'), url:null});
@@ -553,18 +578,9 @@ function renderAlerts(){
       list.innerHTML='<div class="empty"><span class="empty-icon">⏳</span><p>讀取中…</p></div>';
     } else {
       list.innerHTML='<div class="alert-card info" style="cursor:default;"><div class="alert-icon">🌿</div><div class="alert-msg">今天家裡一切安好，好好享受美好的一天 ✨</div></div>';
-      document.getElementById('greetSub').textContent='家裡一切都很好 ✨';
     }
     return;
   }
-
-  // update greeting
-  var urgent=msgs.filter(function(m){return m.urgency==='urgent';}).length;
-  var warn=msgs.filter(function(m){return m.urgency==='warn';}).length;
-  var parts=[];
-  if(urgent) parts.push(urgent+'項需要馬上處理');
-  if(warn)   parts.push(warn+'項需要留意');
-  if(parts.length) document.getElementById('greetSub').textContent='目前有 '+parts.join('、')+' 喔 📋';
 
   list.innerHTML=msgs.map(function(m){
     return '<div class="alert-card '+(m.urgency||'info')+'" '+(m.url?'onclick="window.open(\''+m.url+'?code='+roomCode+'\',\'_blank\')"':'')+'>'
@@ -621,12 +637,8 @@ function saveDash(){
   },800);
 }
 
-// ── CONFIRM DIALOG ──
-function showConfirm(msg, cb){
-  document.getElementById('confirmMsg').textContent=msg;
-  confirmCb=cb;
-  document.getElementById('confirmOverlay').classList.add('show');
-}
+// ── CONFIRM ──
+function showConfirm(msg, cb){ document.getElementById('confirmMsg').textContent=msg; confirmCb=cb; document.getElementById('confirmOverlay').classList.add('show'); }
 window.closeConfirm=function(){ document.getElementById('confirmOverlay').classList.remove('show'); confirmCb=null; };
 window.doConfirm=function(){ document.getElementById('confirmOverlay').classList.remove('show'); if(confirmCb)confirmCb(); confirmCb=null; };
 
