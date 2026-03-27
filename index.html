@@ -449,20 +449,25 @@ function getRandHint(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 // ── WEATHER ──
 async function loadWeather(){
   try{
-    var r=await fetch('https://wttr.in/Taipei?format=j1');
+    // Open-Meteo: 完全免費、不需要 Key、CORS 支援好
+    // 台北座標 25.05°N 121.53°E
+    var r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=25.05&longitude=121.53&current=temperature_2m,relative_humidity_2m,weather_code&timezone=Asia%2FTaipei');
     var d=await r.json();
-    var cur=d.current_condition[0];
-    var temp=parseInt(cur.temp_C), hum=cur.humidity;
-    var code=parseInt(cur.weatherCode);
-    var icon='🌤️', hintKey='default';
-    if(code===113){ icon='☀️'; hintKey='sunny'; }
-    else if(code<=116){ icon='⛅'; hintKey='cloudy'; }
-    else if(code<=122){ icon='☁️'; hintKey='cloudy'; }
-    else if(code<=143){ icon='🌫️'; hintKey='cloudy'; }
-    else if(code<=200){ icon='⛈️'; hintKey='rainy'; }
-    else if(code<=260){ icon='🌧️'; hintKey='rainy'; }
-    else if(code<=350){ icon='🌨️'; hintKey='cold'; }
+    var cur=d.current;
+    var temp=Math.round(cur.temperature_2m);
+    var hum=cur.relative_humidity_2m;
+    var code=cur.weather_code;
+    var icon='🌤️', hintKey='cloudy';
+    if(code===0){ icon='☀️'; hintKey='sunny'; }
+    else if(code<=2){ icon='⛅'; hintKey='cloudy'; }
+    else if(code<=3){ icon='☁️'; hintKey='cloudy'; }
+    else if(code<=49){ icon='🌫️'; hintKey='cloudy'; }
+    else if(code<=67){ icon='🌧️'; hintKey='rainy'; }
+    else if(code<=77){ icon='🌨️'; hintKey='cold'; }
+    else if(code<=82){ icon='🌧️'; hintKey='rainy'; }
+    else if(code<=99){ icon='⛈️'; hintKey='rainy'; }
     if(temp<=19) hintKey='cold';
+    else if(temp>=30) hintKey='hot';
     else if(temp>=30) hintKey='hot';
     document.getElementById('wIcon').textContent=icon;
     document.getElementById('wTemp').textContent=temp+'°C';
