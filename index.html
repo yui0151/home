@@ -297,6 +297,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <textarea class="memo-ta" id="memoTa" placeholder="寫下任何想記的事…&#10;購物清單、小嘟的成長紀錄、聯絡備忘…"></textarea>
     </div>
 
+    <!-- WISHLIST -->
+    <div class="sec-hd"><div class="sec-title">🛍️ 心願清單</div></div>
+    <div class="todo-card">
+      <div class="todo-input-row">
+        <input class="todo-input" id="wishInput" placeholder="想買的東西…（可加備註，例：Nike球鞋 約$2000）" onkeydown="if(event.key==='Enter')addWish()">
+        <button class="todo-add-btn" onclick="addWish()">＋</button>
+      </div>
+      <div class="todo-list" id="wishList">
+        <div class="empty" style="padding:16px;"><p>還沒有心願，新增一個吧 🛍️</p></div>
+      </div>
+    </div>
+
     <!-- ANNIVERSARY -->
     <div class="sec-hd">
       <div class="sec-title">🎂 重要紀念日</div>
@@ -383,7 +395,7 @@ if(window._onFbReady) window._onFbReady();
 <script>
 'use strict';
 var roomCode='', secData=null, invData=null, wardData=null;
-var loadedCount=0, todos=[], annis=[], dashSaveTimer=null;
+var loadedCount=0, todos=[], annis=[], wishes=[], dashSaveTimer=null;
 var confirmCb=null;
 
 var APP_URLS={
@@ -472,30 +484,33 @@ function getOutfit(maxT, minT){
 }
 
 // ── WEATHER ──
-// 用 script tag 載入避開 CSP，callback 接收資料
 window._weatherCallback = function(temp, hum, code, maxT, minT){
-  try{
-    var icon='🌤️', hintKey='cloudy';
-    if(code===0){icon='☀️';hintKey='sunny';}
-    else if(code<=2){icon='⛅';hintKey='cloudy';}
-    else if(code<=3){icon='☁️';hintKey='cloudy';}
-    else if(code<=49){icon='🌫️';hintKey='cloudy';}
-    else if(code<=67){icon='🌧️';hintKey='rainy';}
-    else if(code<=77){icon='🌨️';hintKey='cold';}
-    else if(code<=82){icon='🌧️';hintKey='rainy';}
-    else if(code<=99){icon='⛈️';hintKey='rainy';}
-    if(temp<=19)hintKey='cold';
-    else if(temp>=30)hintKey='hot';
-    document.getElementById('wIcon').textContent=icon;
-    document.getElementById('wTemp').textContent=temp+'°C';
-    document.getElementById('wDesc').textContent='台北'+(hum?'・濕度 '+hum+'%':'');
-    document.getElementById('wRange').textContent='最高 '+maxT+'° / 最低 '+minT+'°';
-    document.getElementById('wHint').textContent=getRandHint(WEATHER_HINTS[hintKey]||WEATHER_HINTS.default);
-    var outfitEl=document.getElementById('wOutfit');
-    outfitEl.textContent='👗 '+getOutfit(maxT,minT);
-    outfitEl.style.display='block';
-    document.getElementById('greetSub').textContent=WARM_QUOTES[Math.floor(Math.random()*WARM_QUOTES.length)];
-  }catch(e){}
+  var icon='🌤️', hintKey='cloudy';
+  if(code===0){icon='☀️';hintKey='sunny';}
+  else if(code<=2){icon='⛅';hintKey='cloudy';}
+  else if(code<=3){icon='☁️';hintKey='cloudy';}
+  else if(code<=49){icon='🌫️';hintKey='cloudy';}
+  else if(code<=67){icon='🌧️';hintKey='rainy';}
+  else if(code<=77){icon='🌨️';hintKey='cold';}
+  else if(code<=82){icon='🌧️';hintKey='rainy';}
+  else if(code<=99){icon='⛈️';hintKey='rainy';}
+  if(temp<=19) hintKey='cold';
+  else if(temp>=30) hintKey='hot';
+  document.getElementById('wIcon').textContent=icon;
+  document.getElementById('wTemp').textContent=temp+'°C';
+  document.getElementById('wDesc').textContent='台北'+(hum?'・濕度 '+hum+'%':'');
+  document.getElementById('wRange').textContent='最高 '+maxT+'° / 最低 '+minT+'°';
+  // 直接取陣列，不透過函數
+  var hArr=WEATHER_HINTS[hintKey]||WEATHER_HINTS.default;
+  document.getElementById('wHint').textContent=hArr[Math.floor(Math.random()*hArr.length)];
+  // outfit
+  var avg=(maxT+minT)/2;
+  var oKey=avg<10?'freezing':avg<17?'cold':avg<23?'mild':avg<29?'warm':'hot';
+  var oArr=OUTFITS[oKey];
+  var outfitEl=document.getElementById('wOutfit');
+  outfitEl.textContent='👗 '+oArr[Math.floor(Math.random()*oArr.length)];
+  outfitEl.style.display='block';
+  document.getElementById('greetSub').textContent=WARM_QUOTES[Math.floor(Math.random()*WARM_QUOTES.length)];
 };
 
 function loadWeather(){
@@ -555,6 +570,7 @@ function startListen(){
       if(d.todos)  { todos=d.todos; renderTodos(); }
       if(d.memo!==undefined){ document.getElementById('memoTa').value=d.memo; }
       if(d.annis)  { annis=d.annis; renderAnnis(); }
+      if(d.wishes) { wishes=d.wishes; renderWishes(); }
     }
   });
   setTimeout(function(){ document.getElementById('alertLoading').textContent=''; renderAlerts(); },4000);
@@ -578,7 +594,7 @@ function enterApp(){
   updateAppLinks();
   renderGreeting();
   loadDashLocal();
-  renderTodos(); renderAnnis();
+  renderTodos(); renderAnnis(); renderWishes();
   loadWeather();
   if(window._fbReady) startListen();
   else window._onFbReady=startListen;
@@ -694,16 +710,18 @@ function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')
 function loadDashLocal(){
   try{ todos=JSON.parse(localStorage.getItem('dash_todos_'+roomCode)||'[]'); }catch(e){ todos=[]; }
   try{ annis=JSON.parse(localStorage.getItem('dash_annis_'+roomCode)||'[]'); }catch(e){ annis=[]; }
+  try{ wishes=JSON.parse(localStorage.getItem('dash_wishes_'+roomCode)||'[]'); }catch(e){ wishes=[]; }
   document.getElementById('memoTa').value=localStorage.getItem('dash_memo_'+roomCode)||'';
 }
 function saveDash(){
   var memo=document.getElementById('memoTa').value;
   localStorage.setItem('dash_todos_'+roomCode,JSON.stringify(todos));
   localStorage.setItem('dash_annis_'+roomCode,JSON.stringify(annis));
+  localStorage.setItem('dash_wishes_'+roomCode,JSON.stringify(wishes));
   localStorage.setItem('dash_memo_'+roomCode,memo);
   clearTimeout(dashSaveTimer);
   dashSaveTimer=setTimeout(function(){
-    if(window._fbSetDash) window._fbSetDash(roomCode,{todos:todos,memo:memo,annis:annis,updatedAt:Date.now()}).catch(function(){});
+    if(window._fbSetDash) window._fbSetDash(roomCode,{todos:todos,memo:memo,annis:annis,wishes:wishes,updatedAt:Date.now()}).catch(function(){});
   },800);
 }
 
@@ -749,11 +767,13 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 // ── ANNIVERSARY ──
+var anniExpanded=false;
 function renderAnnis(){
   var list=document.getElementById('anniList');
   if(!annis.length){ list.innerHTML='<div class="empty"><p>還沒有紀念日，點右上角新增 🎉</p></div>'; return; }
   var sorted=annis.slice().sort(function(a,b){ return daysUntilAnni(a.date)-daysUntilAnni(b.date); });
-  list.innerHTML=sorted.map(function(a){
+  var show=anniExpanded?sorted:sorted.slice(0,3);
+  var cards=show.map(function(a){
     var d=daysUntilAnni(a.date);
     var cls=d<=7?'soon':d<=30?'coming':'normal';
     var label=d===0?'🎉 就是今天！':d+'天後';
@@ -764,6 +784,15 @@ function renderAnnis(){
       +'<button class="anni-del" onclick="confirmDelAnni(\''+a.id+'\',\''+esc(a.name)+'\')">🗑️</button>'
       +'</div>';
   }).join('');
+  var more='';
+  if(sorted.length>3){
+    if(!anniExpanded){
+      more='<div onclick="anniExpanded=true;renderAnnis();" style="text-align:center;padding:10px;font-size:12px;color:var(--brown);cursor:pointer;background:var(--cream);border-radius:var(--rsm);border:1px solid var(--latte);">還有 '+(sorted.length-3)+' 個紀念日，點此展開 ↓</div>';
+    } else {
+      more='<div onclick="anniExpanded=false;renderAnnis();" style="text-align:center;padding:10px;font-size:12px;color:var(--muted);cursor:pointer;">收起 ↑</div>';
+    }
+  }
+  list.innerHTML=cards+more;
 }
 window.openAnniModal=function(){
   document.getElementById('anni-name').value='';
@@ -783,6 +812,47 @@ window.confirmDelAnni=function(id, name){
   showConfirm('確定要移除「'+name+'」這個紀念日嗎？', function(){
     annis=annis.filter(function(a){ return a.id!==id; });
     saveDash(); renderAnnis(); showToast('已移除 🗑️');
+  });
+};
+
+// ── WISHLIST ──
+function renderWishes(){
+  var list=document.getElementById('wishList');
+  if(!wishes.length){ list.innerHTML='<div class="empty" style="padding:16px;"><p>還沒有心願，新增一個吧 🛍️</p></div>'; return; }
+  // 未買的在前，已買的在後
+  var pending=wishes.filter(function(w){ return !w.done; });
+  var bought=wishes.filter(function(w){ return w.done; });
+  var all=pending.concat(bought);
+  list.innerHTML=all.map(function(w){
+    return '<div class="todo-item'+(w.done?' done':'')+'">'
+      +'<div class="todo-check'+(w.done?' checked':'')+'" onclick="toggleWish(\''+w.id+'\')">'+(w.done?'✓':'')+'</div>'
+      +'<div style="flex:1;min-width:0;">'
+      +'<div class="todo-text" style="'+(w.done?'text-decoration:line-through;color:var(--muted);':'')+'">'+esc(w.text)+'</div>'
+      +(w.note?'<div style="font-size:11px;color:var(--muted);margin-top:1px;">'+esc(w.note)+'</div>':'')
+      +'</div>'
+      +(w.done?'<span style="font-size:10px;color:var(--gs);margin-right:4px;">買到了！</span>':'')
+      +'<button class="todo-del" onclick="confirmDelWish(\''+w.id+'\',\''+esc(w.text)+'\')">🗑️</button>'
+      +'</div>';
+  }).join('');
+}
+window.addWish=function(){
+  var inp=document.getElementById('wishInput'), raw=inp.value.trim();
+  if(!raw) return;
+  // 支援「品名 備註」格式
+  var text=raw, note='';
+  var m=raw.match(/^(.+?)\s{2,}(.+)$/) || raw.match(/^(.+?)（(.+)）$/) || raw.match(/^(.+?)\((.+)\)$/);
+  if(m){ text=m[1].trim(); note=m[2].trim(); }
+  wishes.push({id:Date.now().toString(), text:text, note:note, done:false});
+  inp.value=''; saveDash(); renderWishes(); showToast('心願已新增 🛍️');
+};
+window.toggleWish=function(id){
+  wishes=wishes.map(function(w){ return w.id===id?Object.assign({},w,{done:!w.done}):w; });
+  saveDash(); renderWishes();
+};
+window.confirmDelWish=function(id, text){
+  showConfirm('確定要移除「'+text+'」這個心願嗎？', function(){
+    wishes=wishes.filter(function(w){ return w.id!==id; });
+    saveDash(); renderWishes(); showToast('已移除 🗑️');
   });
 };
 
