@@ -366,11 +366,17 @@ window._fbSetDash = (code,data) => setDoc(doc(db,'dashboard_v1',code),data,{merg
 window._listenAll = function(code, cbs){
   const u=[];
   u.push(onSnapshot(doc(db,'home_sec_v2',code), s=>{ if(s.exists()) cbs.sec(s.data()); }));
-  u.push(onSnapshot(doc(db,'inventory',code),   s=>{ if(s.exists()) cbs.inv(s.data()); }));
+  // 庫存管家：每次快照都強制更新，不做快取比較
+  u.push(onSnapshot(doc(db,'inventory',code), s=>{
+    if(s.exists()) cbs.inv(s.data());
+    else cbs.inv({items:[]});
+  }));
   u.push(onSnapshot(doc(db,'wardrobe_v1',code), s=>{ if(s.exists()) cbs.ward(s.data()); }));
   u.push(onSnapshot(doc(db,'dashboard_v1',code),s=>{ if(s.exists()) cbs.dash(s.data()); }));
   return u;
 };
+// 提供單次強制拉取庫存
+window._getInvNow = (code) => getDoc(doc(db,'inventory',code));
 if(window._onFbReady) window._onFbReady();
 </script>
 
@@ -468,8 +474,8 @@ function getOutfit(maxT, minT){
 // ── WEATHER ──
 async function loadWeather(){
   try{
-    // Open-Meteo：加上 daily 的最高/最低溫
     var r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=25.05&longitude=121.53&current=temperature_2m,relative_humidity_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FTaipei&forecast_days=1');
+    if(!r.ok) throw new Error('http '+r.status);
     var d=await r.json();
     var cur=d.current;
     var temp=Math.round(cur.temperature_2m);
@@ -499,10 +505,16 @@ async function loadWeather(){
     var quoteIdx=Math.floor(Math.random()*WARM_QUOTES.length);
     document.getElementById('greetSub').textContent=WARM_QUOTES[quoteIdx];
   }catch(e){
+    // 備用：直接顯示固定文字，不讓整個卡片壞掉
     document.getElementById('wIcon').textContent='🌡️';
-    document.getElementById('wTemp').textContent='—';
-    document.getElementById('wDesc').textContent='無法取得天氣';
-    document.getElementById('wHint').textContent='不管天氣如何，家裡永遠最溫暖 🏡';
+    document.getElementById('wTemp').textContent='台北';
+    document.getElementById('wDesc').textContent='天氣資料暫時無法載入';
+    document.getElementById('wRange').textContent='';
+    document.getElementById('wHint').textContent='出門前記得查一下天氣再決定穿什麼喔 🌈';
+    var outfitEl=document.getElementById('wOutfit');
+    outfitEl.style.display='none';
+    var quoteIdx=Math.floor(Math.random()*WARM_QUOTES.length);
+    document.getElementById('greetSub').textContent=WARM_QUOTES[quoteIdx];
   }
 }
 
@@ -572,6 +584,15 @@ window.forceRefresh=function(){
   loadedCount=0; secData=null; invData=null; wardData=null;
   setSyncDot('off');
   showToast('重新同步中… ↻');
+  // 先直接拉一次庫存（確保最新）
+  if(window._getInvNow){
+    window._getInvNow(roomCode).then(function(snap){
+      if(snap.exists()){
+        invData=snap.data();
+        renderAlerts(); renderAppSubtitles();
+      }
+    }).catch(function(){});
+  }
   startListen();
 };
 
@@ -598,7 +619,7 @@ function renderAlerts(){
     if(maintDue.length>0) msgs.push({urgency:'warn', icon:'🔧', msg:'有 '+maintDue.length+' 項備品需要汰換了 🛠️', url:APP_URLS.sec});
   }
   if(invData && invData.items){
-    var low=invData.items.filter(function(i){ return i.qty<=(i.minStock||1); });
+    var low=(invData.items||[]).filter(function(i){ return i.qty<=(i.minStock!=null?i.minStock:1); });
     if(low.length>0) msgs.push({urgency:low.some(function(i){return i.qty===0;})?'urgent':'warn', icon:'🛒', msg:'有 '+low.length+' 項東西快用完了，該去補貨囉！', url:APP_URLS.inv});
   }
   if(wardData && wardData.clothes){
@@ -635,10 +656,13 @@ function renderAppSubtitles(){
     document.getElementById('sub-sec').textContent=act+'訂閱・'+bills+'繳費';
   }
   if(invData&&invData.items){
-    var low=(invData.items||[]).filter(function(i){return i.qty<=(i.minStock||1);}).length;
-    document.getElementById('sub-inv').textContent=(invData.items||[]).length+'項庫存'+(low?'・'+low+'需補':'・補貨充足');
+    // 與庫存管家一致：needsBuy = qty <= (minStock||1)
+    var allItems=invData.items||[];
+    var low=allItems.filter(function(i){ return i.qty<=(i.minStock!=null?i.minStock:1); });
+    var total=allItems.length;
+    document.getElementById('sub-inv').textContent=total+'項庫存'+(low.length?'・'+low.length+'需補':'・補貨充足');
     var b=document.getElementById('badge-inv');
-    if(low>0){b.style.display='block';b.textContent=low;}else b.style.display='none';
+    if(low.length>0){b.style.display='block';b.textContent=low.length;}else b.style.display='none';
   }
   if(wardData&&wardData.clothes){
     var total=(wardData.clothes||[]).length;
