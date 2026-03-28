@@ -472,68 +472,59 @@ function getOutfit(maxT, minT){
 }
 
 // ── WEATHER ──
-async function loadWeather(){
+// 用 script tag 載入避開 CSP，callback 接收資料
+window._weatherCallback = function(temp, hum, code, maxT, minT){
   try{
-    // 分兩個請求，更穩定
-    var baseUrl='https://api.open-meteo.com/v1/forecast';
-    var params='latitude=25.05&longitude=121.53&timezone=Asia%2FTaipei&forecast_days=1';
-    var r=await fetch(baseUrl+'?'+params+'&current=temperature_2m,relative_humidity_2m,weather_code&daily=temperature_2m_max,temperature_2m_min');
-    if(!r.ok) throw new Error('status '+r.status);
-    var d=await r.json();
-
-    // 防禦性解析，每個欄位都有備用值
-    var cur=d.current||{};
-    var daily=d.daily||{};
-    var temp=cur.temperature_2m!=null ? Math.round(cur.temperature_2m) : null;
-    var hum=cur.relative_humidity_2m!=null ? cur.relative_humidity_2m : null;
-    var code=cur.weather_code!=null ? cur.weather_code : -1;
-    var maxArr=daily.temperature_2m_max||[];
-    var minArr=daily.temperature_2m_min||[];
-    var maxT=maxArr.length ? Math.round(maxArr[0]) : null;
-    var minT=minArr.length ? Math.round(minArr[0]) : null;
-
-    if(temp===null) throw new Error('no temp data');
-
     var icon='🌤️', hintKey='cloudy';
-    if(code===0){ icon='☀️'; hintKey='sunny'; }
-    else if(code<=2){ icon='⛅'; hintKey='cloudy'; }
-    else if(code<=3){ icon='☁️'; hintKey='cloudy'; }
-    else if(code<=49){ icon='🌫️'; hintKey='cloudy'; }
-    else if(code<=67){ icon='🌧️'; hintKey='rainy'; }
-    else if(code<=77){ icon='🌨️'; hintKey='cold'; }
-    else if(code<=82){ icon='🌧️'; hintKey='rainy'; }
-    else if(code<=99){ icon='⛈️'; hintKey='rainy'; }
-    if(temp<=19) hintKey='cold';
-    else if(temp>=30) hintKey='hot';
-
+    if(code===0){icon='☀️';hintKey='sunny';}
+    else if(code<=2){icon='⛅';hintKey='cloudy';}
+    else if(code<=3){icon='☁️';hintKey='cloudy';}
+    else if(code<=49){icon='🌫️';hintKey='cloudy';}
+    else if(code<=67){icon='🌧️';hintKey='rainy';}
+    else if(code<=77){icon='🌨️';hintKey='cold';}
+    else if(code<=82){icon='🌧️';hintKey='rainy';}
+    else if(code<=99){icon='⛈️';hintKey='rainy';}
+    if(temp<=19)hintKey='cold';
+    else if(temp>=30)hintKey='hot';
     document.getElementById('wIcon').textContent=icon;
     document.getElementById('wTemp').textContent=temp+'°C';
-    document.getElementById('wDesc').textContent='台北'+(hum!=null?'・濕度 '+hum+'%':'');
-    document.getElementById('wRange').textContent=(maxT!=null&&minT!=null)?'最高 '+maxT+'° / 最低 '+minT+'°':'';
+    document.getElementById('wDesc').textContent='台北'+(hum?'・濕度 '+hum+'%':'');
+    document.getElementById('wRange').textContent='最高 '+maxT+'° / 最低 '+minT+'°';
     document.getElementById('wHint').textContent=getRandHint(WEATHER_HINTS[hintKey]||WEATHER_HINTS.default);
-
     var outfitEl=document.getElementById('wOutfit');
-    if(maxT!=null&&minT!=null){
-      outfitEl.textContent='👗 '+getOutfit(maxT,minT);
-      outfitEl.style.display='block';
-    } else {
-      outfitEl.textContent='👗 '+getOutfit(temp,temp-4);
-      outfitEl.style.display='block';
-    }
-    var quoteIdx=Math.floor(Math.random()*WARM_QUOTES.length);
-    document.getElementById('greetSub').textContent=WARM_QUOTES[quoteIdx];
+    outfitEl.textContent='👗 '+getOutfit(maxT,minT);
+    outfitEl.style.display='block';
+    document.getElementById('greetSub').textContent=WARM_QUOTES[Math.floor(Math.random()*WARM_QUOTES.length)];
+  }catch(e){}
+};
 
-  }catch(e){
-    console.warn('天氣載入失敗:',e);
-    document.getElementById('wIcon').textContent='🌡️';
-    document.getElementById('wTemp').textContent='—°C';
-    document.getElementById('wDesc').textContent='台北（天氣讀取失敗）';
-    document.getElementById('wRange').textContent='';
-    document.getElementById('wHint').textContent='出門前記得查一下天氣再決定穿什麼喔 🌈';
-    document.getElementById('wOutfit').style.display='none';
-    var quoteIdx=Math.floor(Math.random()*WARM_QUOTES.length);
-    document.getElementById('greetSub').textContent=WARM_QUOTES[quoteIdx];
-  }
+function loadWeather(){
+  setTimeout(function(){
+    // 用 XMLHttpRequest，比 fetch 更少受 CSP 影響
+    var xhr=new XMLHttpRequest();
+    xhr.open('GET','https://api.open-meteo.com/v1/forecast?latitude=25.05&longitude=121.53&current=temperature_2m,relative_humidity_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FTaipei&forecast_days=1');
+    xhr.onload=function(){
+      if(xhr.status===200){
+        try{
+          var d=JSON.parse(xhr.responseText);
+          var cur=d.current||{};
+          var daily=d.daily||{};
+          var temp=cur.temperature_2m!=null?Math.round(cur.temperature_2m):null;
+          if(temp===null) return;
+          var hum=cur.relative_humidity_2m||null;
+          var code=cur.weather_code!=null?cur.weather_code:-1;
+          var maxT=daily.temperature_2m_max&&daily.temperature_2m_max[0]!=null?Math.round(daily.temperature_2m_max[0]):temp+3;
+          var minT=daily.temperature_2m_min&&daily.temperature_2m_min[0]!=null?Math.round(daily.temperature_2m_min[0]):temp-3;
+          window._weatherCallback(temp,hum,code,maxT,minT);
+        }catch(e){}
+      }
+    };
+    xhr.onerror=function(){
+      document.getElementById('wHint').textContent='出門前記得看一下天氣喔 🌈';
+      document.getElementById('greetSub').textContent=WARM_QUOTES[Math.floor(Math.random()*WARM_QUOTES.length)];
+    };
+    xhr.send();
+  }, 800);
 }
 
 // ── GREETING ──
