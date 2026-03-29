@@ -675,7 +675,7 @@ function renderAppSubtitles(){
       var dt=i.type==='maint'?(function(){if(!i.lastDate||!i.interval)return i.due;var d=new Date(i.lastDate);d.setDate(d.getDate()+parseInt(i.interval));return d.toISOString().slice(0,10);}()):i.due;
       return dt&&daysUntil(dt)<=7;
     }).length;
-    document.getElementById('sub-sec').textContent=act+'訂閱・'+bills+'繳費';
+    document.getElementById('sub-sec').textContent='家裡大小事都交給它 🔔';
     var b=document.getElementById('badge-sec');
     var al=document.getElementById('alert-sec');
     if(secDue>0){
@@ -700,10 +700,7 @@ function renderAppSubtitles(){
     var clothes=wardData.clothes||[];
     var cur=clothes.filter(function(c){return c.status==='當季';}).length;
     var fut=clothes.filter(function(c){return c.status==='未來';}).length;
-    // 可愛小字：顯示當季幾件可穿，或「今天穿什麼呢？」
-    var cuteTexts=['今天要穿什麼呢？👗','小嘟今天穿什麼 ✨','一起挑衣服吧 🌈','打扮漂亮出門囉 🎀','今天的寶貝穿搭 💛'];
-    var picked=cuteTexts[new Date().getDate()%cuteTexts.length];
-    document.getElementById('sub-ward').textContent=cur>0?('當季可穿 '+cur+' 件 👕'):picked;
+    document.getElementById('sub-ward').textContent='小嘟今天穿什麼呢？👗';
     var al=document.getElementById('alert-ward');
     if(fut>0){ al.textContent='📦 '+fut+'件待長大'; al.style.display='block'; }
     else { al.style.display='none'; }
