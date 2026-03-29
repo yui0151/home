@@ -252,7 +252,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div id="badge-sec" class="app-badge" style="display:none;"></div>
         <div class="app-card-emoji">🐧</div>
         <div class="app-card-name">家務秘書</div>
-        <div class="app-card-sub" id="sub-sec">訂閱・繳費・汰換</div>
+        <div class="app-card-sub" id="sub-sec">家裡大小事都交給它 🔔</div>
         <div class="app-card-alert" id="alert-sec" style="display:none;"></div>
       </a>
       <a class="app-card" id="link-inv" href="#" target="_blank">
@@ -271,7 +271,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <a class="app-card" id="link-pocket" href="#" target="_blank">
         <div class="app-card-emoji">🗺️</div>
         <div class="app-card-name">口袋名單</div>
-        <div class="app-card-sub" id="sub-pocket">下次要去哪裡踩點呢？</div>
+        <div class="app-card-sub" id="sub-pocket">下次要去哪裡踩點？🗺️</div>
       </a>
     </div>
 
@@ -653,7 +653,7 @@ function updateAppLinks(){
   document.getElementById('link-sec').href  = APP_URLS.sec  + '?code='+roomCode;
   document.getElementById('link-inv').href  = APP_URLS.inv  + '?code='+roomCode;
   document.getElementById('link-ward').href = APP_URLS.ward + '?code='+roomCode;
-  document.getElementById('link-pocket').href = APP_URLS.pocket + 'pages/app.html?code='+roomCode;
+  document.getElementById('link-pocket').href = APP_URLS.pocket + '?code='+roomCode;
 }
 
 // ── ALERTS → now embedded in app cards ──
@@ -698,10 +698,12 @@ function renderAppSubtitles(){
   // 小嘟衣櫃 - 用 clothes array，顯示當季件數
   if(wardData&&wardData.clothes){
     var clothes=wardData.clothes||[];
-    var total=clothes.length;
     var cur=clothes.filter(function(c){return c.status==='當季';}).length;
     var fut=clothes.filter(function(c){return c.status==='未來';}).length;
-    document.getElementById('sub-ward').textContent=total+'件・當季'+cur+'件';
+    // 可愛小字：顯示當季幾件可穿，或「今天穿什麼呢？」
+    var cuteTexts=['今天要穿什麼呢？👗','小嘟今天穿什麼 ✨','一起挑衣服吧 🌈','打扮漂亮出門囉 🎀','今天的寶貝穿搭 💛'];
+    var picked=cuteTexts[new Date().getDate()%cuteTexts.length];
+    document.getElementById('sub-ward').textContent=cur>0?('當季可穿 '+cur+' 件 👕'):picked;
     var al=document.getElementById('alert-ward');
     if(fut>0){ al.textContent='📦 '+fut+'件待長大'; al.style.display='block'; }
     else { al.style.display='none'; }
