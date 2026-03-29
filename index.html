@@ -99,6 +99,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .app-card-sub{font-size:10px;color:var(--muted);text-align:center;line-height:1.4;}
 .app-badge{position:absolute;top:7px;right:7px;background:var(--rs);color:white;font-size:9px;font-weight:700;border-radius:10px;padding:2px 5px;min-width:16px;text-align:center;}
 .app-badge.yellow{background:var(--ys);}
+.app-card-alert{font-size:9px;color:var(--rs);font-weight:700;text-align:center;line-height:1.3;background:var(--rb);border-radius:6px;padding:2px 6px;margin-top:2px;}
 
 /* TODO */
 .todo-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);overflow:hidden;}
@@ -214,7 +215,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="logo-sub">家務秘書・庫存管家・小嘟衣櫃</div>
       </div>
       <span class="code-pill" id="codePill" onclick="copyCode()"></span>
-      <div style="width:32px;height:32px;border:1px solid var(--latte);background:var(--cream);border-radius:var(--rsm);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;" onclick="forceRefresh()" title="重新同步">↻</div>
+      <button onclick="doLogout()" style="font-size:11px;color:var(--muted);background:var(--cream);border:1px solid var(--latte);border-radius:20px;padding:4px 11px;cursor:pointer;font-family:'Zen Kaku Gothic New',sans-serif;">切換 ↩</button>
     </div>
   </div>
 
@@ -229,31 +230,21 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
     </div>
 
-    <!-- WEATHER - full width with hint -->
+    <!-- WEATHER -->
     <div class="weather-card">
-      <div class="weather-label">嘟嘟家氣象台 📡</div>
+      <div class="weather-label" id="wLabel">嘟嘟家氣象台 📡</div>
       <div class="weather-top">
         <span class="weather-icon-big" id="wIcon">—</span>
         <div class="weather-info">
           <div class="weather-temp" id="wTemp">—°C</div>
           <div class="weather-desc" id="wDesc">讀取中</div>
-          <div class="weather-range" id="wRange" style="font-size:11px;color:var(--muted);margin-top:2px;"></div>
+          <div id="wRange" style="font-size:11px;color:var(--muted);margin-top:2px;"></div>
         </div>
       </div>
       <div class="weather-hint" id="wHint">☁️ 讀取天氣中...</div>
-      <div class="weather-outfit" id="wOutfit" style="display:none;margin-top:8px;padding:8px 12px;background:var(--bb);border-radius:var(--rsm);font-size:12px;color:var(--bs);line-height:1.6;"></div>
     </div>
 
-    <!-- ALERTS -->
-    <div class="sec-hd">
-      <div class="sec-title">✨ 家裡的事</div>
-      <span class="loading-txt" id="alertLoading"></span>
-    </div>
-    <div class="alert-list" id="alertList">
-      <div class="empty"><span class="empty-icon">⏳</span><p>讀取中…</p></div>
-    </div>
-
-    <!-- APP SHORTCUTS -->
+    <!-- APP SHORTCUTS - 提醒整合在卡片內 -->
     <div class="sec-hd"><div class="sec-title">快速進入</div></div>
     <div class="app-grid">
       <a class="app-card" id="link-sec" href="#" target="_blank">
@@ -261,17 +252,20 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="app-card-emoji">🐧</div>
         <div class="app-card-name">家務秘書</div>
         <div class="app-card-sub" id="sub-sec">訂閱・繳費・汰換</div>
+        <div class="app-card-alert" id="alert-sec" style="display:none;"></div>
       </a>
       <a class="app-card" id="link-inv" href="#" target="_blank">
         <div id="badge-inv" class="app-badge yellow" style="display:none;"></div>
         <div class="app-card-emoji">🐰</div>
         <div class="app-card-name">庫存管家</div>
         <div class="app-card-sub" id="sub-inv">家庭庫存追蹤</div>
+        <div class="app-card-alert" id="alert-inv" style="display:none;"></div>
       </a>
       <a class="app-card" id="link-ward" href="#" target="_blank">
         <div class="app-card-emoji">👗</div>
         <div class="app-card-name">小嘟衣櫃</div>
         <div class="app-card-sub" id="sub-ward">小嘟的電子衣櫃</div>
+        <div class="app-card-alert" id="alert-ward" style="display:none;"></div>
       </a>
     </div>
 
@@ -325,7 +319,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="modal-overlay" id="anniModal" onclick="if(event.target===this)closeAnniModal()">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
-    <div class="modal-title">🎂 新增紀念日</div>
+    <div class="modal-title" id="anniModalTitle">🎂 新增紀念日</div>
+    <input type="hidden" id="anni-edit-id">
     <div class="mfield"><label>名稱</label><input id="anni-name" placeholder="例：小嘟生日"></div>
     <div class="mfield"><label>日期</label><input id="anni-date" type="date"></div>
     <div class="mfield"><label>圖示</label>
@@ -484,7 +479,7 @@ function getOutfit(maxT, minT){
 }
 
 // ── WEATHER ──
-window._weatherCallback = function(temp, hum, code, maxT, minT){
+window._weatherCallback = function(temp, hum, code, maxT, minT, cityName){
   var icon='🌤️', hintKey='cloudy';
   if(code===0){icon='☀️';hintKey='sunny';}
   else if(code<=2){icon='⛅';hintKey='cloudy';}
@@ -498,47 +493,80 @@ window._weatherCallback = function(temp, hum, code, maxT, minT){
   else if(temp>=30) hintKey='hot';
   document.getElementById('wIcon').textContent=icon;
   document.getElementById('wTemp').textContent=temp+'°C';
-  document.getElementById('wDesc').textContent='台北'+(hum?'・濕度 '+hum+'%':'');
+  document.getElementById('wDesc').textContent=(cityName||'台北')+(hum?'・濕度 '+hum+'%':'');
   document.getElementById('wRange').textContent='最高 '+maxT+'° / 最低 '+minT+'°';
-  // 直接取陣列，不透過函數
+  // 合併叮嚀＋穿衣 → 交錯輪播
   var hArr=WEATHER_HINTS[hintKey]||WEATHER_HINTS.default;
-  document.getElementById('wHint').textContent=hArr[Math.floor(Math.random()*hArr.length)];
-  // outfit
+  var hint=hArr[Math.floor(Math.random()*hArr.length)];
   var avg=(maxT+minT)/2;
   var oKey=avg<10?'freezing':avg<17?'cold':avg<23?'mild':avg<29?'warm':'hot';
   var oArr=OUTFITS[oKey];
-  var outfitEl=document.getElementById('wOutfit');
-  outfitEl.textContent='👗 '+oArr[Math.floor(Math.random()*oArr.length)];
-  outfitEl.style.display='block';
+  var outfit=oArr[Math.floor(Math.random()*oArr.length)];
+  var lines=[hint, outfit];
+  var idx=0;
+  var el=document.getElementById('wHint');
+  el.textContent=lines[0];
+  clearInterval(window._wRotate);
+  window._wRotate=setInterval(function(){
+    idx=(idx+1)%lines.length;
+    el.style.opacity='0';
+    setTimeout(function(){ el.textContent=lines[idx]; el.style.opacity='1'; },300);
+  },4000);
+  el.style.transition='opacity 0.3s';
   document.getElementById('greetSub').textContent=WARM_QUOTES[Math.floor(Math.random()*WARM_QUOTES.length)];
 };
 
 function loadWeather(){
   setTimeout(function(){
-    // 用 XMLHttpRequest，比 fetch 更少受 CSP 影響
-    var xhr=new XMLHttpRequest();
-    xhr.open('GET','https://api.open-meteo.com/v1/forecast?latitude=25.05&longitude=121.53&current=temperature_2m,relative_humidity_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FTaipei&forecast_days=1');
-    xhr.onload=function(){
-      if(xhr.status===200){
-        try{
-          var d=JSON.parse(xhr.responseText);
-          var cur=d.current||{};
-          var daily=d.daily||{};
-          var temp=cur.temperature_2m!=null?Math.round(cur.temperature_2m):null;
-          if(temp===null) return;
-          var hum=cur.relative_humidity_2m||null;
-          var code=cur.weather_code!=null?cur.weather_code:-1;
-          var maxT=daily.temperature_2m_max&&daily.temperature_2m_max[0]!=null?Math.round(daily.temperature_2m_max[0]):temp+3;
-          var minT=daily.temperature_2m_min&&daily.temperature_2m_min[0]!=null?Math.round(daily.temperature_2m_min[0]):temp-3;
-          window._weatherCallback(temp,hum,code,maxT,minT);
-        }catch(e){}
-      }
-    };
-    xhr.onerror=function(){
-      document.getElementById('wHint').textContent='出門前記得看一下天氣喔 🌈';
-      document.getElementById('greetSub').textContent=WARM_QUOTES[Math.floor(Math.random()*WARM_QUOTES.length)];
-    };
-    xhr.send();
+    function fetchWeather(lat, lon, cityName){
+      var xhr=new XMLHttpRequest();
+      var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&current=temperature_2m,relative_humidity_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=1';
+      xhr.open('GET', url);
+      xhr.onload=function(){
+        if(xhr.status===200){
+          try{
+            var d=JSON.parse(xhr.responseText);
+            var cur=d.current||{};
+            var daily=d.daily||{};
+            var temp=cur.temperature_2m!=null?Math.round(cur.temperature_2m):null;
+            if(temp===null) return;
+            var hum=cur.relative_humidity_2m||null;
+            var code=cur.weather_code!=null?cur.weather_code:-1;
+            var maxT=daily.temperature_2m_max&&daily.temperature_2m_max[0]!=null?Math.round(daily.temperature_2m_max[0]):temp+3;
+            var minT=daily.temperature_2m_min&&daily.temperature_2m_min[0]!=null?Math.round(daily.temperature_2m_min[0]):temp-3;
+            window._weatherCallback(temp,hum,code,maxT,minT,cityName);
+          }catch(e){ document.getElementById('wHint').textContent='出門前記得看天氣喔 🌈'; }
+        }
+      };
+      xhr.onerror=function(){ document.getElementById('wHint').textContent='出門前記得看天氣喔 🌈'; };
+      xhr.send();
+    }
+    // 嘗試取得使用者位置
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(
+        function(pos){
+          var lat=pos.coords.latitude.toFixed(4);
+          var lon=pos.coords.longitude.toFixed(4);
+          // 用 Open-Meteo 反查地名（簡易）
+          var rGeo=new XMLHttpRequest();
+          rGeo.open('GET','https://nominatim.openstreetmap.org/reverse?format=json&lat='+lat+'&lon='+lon+'&accept-language=zh-TW');
+          rGeo.onload=function(){
+            var city='';
+            try{
+              var geo=JSON.parse(rGeo.responseText);
+              city=geo.address.city||geo.address.town||geo.address.village||geo.address.county||'';
+            }catch(e){}
+            fetchWeather(lat, lon, city);
+          };
+          rGeo.onerror=function(){ fetchWeather(lat, lon, ''); };
+          rGeo.send();
+        },
+        function(){ fetchWeather(25.05, 121.53, '台北'); }, // 拒絕定位 → 預設台北
+        {timeout:5000}
+      );
+    } else {
+      fetchWeather(25.05, 121.53, '台北');
+    }
   }, 800);
 }
 
@@ -605,21 +633,14 @@ window.copyCode=function(){
   else showToast('代號：'+roomCode.toUpperCase());
 };
 
-window.forceRefresh=function(){
-  loadedCount=0; secData=null; invData=null; wardData=null;
-  setSyncDot('off');
-  showToast('重新同步中… ↻');
-  // 先直接拉一次庫存（確保最新）
-  if(window._getInvNow){
-    window._getInvNow(roomCode).then(function(snap){
-      if(snap.exists()){
-        invData=snap.data();
-        renderAlerts(); renderAppSubtitles();
-      }
-    }).catch(function(){});
-  }
-  startListen();
+window.doLogout=function(){
+  localStorage.removeItem('dash_last_room');
+  roomCode=''; secData=null; invData=null; wardData=null;
+  document.getElementById('app').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('roomInput').value='';
 };
+
 
 function updateAppLinks(){
   document.getElementById('link-sec').href  = APP_URLS.sec  + '?code='+roomCode;
@@ -627,77 +648,55 @@ function updateAppLinks(){
   document.getElementById('link-ward').href = APP_URLS.ward + '?code='+roomCode;
 }
 
-// ── ALERTS ──
+// ── ALERTS → now embedded in app cards ──
 function renderAlerts(){
-  document.getElementById('alertLoading').textContent='';
-  var list=document.getElementById('alertList');
-  var msgs=[];
-
-  if(secData && secData.items){
-    var dueItems=secData.items.filter(function(i){
-      var dt=i.type==='maint'?(i.due||(function(){if(!i.lastDate||!i.interval)return null;var d=new Date(i.lastDate);d.setDate(d.getDate()+parseInt(i.interval));return d.toISOString().slice(0,10);})()) : i.due;
-      return dt && daysUntil(dt)<=7;
-    });
-    var billDue=dueItems.filter(function(i){ return i.type==='sub'||i.type==='bill'; });
-    var maintDue=dueItems.filter(function(i){ return i.type==='maint'; });
-    if(billDue.length>0) msgs.push({urgency:billDue.some(function(i){return daysUntil(i.due)<=3;})?'urgent':'warn', icon:'💸', msg:'有 '+billDue.length+' 項費用快到期了，記得繳費喔！', url:APP_URLS.sec});
-    if(maintDue.length>0) msgs.push({urgency:'warn', icon:'🔧', msg:'有 '+maintDue.length+' 項備品需要汰換了 🛠️', url:APP_URLS.sec});
-  }
-  if(invData && invData.items){
-    var low=(invData.items||[]).filter(function(i){ return i.qty<=(i.minStock!=null?i.minStock:1); });
-    if(low.length>0) msgs.push({urgency:low.some(function(i){return i.qty===0;})?'urgent':'warn', icon:'🛒', msg:'有 '+low.length+' 項東西快用完了，該去補貨囉！', url:APP_URLS.inv});
-  }
-  if(wardData && wardData.clothes){
-    var recent=wardData.clothes.filter(function(c){ return c.status==='恩典牌'; });
-    if(recent.length>0) msgs.push({urgency:'info', icon:'👗', msg:'發現了 '+recent.length+' 件新衣服，快去幫小嘟穿搭吧！', url:APP_URLS.ward});
-  }
+  // 紀念日快到時更新問候語
   annis.forEach(function(a){
     var d=daysUntilAnni(a.date);
-    if(d<=7) msgs.push({urgency:d<=2?'urgent':'warn', icon:a.icon, msg:(d===0?'今天是 '+a.name+'！🎉':'再 '+d+' 天就是 '+a.name+' 了 🎊'), url:null});
+    if(d===0) document.getElementById('greetSub').textContent='今天是 '+a.name+'！🎉 好好慶祝吧！';
+    else if(d<=3) document.getElementById('greetSub').textContent='再 '+d+' 天就是 '+a.name+' 了 🎊';
   });
-
-  if(!msgs.length){
-    if(loadedCount===0){
-      list.innerHTML='<div class="empty"><span class="empty-icon">⏳</span><p>讀取中…</p></div>';
-    } else {
-      list.innerHTML='<div class="alert-card info" style="cursor:default;"><div class="alert-icon">🌿</div><div class="alert-msg">今天家裡一切安好，好好享受美好的一天 ✨</div></div>';
-    }
-    return;
-  }
-
-  list.innerHTML=msgs.map(function(m){
-    return '<div class="alert-card '+(m.urgency||'info')+'" '+(m.url?'onclick="window.open(\''+m.url+'?code='+roomCode+'\',\'_blank\')"':'')+'>'
-      +'<div class="alert-icon">'+m.icon+'</div>'
-      +'<div class="alert-msg">'+m.msg+'</div>'
-      +(m.url?'<div class="alert-arrow">›</div>':'')
-      +'</div>';
-  }).join('');
 }
 
 function renderAppSubtitles(){
+  // 家務秘書
   if(secData&&secData.items){
     var act=(secData.items||[]).filter(function(i){return i.type==='sub'&&i.status==='active';}).length;
     var bills=(secData.items||[]).filter(function(i){return i.type==='bill';}).length;
+    var secDue=(secData.items||[]).filter(function(i){
+      var dt=i.type==='maint'?(function(){if(!i.lastDate||!i.interval)return i.due;var d=new Date(i.lastDate);d.setDate(d.getDate()+parseInt(i.interval));return d.toISOString().slice(0,10);}()):i.due;
+      return dt&&daysUntil(dt)<=7;
+    }).length;
     document.getElementById('sub-sec').textContent=act+'訂閱・'+bills+'繳費';
+    var b=document.getElementById('badge-sec');
+    var al=document.getElementById('alert-sec');
+    if(secDue>0){
+      b.style.display='block';b.textContent=secDue;
+      al.textContent='🔔 '+secDue+'項費用快到期';al.style.display='block';
+    } else { b.style.display='none'; al.style.display='none'; }
   }
+  // 庫存管家
   if(invData&&invData.items){
-    // 與庫存管家一致：needsBuy = qty <= (minStock||1)
     var allItems=invData.items||[];
     var low=allItems.filter(function(i){ return i.qty<=(i.minStock!=null?i.minStock:1); });
-    var total=allItems.length;
-    document.getElementById('sub-inv').textContent=total+'項庫存'+(low.length?'・'+low.length+'需補':'・補貨充足');
+    document.getElementById('sub-inv').textContent=allItems.length+'項庫存'+(low.length?'・'+low.length+'需補':'・補貨充足');
     var b=document.getElementById('badge-inv');
-    if(low.length>0){b.style.display='block';b.textContent=low.length;}else b.style.display='none';
+    var al=document.getElementById('alert-inv');
+    if(low.length>0){
+      b.style.display='block';b.textContent=low.length;
+      al.textContent='🔔 '+low.length+'項需補貨';al.style.display='block';
+    } else { b.style.display='none'; al.style.display='none'; }
   }
+  // 小嘟衣櫃 - 用 clothes array，顯示當季件數
   if(wardData&&wardData.clothes){
-    var total=(wardData.clothes||[]).length;
-    var cur=(wardData.clothes||[]).filter(function(c){return c.status==='當季';}).length;
+    var clothes=wardData.clothes||[];
+    var total=clothes.length;
+    var cur=clothes.filter(function(c){return c.status==='當季';}).length;
+    var fut=clothes.filter(function(c){return c.status==='未來';}).length;
     document.getElementById('sub-ward').textContent=total+'件・當季'+cur+'件';
-  }
-  if(secData&&secData.items){
-    var secDue=(secData.items||[]).filter(function(i){var dt=i.type==='maint'?(i.due||null):i.due;return dt&&daysUntil(dt)<=7;}).length;
-    var b=document.getElementById('badge-sec');
-    if(secDue>0){b.style.display='block';b.textContent=secDue;}else b.style.display='none';
+    var al=document.getElementById('alert-ward');
+    if(fut>0){ al.textContent='📦 '+fut+'件待長大'; al.style.display='block'; }
+    else { al.style.display='none'; }
   }
 }
 
@@ -777,17 +776,17 @@ function renderAnnis(){
     var d=daysUntilAnni(a.date);
     var cls=d<=7?'soon':d<=30?'coming':'normal';
     var label=d===0?'🎉 就是今天！':d+'天後';
-    return '<div class="anni-card '+cls+'">'
+    return '<div class="anni-card '+cls+'" onclick="editAnni(\''+a.id+'\')" style="cursor:pointer;">'
       +'<div class="anni-icon">'+a.icon+'</div>'
       +'<div class="anni-info"><div class="anni-name">'+esc(a.name)+'</div><div class="anni-date">📅 '+a.date.slice(5).replace('-','/')+'</div></div>'
       +'<div class="anni-days">'+label+'</div>'
-      +'<button class="anni-del" onclick="confirmDelAnni(\''+a.id+'\',\''+esc(a.name)+'\')">🗑️</button>'
+      +'<button class="anni-del" onclick="event.stopPropagation();confirmDelAnni(\''+a.id+'\',\''+esc(a.name)+'\')">🗑️</button>'
       +'</div>';
   }).join('');
   var more='';
   if(sorted.length>3){
     if(!anniExpanded){
-      more='<div onclick="anniExpanded=true;renderAnnis();" style="text-align:center;padding:10px;font-size:12px;color:var(--brown);cursor:pointer;background:var(--cream);border-radius:var(--rsm);border:1px solid var(--latte);">還有 '+(sorted.length-3)+' 個紀念日，點此展開 ↓</div>';
+      more='<div onclick="anniExpanded=true;renderAnnis();" style="text-align:center;padding:10px;font-size:12px;color:var(--brown);cursor:pointer;background:var(--cream);border-radius:var(--rsm);border:1px solid var(--latte);">還有 '+(sorted.length-3)+' 個，展開 ↓</div>';
     } else {
       more='<div onclick="anniExpanded=false;renderAnnis();" style="text-align:center;padding:10px;font-size:12px;color:var(--muted);cursor:pointer;">收起 ↑</div>';
     }
@@ -795,18 +794,38 @@ function renderAnnis(){
   list.innerHTML=cards+more;
 }
 window.openAnniModal=function(){
+  document.getElementById('anni-edit-id').value='';
+  document.getElementById('anniModalTitle').textContent='🎂 新增紀念日';
   document.getElementById('anni-name').value='';
   document.getElementById('anni-date').value='';
   document.getElementById('anni-icon').value='🎂';
+  document.getElementById('anniModal').classList.add('show');
+};
+window.editAnni=function(id){
+  var a=annis.find(function(x){ return x.id===id; });
+  if(!a) return;
+  document.getElementById('anni-edit-id').value=id;
+  document.getElementById('anniModalTitle').textContent='✏️ 編輯紀念日';
+  document.getElementById('anni-name').value=a.name;
+  document.getElementById('anni-date').value=a.date;
+  document.getElementById('anni-icon').value=a.icon||'🎂';
   document.getElementById('anniModal').classList.add('show');
 };
 window.closeAnniModal=function(){ document.getElementById('anniModal').classList.remove('show'); };
 window.saveAnni=function(){
   var name=document.getElementById('anni-name').value.trim();
   var date=document.getElementById('anni-date').value;
+  var icon=document.getElementById('anni-icon').value;
+  var editId=document.getElementById('anni-edit-id').value;
   if(!name||!date){ showToast('請填寫名稱和日期'); return; }
-  annis.push({id:Date.now().toString(),name:name,date:date,icon:document.getElementById('anni-icon').value});
-  saveDash(); renderAnnis(); closeAnniModal(); showToast('紀念日已新增 🎉');
+  if(editId){
+    annis=annis.map(function(a){ return a.id===editId?Object.assign({},a,{name:name,date:date,icon:icon}):a; });
+    showToast('紀念日已更新 ✏️');
+  } else {
+    annis.push({id:Date.now().toString(),name:name,date:date,icon:icon});
+    showToast('紀念日已新增 🎉');
+  }
+  saveDash(); renderAnnis(); closeAnniModal();
 };
 window.confirmDelAnni=function(id, name){
   showConfirm('確定要移除「'+name+'」這個紀念日嗎？', function(){
