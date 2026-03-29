@@ -382,8 +382,9 @@ window._listenAll = function(code, cbs){
   u.push(onSnapshot(doc(db,'dashboard_v1',code),s=>{ if(s.exists()) cbs.dash(s.data()); }));
   return u;
 };
-// 提供單次強制拉取庫存
-window._getInvNow = (code) => getDoc(doc(db,'inventory',code));
+// 強制拉取最新資料（繞過快取）
+window._getInvNow  = (code) => getDoc(doc(db,'inventory',code));
+window._getWardNow = (code) => getDoc(doc(db,'wardrobe_v1',code));
 if(window._onFbReady) window._onFbReady();
 </script>
 
@@ -589,10 +590,7 @@ function startListen(){
   setSyncDot('off');
   window._listenAll(roomCode,{
     sec:  function(d){ secData=d;  loadedCount++; setSyncDot('on'); renderAlerts(); renderAppSubtitles(); },
-    inv:  function(d){
-      invData=d; loadedCount++;
-      renderAlerts(); renderAppSubtitles();
-    },
+    inv:  function(d){ invData=d;  loadedCount++; renderAlerts(); renderAppSubtitles(); },
     ward: function(d){ wardData=d; loadedCount++; renderAlerts(); renderAppSubtitles(); },
     dash: function(d){
       if(d.todos)  { todos=d.todos; renderTodos(); }
@@ -601,7 +599,8 @@ function startListen(){
       if(d.wishes) { wishes=d.wishes; renderWishes(); }
     }
   });
-  setTimeout(function(){ document.getElementById('alertLoading').textContent=''; renderAlerts(); },4000);
+  // 衣櫃額外直接拉已移除，避免干擾衣櫃 app 的資料
+  setTimeout(function(){ renderAlerts(); },4000);
 }
 
 // ── LOGIN ──
@@ -687,16 +686,15 @@ function renderAppSubtitles(){
       al.textContent='🔔 '+low.length+'項需補貨';al.style.display='block';
     } else { b.style.display='none'; al.style.display='none'; }
   }
-  // 小嘟衣櫃 - 用 clothes array，顯示當季件數
-  if(wardData&&wardData.clothes){
-    var clothes=wardData.clothes||[];
-    var total=clothes.length;
-    var cur=clothes.filter(function(c){return c.status==='當季';}).length;
-    var fut=clothes.filter(function(c){return c.status==='未來';}).length;
-    document.getElementById('sub-ward').textContent=total+'件・當季'+cur+'件';
+  // 小嘟衣櫃 - 不顯示數量，避免不同步造成困擾
+  if(wardData){
+    document.getElementById('sub-ward').textContent='小嘟今天要穿什麼呢？👗';
     var al=document.getElementById('alert-ward');
-    if(fut>0){ al.textContent='📦 '+fut+'件待長大'; al.style.display='block'; }
-    else { al.style.display='none'; }
+    if(wardData.clothes){
+      var pending=(wardData.clothes||[]).filter(function(c){return c.status==='待整理';}).length;
+      if(pending>0){ al.textContent='🔔 '+pending+'件待整理'; al.style.display='block'; al.style.background='var(--yb)'; al.style.color='var(--ys)'; }
+      else al.style.display='none';
+    } else { al.style.display='none'; }
   }
 }
 
