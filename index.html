@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -24,162 +23,153 @@ body{font-family:'Zen Kaku Gothic New',sans-serif;background:var(--milk);color:v
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 8%,rgba(201,169,122,.08),transparent 50%),radial-gradient(ellipse at 85% 92%,rgba(139,99,67,.05),transparent 50%);pointer-events:none;z-index:0;}
 
 /* LOGIN */
-#loginScreen{position:fixed;inset:0;background:var(–milk);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;}
-.login-box{background:var(–white);border-radius:var(–rlg);padding:34px 28px;width:100%;max-width:380px;box-shadow:0 8px 40px var(–shadow);text-align:center;}
+#loginScreen{position:fixed;inset:0;background:var(--milk);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;}
+.login-box{background:var(--white);border-radius:var(--rlg);padding:34px 28px;width:100%;max-width:380px;box-shadow:0 8px 40px var(--shadow);text-align:center;}
 .login-icon{font-size:56px;display:block;margin-bottom:8px;animation:float 3s ease-in-out infinite;}
 @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
-.login-title{font-family:‘Noto Serif TC’,serif;font-size:23px;color:var(–deep);font-weight:500;margin-bottom:3px;}
-.login-sub{font-size:13px;color:var(–muted);margin-bottom:28px;line-height:1.75;}
-.login-label{font-size:11px;color:var(–muted);font-weight:600;letter-spacing:.5px;text-align:left;display:block;margin-bottom:6px;text-transform:uppercase;}
-.login-in{width:100%;padding:13px 16px;border:1.5px solid var(–latte);border-radius:var(–r);background:var(–cream);font-family:‘Zen Kaku Gothic New’,sans-serif;font-size:20px;color:var(–text);outline:none;text-align:center;letter-spacing:5px;font-weight:700;margin-bottom:14px;transition:border-color .2s;}
-.login-in:focus{border-color:var(–moon);background:var(–white);}
-.login-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(–moon),var(–moon2));color:white;border:none;border-radius:var(–r);font-family:‘Zen Kaku Gothic New’,sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px;}
+.login-title{font-family:'Noto Serif TC',serif;font-size:23px;color:var(--deep);font-weight:500;margin-bottom:3px;}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:28px;line-height:1.75;}
+.login-label{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.5px;text-align:left;display:block;margin-bottom:6px;text-transform:uppercase;}
+.login-in{width:100%;padding:13px 16px;border:1.5px solid var(--latte);border-radius:var(--r);background:var(--cream);font-family:'Zen Kaku Gothic New',sans-serif;font-size:20px;color:var(--text);outline:none;text-align:center;letter-spacing:5px;font-weight:700;margin-bottom:14px;transition:border-color .2s;}
+.login-in:focus{border-color:var(--moon);background:var(--white);}
+.login-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--moon),var(--moon2));color:white;border:none;border-radius:var(--r);font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px;}
 .login-btn:active{opacity:.85;}
-.login-hint{font-size:12px;color:var(–muted);line-height:1.8;}
-.login-hint b{color:var(–brown);}
+.login-hint{font-size:12px;color:var(--muted);line-height:1.8;}
+.login-hint b{color:var(--brown);}
 .login-err{color:#c05050;font-size:12px;margin-bottom:8px;min-height:16px;}
 
 /* HEADER */
 #app{display:none;position:relative;z-index:1;}
-.header{background:var(–white);border-bottom:1.5px solid var(–latte);padding:13px 18px 12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px var(–shadow);}
+.header{background:var(--white);border-bottom:1.5px solid var(--latte);padding:13px 18px 12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px var(--shadow);}
 .header-row{display:flex;align-items:center;justify-content:space-between;}
-.logo{font-family:‘Noto Serif TC’,serif;font-size:19px;font-weight:500;color:var(–deep);display:flex;flex-direction:column;}
+.logo{font-family:'Noto Serif TC',serif;font-size:19px;font-weight:500;color:var(--deep);display:flex;flex-direction:column;}
 .logo-main{display:flex;align-items:center;gap:7px;}
-.sync-dot{width:8px;height:8px;border-radius:50%;background:var(–gs);flex-shrink:0;animation:pulse 2s infinite;}
-.sync-dot.off{background:var(–latte);animation:none;}
-.sync-dot.err{background:var(–rs);animation:none;}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--gs);flex-shrink:0;animation:pulse 2s infinite;}
+.sync-dot.off{background:var(--latte);animation:none;}
+.sync-dot.err{background:var(--rs);animation:none;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
-.logo-sub{font-size:10px;color:var(–muted);font-family:‘Zen Kaku Gothic New’,sans-serif;margin-top:1px;padding-left:2px;}
-.code-pill{font-size:11px;color:var(–muted);background:var(–cream);border:1px solid var(–latte);border-radius:20px;padding:3px 10px;cursor:pointer;white-space:nowrap;}
+.logo-sub{font-size:10px;color:var(--muted);font-family:'Zen Kaku Gothic New',sans-serif;margin-top:1px;padding-left:2px;}
+.code-pill{font-size:11px;color:var(--muted);background:var(--cream);border:1px solid var(--latte);border-radius:20px;padding:3px 10px;cursor:pointer;white-space:nowrap;}
 
 /* CONTENT */
 .content{padding:14px 16px;}
 
 /* SECTION */
 .sec-hd{display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px;}
-.sec-title{font-size:12px;font-weight:700;color:var(–muted);letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:5px;}
-.sec-title::before{content:’’;display:block;width:3px;height:12px;background:var(–moon);border-radius:2px;}
-.sec-more{font-size:12px;color:var(–brown);background:none;border:none;cursor:pointer;font-family:‘Zen Kaku Gothic New’,sans-serif;}
-.loading-txt{font-size:12px;color:var(–muted);}
+.sec-title{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:5px;}
+.sec-title::before{content:'';display:block;width:3px;height:12px;background:var(--moon);border-radius:2px;}
+.sec-more{font-size:12px;color:var(--brown);background:none;border:none;cursor:pointer;font-family:'Zen Kaku Gothic New',sans-serif;}
+.loading-txt{font-size:12px;color:var(--muted);}
 
 /* GREETING */
-.greeting{background:linear-gradient(120deg,#fffaf4,var(–cream));border:1px solid var(–latte);border-radius:var(–rlg);padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;overflow:hidden;}
-.greeting::after{content:’’;position:absolute;right:-16px;top:-16px;width:100px;height:100px;background:radial-gradient(circle,rgba(201,169,122,.12),transparent 70%);pointer-events:none;}
+.greeting{background:linear-gradient(120deg,#fffaf4,var(--cream));border:1px solid var(--latte);border-radius:var(--rlg);padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;overflow:hidden;}
+.greeting::after{content:'';position:absolute;right:-16px;top:-16px;width:100px;height:100px;background:radial-gradient(circle,rgba(201,169,122,.12),transparent 70%);pointer-events:none;}
 .greet-icon{font-size:30px;flex-shrink:0;}
-.greet-text .greet-title{font-family:‘Noto Serif TC’,serif;font-size:15px;color:var(–deep);font-weight:500;margin-bottom:2px;}
-.greet-text .greet-sub{font-size:12px;color:var(–muted);line-height:1.6;}
+.greet-text .greet-title{font-family:'Noto Serif TC',serif;font-size:15px;color:var(--deep);font-weight:500;margin-bottom:2px;}
+.greet-text .greet-sub{font-size:12px;color:var(--muted);line-height:1.6;}
 
-/* WEATHER CARD */
-.weather-card{background:var(–white);border:1px solid var(–latte);border-radius:var(–r);padding:14px 16px;margin-bottom:4px;}
+/* WEATHER CARD - full width */
+.weather-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);padding:14px 16px;margin-bottom:4px;}
 .weather-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
-.weather-label{font-size:10px;color:var(–muted);font-weight:600;letter-spacing:.3px;margin-bottom:6px;}
+.weather-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.3px;margin-bottom:6px;}
 .weather-icon-big{font-size:36px;line-height:1;flex-shrink:0;}
 .weather-info{flex:1;}
-.weather-temp{font-family:‘Noto Serif TC’,serif;font-size:28px;font-weight:500;color:var(–deep);line-height:1;}
-.weather-desc{font-size:11px;color:var(–muted);margin-top:3px;}
-.weather-hint{font-size:12px;color:var(–brown);background:var(–moon-light);border:1px solid var(–moon-soft);border-radius:var(–rsm);padding:8px 12px;line-height:1.6;font-style:italic;}
+.weather-temp{font-family:'Noto Serif TC',serif;font-size:28px;font-weight:500;color:var(--deep);line-height:1;}
+.weather-desc{font-size:11px;color:var(--muted);margin-top:3px;}
+.weather-hint{font-size:12px;color:var(--brown);background:var(--moon-light);border:1px solid var(--moon-soft);border-radius:var(--rsm);padding:8px 12px;line-height:1.6;font-style:italic;}
 
 /* ALERT CARD */
 .alert-list{display:flex;flex-direction:column;gap:8px;}
-.alert-card{background:var(–white);border:1px solid var(–latte);border-radius:var(–r);padding:13px 15px;display:flex;align-items:center;gap:12px;cursor:pointer;position:relative;overflow:hidden;transition:transform .1s;}
+.alert-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);padding:13px 15px;display:flex;align-items:center;gap:12px;cursor:pointer;position:relative;overflow:hidden;transition:transform .1s;}
 .alert-card:active{transform:scale(.985);}
-.alert-card::before{content:’’;position:absolute;left:0;top:0;bottom:0;width:3px;}
-.alert-card.urgent::before{background:var(–rs);}
-.alert-card.warn::before{background:var(–ys);}
-.alert-card.info::before{background:var(–gs);}
+.alert-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;}
+.alert-card.urgent::before{background:var(--rs);}
+.alert-card.warn::before{background:var(--ys);}
+.alert-card.info::before{background:var(--gs);}
 .alert-icon{font-size:24px;flex-shrink:0;}
-.alert-msg{font-size:13px;color:var(–text);line-height:1.5;flex:1;}
-.alert-arrow{font-size:14px;color:var(–latte);flex-shrink:0;}
+.alert-msg{font-size:13px;color:var(--text);line-height:1.5;flex:1;}
+.alert-arrow{font-size:14px;color:var(--latte);flex-shrink:0;}
 
 /* APP CARDS */
 .app-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.app-card{background:var(–white);border:1px solid var(–latte);border-radius:var(–rlg);padding:16px 10px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;overflow:hidden;transition:transform .12s;cursor:pointer;}
+.app-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--rlg);padding:16px 10px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;overflow:hidden;transition:transform .12s;cursor:pointer;}
 .app-card:active{transform:scale(.96);}
 .app-card-emoji{font-size:28px;}
-.app-card-name{font-size:11px;font-weight:700;color:var(–brown);text-align:center;line-height:1.3;}
-.app-card-sub{font-size:10px;color:var(–muted);text-align:center;line-height:1.4;}
-.app-badge{position:absolute;top:7px;right:7px;background:var(–rs);color:white;font-size:9px;font-weight:700;border-radius:10px;padding:2px 5px;min-width:16px;text-align:center;}
-.app-badge.yellow{background:var(–ys);}
-.app-card-alert{font-size:9px;color:var(–rs);font-weight:700;text-align:center;line-height:1.3;background:var(–rb);border-radius:6px;padding:2px 6px;margin-top:2px;}
+.app-card-name{font-size:11px;font-weight:700;color:var(--brown);text-align:center;line-height:1.3;}
+.app-card-sub{font-size:10px;color:var(--muted);text-align:center;line-height:1.4;}
+.app-badge{position:absolute;top:7px;right:7px;background:var(--rs);color:white;font-size:9px;font-weight:700;border-radius:10px;padding:2px 5px;min-width:16px;text-align:center;}
+.app-badge.yellow{background:var(--ys);}
+.app-card-alert{font-size:9px;color:var(--rs);font-weight:700;text-align:center;line-height:1.3;background:var(--rb);border-radius:6px;padding:2px 6px;margin-top:2px;}
 
 /* TODO */
-.todo-card{background:var(–white);border:1px solid var(–latte);border-radius:var(–r);overflow:hidden;}
-.todo-input-row{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(–cream);}
-.todo-input{flex:1;border:none;background:transparent;font-family:‘Zen Kaku Gothic New’,sans-serif;font-size:14px;color:var(–text);outline:none;}
-.todo-input::placeholder{color:var(–latte);}
-.todo-add-btn{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(–moon),var(–moon2));color:white;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.todo-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);overflow:hidden;}
+.todo-input-row{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--cream);}
+.todo-input{flex:1;border:none;background:transparent;font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;color:var(--text);outline:none;}
+.todo-input::placeholder{color:var(--latte);}
+.todo-add-btn{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--moon),var(--moon2));color:white;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .todo-list{max-height:260px;overflow-y:auto;}
-.todo-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(–cream);transition:all .2s;position:relative;}
+.todo-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--cream);transition:all .2s;}
 .todo-item:last-child{border-bottom:none;}
-.todo-item.done .todo-text{text-decoration:line-through;color:var(–muted);opacity:.6;}
-.todo-check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(–latte);background:var(–cream);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(–gs);transition:all .15s;}
-.todo-check.checked{background:var(–gb);border-color:var(–gs);}
-.todo-text{flex:1;font-size:13px;color:var(–text);}
-.todo-del{border:none;background:none;color:var(–latte);font-size:15px;cursor:pointer;padding:3px;transition:color .12s;flex-shrink:0;}
-.todo-del:hover{color:var(–rs);}
+.todo-item.done .todo-text{text-decoration:line-through;color:var(--muted);opacity:.6;}
+.todo-check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--latte);background:var(--cream);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--gs);transition:all .15s;}
+.todo-check.checked{background:var(--gb);border-color:var(--gs);}
+.todo-text{flex:1;font-size:13px;color:var(--text);}
+.todo-del{border:none;background:none;color:var(--latte);font-size:15px;cursor:pointer;padding:3px;transition:color .12s;flex-shrink:0;}
+.todo-del:hover{color:var(--rs);}
 
-/* Drag handle */
-.drag-handle{cursor:grab;color:var(–latte);font-size:14px;flex-shrink:0;padding:2px 4px;user-select:none;touch-action:none;display:flex;align-items:center;}
-.drag-handle:active{cursor:grabbing;color:var(–moon);}
-.todo-item.dragging{opacity:.5;background:var(–moon-light);}
-.todo-item.drag-over{border-top:2px solid var(–moon);}
-
-/* Edit todo */
-.todo-edit-input{flex:1;border:none;background:var(–cream);border-radius:6px;padding:4px 8px;font-family:‘Zen Kaku Gothic New’,sans-serif;font-size:13px;color:var(–text);outline:none;}
-
-/* MEMO */
-.memo-card{background:#fdf8e1;border:1px solid #e8d88a;border-radius:var(–rlg);overflow:hidden;box-shadow:2px 3px 10px rgba(180,160,80,.12);}
+/* MEMO - sticky note style */
+.memo-card{background:#fdf8e1;border:1px solid #e8d88a;border-radius:var(--rlg);overflow:hidden;box-shadow:2px 3px 10px rgba(180,160,80,.12);}
 .memo-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid rgba(200,180,80,.2);}
 .memo-title-txt{font-size:12px;color:#8a7830;font-weight:600;}
-.memo-save-btn{font-size:11px;color:#7a6820;background:rgba(200,180,60,.15);border:1px solid rgba(200,180,60,.3);border-radius:20px;padding:3px 10px;cursor:pointer;font-family:‘Zen Kaku Gothic New’,sans-serif;}
-.memo-ta{width:100%;border:none;background:transparent;font-family:‘Zen Kaku Gothic New’,sans-serif;font-size:13px;color:#5a4a20;padding:12px 14px;resize:none;outline:none;min-height:90px;line-height:1.8;}
+.memo-save-btn{font-size:11px;color:#7a6820;background:rgba(200,180,60,.15);border:1px solid rgba(200,180,60,.3);border-radius:20px;padding:3px 10px;cursor:pointer;font-family:'Zen Kaku Gothic New',sans-serif;}
+.memo-ta{width:100%;border:none;background:transparent;font-family:'Zen Kaku Gothic New',sans-serif;font-size:13px;color:#5a4a20;padding:12px 14px;resize:none;outline:none;min-height:90px;line-height:1.8;}
 
 /* ANNIVERSARY */
 .anni-list{display:flex;flex-direction:column;gap:8px;}
-.anni-card{background:var(–white);border:1px solid var(–latte);border-radius:var(–r);padding:12px 14px;display:flex;align-items:center;gap:11px;position:relative;overflow:hidden;}
-.anni-card::before{content:’’;position:absolute;left:0;top:0;bottom:0;width:3px;}
-.anni-card.soon::before{background:var(–rs);}
-.anni-card.coming::before{background:var(–ys);}
-.anni-card.normal::before{background:var(–gs);}
+.anni-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);padding:12px 14px;display:flex;align-items:center;gap:11px;position:relative;overflow:hidden;}
+.anni-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;}
+.anni-card.soon::before{background:var(--rs);}
+.anni-card.coming::before{background:var(--ys);}
+.anni-card.normal::before{background:var(--gs);}
 .anni-icon{font-size:22px;flex-shrink:0;}
 .anni-info{flex:1;}
-.anni-name{font-size:13px;font-weight:700;color:var(–text);}
-.anni-date{font-size:11px;color:var(–muted);margin-top:2px;}
-.anni-days{font-size:13px;font-weight:700;color:var(–deep);}
-.anni-del{border:none;background:none;color:var(–latte);font-size:15px;cursor:pointer;padding:3px;}
+.anni-name{font-size:13px;font-weight:700;color:var(--text);}
+.anni-date{font-size:11px;color:var(--muted);margin-top:2px;}
+.anni-days{font-size:13px;font-weight:700;color:var(--deep);}
+.anni-del{border:none;background:none;color:var(--latte);font-size:15px;cursor:pointer;padding:3px;}
 
 /* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(61,43,26,.42);z-index:200;display:none;align-items:flex-end;backdrop-filter:blur(3px);-webkit-overflow-scrolling:touch;}
+.modal-overlay{position:fixed;inset:0;background:rgba(61,43,26,.42);z-index:200;display:none;align-items:flex-end;backdrop-filter:blur(3px);}
 .modal-overlay.show{display:flex;}
-.modal-sheet{background:var(–white);border-radius:22px 22px 0 0;padding:20px 18px 44px;width:100%;max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;}
-.modal-handle{width:36px;height:4px;background:var(–latte);border-radius:2px;margin:0 auto 18px;}
-.modal-title{font-family:‘Noto Serif TC’,serif;font-size:17px;color:var(–deep);margin-bottom:16px;}
+.modal-sheet{background:var(--white);border-radius:22px 22px 0 0;padding:20px 18px 44px;width:100%;}
+.modal-handle{width:36px;height:4px;background:var(--latte);border-radius:2px;margin:0 auto 18px;}
+.modal-title{font-family:'Noto Serif TC',serif;font-size:17px;color:var(--deep);margin-bottom:16px;}
 .mfield{margin-bottom:12px;}
-.mfield label{font-size:11px;color:var(–muted);font-weight:600;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.3px;}
-.mfield input,.mfield select{width:100%;padding:11px 13px;background:var(–cream);border:1.5px solid var(–latte);border-radius:var(–rsm);color:var(–text);font-family:‘Zen Kaku Gothic New’,sans-serif;font-size:13px;outline:none;transition:border-color .2s;}
-.mfield input:focus,.mfield select:focus{border-color:var(–moon);background:var(–white);}
+.mfield label{font-size:11px;color:var(--muted);font-weight:600;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.3px;}
+.mfield input,.mfield select{width:100%;padding:11px 13px;background:var(--cream);border:1.5px solid var(--latte);border-radius:var(--rsm);color:var(--text);font-family:'Zen Kaku Gothic New',sans-serif;font-size:13px;outline:none;transition:border-color .2s;}
+.mfield input:focus,.mfield select:focus{border-color:var(--moon);background:var(--white);}
 .mbtns{display:flex;gap:8px;margin-top:16px;}
-.mbtn-c{flex:1;padding:12px;border-radius:var(–rsm);font-family:‘Zen Kaku Gothic New’,sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;background:var(–cream);color:var(–muted);}
-.mbtn-s{flex:1;padding:12px;border-radius:var(–rsm);font-family:‘Zen Kaku Gothic New’,sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;background:linear-gradient(135deg,var(–moon),var(–moon2));color:white;}
+.mbtn-c{flex:1;padding:12px;border-radius:var(--rsm);font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;background:var(--cream);color:var(--muted);}
+.mbtn-s{flex:1;padding:12px;border-radius:var(--rsm);font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;background:linear-gradient(135deg,var(--moon),var(--moon2));color:white;}
 
 /* CONFIRM DIALOG */
 .confirm-overlay{position:fixed;inset:0;background:rgba(61,43,26,.42);z-index:300;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(3px);}
 .confirm-overlay.show{display:flex;}
-.confirm-box{background:var(–white);border-radius:var(–rlg);padding:24px 22px;width:100%;max-width:320px;text-align:center;box-shadow:0 8px 40px var(–shadow);}
+.confirm-box{background:var(--white);border-radius:var(--rlg);padding:24px 22px;width:100%;max-width:320px;text-align:center;box-shadow:0 8px 40px var(--shadow);}
 .confirm-icon{font-size:36px;margin-bottom:10px;}
-.confirm-title{font-family:‘Noto Serif TC’,serif;font-size:16px;color:var(–deep);font-weight:500;margin-bottom:6px;}
-.confirm-msg{font-size:13px;color:var(–muted);line-height:1.6;margin-bottom:18px;}
+.confirm-title{font-family:'Noto Serif TC',serif;font-size:16px;color:var(--deep);font-weight:500;margin-bottom:6px;}
+.confirm-msg{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px;}
 .confirm-btns{display:flex;gap:8px;}
-.cbtn-c{flex:1;padding:11px;border-radius:var(–rsm);font-family:‘Zen Kaku Gothic New’,sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;background:var(–cream);color:var(–muted);}
-.cbtn-ok{flex:1;padding:11px;border-radius:var(–rsm);font-family:‘Zen Kaku Gothic New’,sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;background:var(–rb);color:var(–rs);}
+.cbtn-c{flex:1;padding:11px;border-radius:var(--rsm);font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;background:var(--cream);color:var(--muted);}
+.cbtn-ok{flex:1;padding:11px;border-radius:var(--rsm);font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;background:var(--rb);color:var(--rs);}
 
 /* EMPTY */
-.empty{text-align:center;padding:22px 20px;color:var(–muted);}
+.empty{text-align:center;padding:22px 20px;color:var(--muted);}
 .empty-icon{font-size:28px;display:block;margin-bottom:6px;}
 
 /* TOAST */
 .toast-wrap{position:fixed;bottom:24px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;z-index:500;}
-.toast-item{display:flex;align-items:center;gap:8px;background:var(–white);border:1px solid var(–latte);color:var(–text);font-size:13px;padding:10px 16px 10px 12px;border-radius:24px;box-shadow:0 4px 20px var(–shadow);opacity:0;transform:translateY(16px) scale(.95);transition:all .28s cubic-bezier(.34,1.56,.64,1);pointer-events:none;max-width:calc(100vw - 40px);}
+.toast-item{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--latte);color:var(--text);font-size:13px;padding:10px 16px 10px 12px;border-radius:24px;box-shadow:0 4px 20px var(--shadow);opacity:0;transform:translateY(16px) scale(.95);transition:all .28s cubic-bezier(.34,1.56,.64,1);pointer-events:none;max-width:calc(100vw - 40px);}
 .toast-item.show{opacity:1;transform:translateY(0) scale(1);}
 .toast-item.removing{opacity:0;transform:translateY(-8px) scale(.95);transition:all .2s ease-in;}
 
@@ -196,12 +186,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .alert-card:nth-child(3){animation-delay:.13s;}
 .weather-card{animation:fadeUp .3s ease both;}
 </style>
-
 </head>
 <body>
 
 <!-- LOGIN -->
-
 <div id="loginScreen">
   <div class="login-box">
     <span class="login-icon">🌙</span>
@@ -217,7 +205,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </div>
 
 <!-- APP -->
-
 <div id="app">
   <div class="header">
     <div class="header-row">
@@ -226,7 +213,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           <span class="sync-dot" id="syncDot"></span>
           🌙 嘟嘟一家
         </div>
-        <div class="logo-sub">嘟嘟一家的生活助手：從日常家務到知識百科</div>
+        <div class="logo-sub">家務秘書・庫存管家・小嘟衣櫃・口袋地圖</div>
       </div>
       <span class="code-pill" id="codePill" onclick="copyCode()"></span>
       <button onclick="doLogout()" style="font-size:11px;color:var(--muted);background:var(--cream);border:1px solid var(--latte);border-radius:20px;padding:4px 11px;cursor:pointer;font-family:'Zen Kaku Gothic New',sans-serif;">切換 ↩</button>
@@ -235,117 +222,106 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
   <div class="content">
 
-```
-<!-- GREETING -->
-<div class="greeting">
-  <div class="greet-icon" id="greetIcon">🌿</div>
-  <div class="greet-text">
-    <div class="greet-title" id="greetTitle">歡迎回家！</div>
-    <div class="greet-sub" id="greetSub">讀取中…</div>
-  </div>
-</div>
-
-<!-- WEATHER -->
-<div class="weather-card">
-  <div class="weather-label" id="wLabel">嘟嘟家氣象台 📡</div>
-  <div class="weather-top">
-    <span class="weather-icon-big" id="wIcon">—</span>
-    <div class="weather-info">
-      <div class="weather-temp" id="wTemp">—°C</div>
-      <div class="weather-desc" id="wDesc">讀取中</div>
-      <div id="wRange" style="font-size:11px;color:var(--muted);margin-top:2px;"></div>
+    <!-- GREETING -->
+    <div class="greeting">
+      <div class="greet-icon" id="greetIcon">🌿</div>
+      <div class="greet-text">
+        <div class="greet-title" id="greetTitle">歡迎回家！</div>
+        <div class="greet-sub" id="greetSub">讀取中…</div>
+      </div>
     </div>
-  </div>
-  <div class="weather-hint" id="wHint">☁️ 讀取天氣中...</div>
-</div>
 
-<!-- APP SHORTCUTS -->
-<div class="sec-hd"><div class="sec-title">快速進入</div></div>
-<div class="app-grid">
-  <a class="app-card" id="link-sec" href="#" target="_blank">
-    <div id="badge-sec" class="app-badge" style="display:none;"></div>
-    <div class="app-card-emoji">🐧</div>
-    <div class="app-card-name">家務秘書</div>
-    <div class="app-card-sub" id="sub-sec">家裡大小事都交給它🔔</div>
-    <div class="app-card-alert" id="alert-sec" style="display:none;"></div>
-  </a>
-  <a class="app-card" id="link-inv" href="#" target="_blank">
-    <div id="badge-inv" class="app-badge yellow" style="display:none;"></div>
-    <div class="app-card-emoji">🐰</div>
-    <div class="app-card-name">庫存管家</div>
-    <div class="app-card-sub" id="sub-inv">家庭庫存追蹤</div>
-    <div class="app-card-alert" id="alert-inv" style="display:none;"></div>
-  </a>
-  <a class="app-card" id="link-ward" href="#" target="_blank">
-    <div class="app-card-emoji">👗</div>
-    <div class="app-card-name">小嘟衣櫃</div>
-    <div class="app-card-sub" id="sub-ward">小嘟今天要穿什麼呢？</div>
-    <div class="app-card-alert" id="alert-ward" style="display:none;"></div>
-  </a>
-  <a class="app-card" id="link-pocket" href="#" target="_blank">
-    <div class="app-card-emoji">🗺️</div>
-    <div class="app-card-name">口袋地圖</div>
-    <div class="app-card-sub" id="sub-pocket">下次要去哪裡踩點？</div>
-  </a>
-</div>
-<!-- M.Y 小百科 - 全寬卡片，移除「進入 →」 -->
-<a class="app-card app-card-wiki" id="link-wiki" href="#" target="_blank" style="margin-top:10px;flex-direction:row;padding:14px 18px;gap:14px;align-items:center;justify-content:flex-start;">
-  <div class="app-card-emoji" style="font-size:32px;">📖</div>
-  <div style="flex:1;text-align:left;">
-    <div class="app-card-name" style="font-size:13px;text-align:left;">M.Y 小百科</div>
-    <div class="app-card-sub" style="text-align:left;margin-top:2px;">記下每件值得留存的事，讓愛有跡可循 ✨</div>
-  </div>
-</a>
+    <!-- WEATHER -->
+    <div class="weather-card">
+      <div class="weather-label" id="wLabel">嘟嘟家氣象台 📡</div>
+      <div class="weather-top">
+        <span class="weather-icon-big" id="wIcon">—</span>
+        <div class="weather-info">
+          <div class="weather-temp" id="wTemp">—°C</div>
+          <div class="weather-desc" id="wDesc">讀取中</div>
+          <div id="wRange" style="font-size:11px;color:var(--muted);margin-top:2px;"></div>
+        </div>
+      </div>
+      <div class="weather-hint" id="wHint">☁️ 讀取天氣中...</div>
+    </div>
 
-<!-- TODO -->
-<div class="sec-hd"><div class="sec-title">✅ 家庭待辦</div></div>
-<div class="todo-card">
-  <div class="todo-input-row">
-    <input class="todo-input" id="todoInput" placeholder="新增待辦事項…" onkeydown="if(event.key==='Enter')addTodo()">
-    <button class="todo-add-btn" onclick="addTodo()">＋</button>
-  </div>
-  <div class="todo-list" id="todoList">
-    <div class="empty" style="padding:16px;"><p>還沒有待辦事項 🌿</p></div>
-  </div>
-</div>
+    <!-- APP SHORTCUTS - 提醒整合在卡片內 -->
+    <div class="sec-hd"><div class="sec-title">快速進入</div></div>
+    <div class="app-grid">
+      <a class="app-card" id="link-sec" href="#" target="_blank">
+        <div id="badge-sec" class="app-badge" style="display:none;"></div>
+        <div class="app-card-emoji">🐧</div>
+        <div class="app-card-name">家務秘書</div>
+        <div class="app-card-sub" id="sub-sec">家裡大小事都交給它🔔</div>
+        <div class="app-card-alert" id="alert-sec" style="display:none;"></div>
+      </a>
+      <a class="app-card" id="link-inv" href="#" target="_blank">
+        <div id="badge-inv" class="app-badge yellow" style="display:none;"></div>
+        <div class="app-card-emoji">🐰</div>
+        <div class="app-card-name">庫存管家</div>
+        <div class="app-card-sub" id="sub-inv">家庭庫存追蹤</div>
+        <div class="app-card-alert" id="alert-inv" style="display:none;"></div>
+      </a>
+      <a class="app-card" id="link-ward" href="#" target="_blank">
+        <div class="app-card-emoji">👗</div>
+        <div class="app-card-name">小嘟衣櫃</div>
+        <div class="app-card-sub" id="sub-ward">小嘟今天要穿什麼呢？</div>
+        <div class="app-card-alert" id="alert-ward" style="display:none;"></div>
+      </a>
+      <a class="app-card" id="link-pocket" href="#" target="_blank">
+        <div class="app-card-emoji">🗺️</div>
+        <div class="app-card-name">口袋地圖</div>
+        <div class="app-card-sub" id="sub-pocket">下次要去哪裡踩點？</div>
+      </a>
+    </div>
 
-<!-- MEMO -->
-<div class="sec-hd"><div class="sec-title">📝 隨手備忘</div></div>
-<div class="memo-card">
-  <div class="memo-header">
-    <span class="memo-title-txt">🌻 兩人共用記事本</span>
-    <button class="memo-save-btn" onclick="saveMemo()">儲存</button>
-  </div>
-  <textarea class="memo-ta" id="memoTa" placeholder="寫下任何想記的事…&#10;購物清單、小嘟的成長紀錄、聯絡備忘…"></textarea>
-</div>
+    <!-- TODO -->
+    <div class="sec-hd"><div class="sec-title">✅ 家庭待辦</div></div>
+    <div class="todo-card">
+      <div class="todo-input-row">
+        <input class="todo-input" id="todoInput" placeholder="新增待辦事項…" onkeydown="if(event.key==='Enter')addTodo()">
+        <button class="todo-add-btn" onclick="addTodo()">＋</button>
+      </div>
+      <div class="todo-list" id="todoList">
+        <div class="empty" style="padding:16px;"><p>還沒有待辦事項 🌿</p></div>
+      </div>
+    </div>
 
-<!-- WISHLIST -->
-<div class="sec-hd"><div class="sec-title">🛍️ 心願清單</div></div>
-<div class="todo-card">
-  <div class="todo-input-row">
-    <input class="todo-input" id="wishInput" placeholder="想買的東西…（可加備註，例：Nike球鞋 約$2000）" onkeydown="if(event.key==='Enter')addWish()">
-    <button class="todo-add-btn" onclick="addWish()">＋</button>
-  </div>
-  <div class="todo-list" id="wishList">
-    <div class="empty" style="padding:16px;"><p>還沒有心願，新增一個吧 🛍️</p></div>
-  </div>
-</div>
+    <!-- MEMO - sticky note -->
+    <div class="sec-hd"><div class="sec-title">📝 隨手備忘</div></div>
+    <div class="memo-card">
+      <div class="memo-header">
+        <span class="memo-title-txt">🌻 兩人共用記事本</span>
+        <button class="memo-save-btn" onclick="saveMemo()">儲存</button>
+      </div>
+      <textarea class="memo-ta" id="memoTa" placeholder="寫下任何想記的事…&#10;購物清單、小嘟的成長紀錄、聯絡備忘…"></textarea>
+    </div>
 
-<!-- ANNIVERSARY -->
-<div class="sec-hd">
-  <div class="sec-title">🎂 重要紀念日</div>
-  <button class="sec-more" onclick="openAnniModal()">＋ 新增</button>
-</div>
-<div class="anni-list" id="anniList">
-  <div class="empty"><p>還沒有紀念日，點右上角新增 🎉</p></div>
-</div>
-```
+    <!-- WISHLIST -->
+    <div class="sec-hd"><div class="sec-title">🛍️ 心願清單</div></div>
+    <div class="todo-card">
+      <div class="todo-input-row">
+        <input class="todo-input" id="wishInput" placeholder="想買的東西…（可加備註，例：Nike球鞋 約$2000）" onkeydown="if(event.key==='Enter')addWish()">
+        <button class="todo-add-btn" onclick="addWish()">＋</button>
+      </div>
+      <div class="todo-list" id="wishList">
+        <div class="empty" style="padding:16px;"><p>還沒有心願，新增一個吧 🛍️</p></div>
+      </div>
+    </div>
+
+    <!-- ANNIVERSARY -->
+    <div class="sec-hd">
+      <div class="sec-title">🎂 重要紀念日</div>
+      <button class="sec-more" onclick="openAnniModal()">＋ 新增</button>
+    </div>
+    <div class="anni-list" id="anniList">
+      <div class="empty"><p>還沒有紀念日，點右上角新增 🎉</p></div>
+    </div>
 
   </div>
 </div>
 
 <!-- ANNIVERSARY MODAL -->
-
 <div class="modal-overlay" id="anniModal" onclick="if(event.target===this)closeAnniModal()">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -371,7 +347,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </div>
 
 <!-- CONFIRM DIALOG -->
-
 <div class="confirm-overlay" id="confirmOverlay">
   <div class="confirm-box">
     <div class="confirm-icon">🗑️</div>
@@ -387,7 +362,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="toast-wrap" id="toastWrap"></div>
 
 <!-- FIREBASE -->
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
@@ -405,6 +379,7 @@ window._fbSetDash = (code,data) => setDoc(doc(db,'dashboard_v1',code),data,{merg
 window._listenAll = function(code, cbs){
   const u=[];
   u.push(onSnapshot(doc(db,'home_sec_v2',code), s=>{ if(s.exists()) cbs.sec(s.data()); }));
+  // 庫存管家：每次快照都強制更新，不做快取比較
   u.push(onSnapshot(doc(db,'inventory',code), s=>{
     if(s.exists()) cbs.inv(s.data());
     else cbs.inv({items:[]});
@@ -413,6 +388,8 @@ window._listenAll = function(code, cbs){
   u.push(onSnapshot(doc(db,'dashboard_v1',code),s=>{ if(s.exists()) cbs.dash(s.data()); }));
   return u;
 };
+// 提供單次強制拉取庫存
+window._getInvNow = (code) => getDoc(doc(db,'inventory',code));
 if(window._onFbReady) window._onFbReady();
 </script>
 
@@ -426,11 +403,10 @@ var APP_URLS={
   sec:'https://yui0151.github.io/secretary/',
   inv:'https://yui0151.github.io/inventory/',
   ward:'https://yui0151.github.io/wardrobe/',
-  pocket:'https://yamap610.github.io/pocket-list/',
-  wiki:'https://yamap610.github.io/mywiki/'
+  pocket:'https://yamap610.github.io/pocket-list/'
 };
 
-// ── WARM QUOTES ──
+// ── WARM QUOTES for greeting ──
 var WARM_QUOTES=[
   '家，是世界上最溫暖的地方 🏡',
   '今天記得抱抱身邊的人 🤗',
@@ -449,16 +425,49 @@ var WARM_QUOTES=[
   '睡前互道晚安，是最好的習慣 🌙',
 ];
 
-// ── WEATHER HINTS ──
+// ── WEATHER HINTS by condition ──
 var WEATHER_HINTS={
-  cold:['外面涼涼的，多穿件衣服喔 🧣','今天適合抱抱取暖 ☕','別忘了幫小嘟加件外套！','涼意來了，記得把棉被拿出來 🛏️','冷冷的天，來杯熱可可吧 🍫'],
-  hot:['今天太陽公公太熱情了 💦','記得多喝水、做好防曬喔！','外面熱呼呼，待在室內最舒服 🌬️','天氣這麼熱，冰箱裡有冰水嗎？ 🧊','記得幫小嘟防曬，出門抹防曬乳☀️'],
-  rainy:['聽，是下雨的聲音 ☂️','出門記得帶傘，別淋濕了！','下雨天也要有好心情 🌈','雨天適合待在家裡喝茶 ☕','記得把窗戶關好，防止潮濕 🪟'],
-  sunny:['陽光真好！今天適合曬棉被 ☀️','是個適合帶小嘟去散步的好日子 🌿','今天天氣滿分，出發吧！','晴空萬里，心情也要晴朗喔 😊','這麼好的天，把家裡通風一下吧 🌬️'],
-  cloudy:['陰天也是舒服的一天 🌥️','不冷不熱，是出門的好時機 🚶','雲朵遮住了太陽，但遮不住好心情 ☁️','帶把傘出門保險一些喔 🌂'],
-  default:['不管天氣如何，家裡永遠最溫暖 🏡','今天也要好好照顧自己和家人 💛']
+  cold:[
+    '外面涼涼的，多穿件衣服喔 🧣',
+    '今天適合抱抱取暖 ☕',
+    '別忘了幫小嘟加件外套！',
+    '涼意來了，記得把棉被拿出來 🛏️',
+    '冷冷的天，來杯熱可可吧 🍫',
+  ],
+  hot:[
+    '今天太陽公公太熱情了 💦',
+    '記得多喝水、做好防曬喔！',
+    '外面熱呼呼，待在室內最舒服 🌬️',
+    '天氣這麼熱，冰箱裡有冰水嗎？ 🧊',
+    '記得幫小嘟防曬，出門抹防曬乳☀️',
+  ],
+  rainy:[
+    '聽，是下雨的聲音 ☂️',
+    '出門記得帶傘，別淋濕了！',
+    '下雨天也要有好心情 🌈',
+    '雨天適合待在家裡喝茶 ☕',
+    '記得把窗戶關好，防止潮濕 🪟',
+  ],
+  sunny:[
+    '陽光真好！今天適合曬棉被 ☀️',
+    '是個適合帶小嘟去散步的好日子 🌿',
+    '今天天氣滿分，出發吧！',
+    '晴空萬里，心情也要晴朗喔 😊',
+    '這麼好的天，把家裡通風一下吧 🌬️',
+  ],
+  cloudy:[
+    '陰天也是舒服的一天 🌥️',
+    '不冷不熱，是出門的好時機 🚶',
+    '雲朵遮住了太陽，但遮不住好心情 ☁️',
+    '帶把傘出門保險一些喔 🌂',
+  ],
+  default:[
+    '不管天氣如何，家裡永遠最溫暖 🏡',
+    '今天也要好好照顧自己和家人 💛',
+  ]
 };
 
+// ── OUTFIT SUGGESTIONS by temperature range ──
 var OUTFITS={
   freezing:['今日穿搭：羽絨衣＋厚毛衣，圍巾帽子都出動 🧥🧣','穿最厚的那件！帽子圍巾手套一起上 ❄️','全副武裝出門，保暖第一 🧤'],
   cold:['今日穿搭：外套＋長袖，記得加一件背心 🧥','穿件薄外套或針織衫，小嘟也要加件外套喔 🌿','建議洋蔥式穿法，早晚溫差大 🧅'],
@@ -467,7 +476,14 @@ var OUTFITS={
   hot:['今日穿搭：短袖清爽上陣，防曬不能少！☀️','穿最透氣的短袖，出門記得帶防曬乳 🧴','天氣很熱，穿輕薄透氣、出門帶水和防曬喔 💦'],
 };
 
-function getRandHint(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function getOutfit(maxT, minT){
+  var avg=(maxT+minT)/2;
+  if(avg<10) return getRandHint(OUTFITS.freezing);
+  if(avg<17) return getRandHint(OUTFITS.cold);
+  if(avg<23) return getRandHint(OUTFITS.mild);
+  if(avg<29) return getRandHint(OUTFITS.warm);
+  return getRandHint(OUTFITS.hot);
+}
 
 // ── WEATHER ──
 window._weatherCallback = function(temp, hum, code, maxT, minT, cityName){
@@ -486,6 +502,7 @@ window._weatherCallback = function(temp, hum, code, maxT, minT, cityName){
   document.getElementById('wTemp').textContent=temp+'°C';
   document.getElementById('wDesc').textContent=(cityName||'台北')+(hum?'・濕度 '+hum+'%':'');
   document.getElementById('wRange').textContent='最高 '+maxT+'° / 最低 '+minT+'°';
+  // 合併叮嚀＋穿衣 → 交錯輪播
   var hArr=WEATHER_HINTS[hintKey]||WEATHER_HINTS.default;
   var hint=hArr[Math.floor(Math.random()*hArr.length)];
   var avg=(maxT+minT)/2;
@@ -531,11 +548,13 @@ function loadWeather(){
       xhr.onerror=function(){ document.getElementById('wHint').textContent='出門前記得看天氣喔 🌈'; };
       xhr.send();
     }
+    // 嘗試取得使用者位置
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(
         function(pos){
           var lat=pos.coords.latitude.toFixed(4);
           var lon=pos.coords.longitude.toFixed(4);
+          // 用 Open-Meteo 反查地名（簡易）
           var rGeo=new XMLHttpRequest();
           rGeo.open('GET','https://nominatim.openstreetmap.org/reverse?format=json&lat='+lat+'&lon='+lon+'&accept-language=zh-TW');
           rGeo.onload=function(){
@@ -549,7 +568,7 @@ function loadWeather(){
           rGeo.onerror=function(){ fetchWeather(lat, lon, ''); };
           rGeo.send();
         },
-        function(){ fetchWeather(25.05, 121.53, '台北'); },
+        function(){ fetchWeather(25.05, 121.53, '台北'); }, // 拒絕定位 → 預設台北
         {timeout:5000}
       );
     } else {
@@ -565,6 +584,7 @@ function renderGreeting(){
   var titles=['夜深了，好好休息','深夜了～','夜深了～','快去睡喔','早安！','早安！新的一天開始','早安！','早安！','早安！','早安！','早安！','午前時光','午安！吃飯了嗎？','午安！','下午好！','下午好！','下午好！','傍晚了～','晚上好！','晚安～','夜晚時光','夜晚時光','深夜了～','夜深了～'];
   document.getElementById('greetIcon').textContent=icons[h];
   document.getElementById('greetTitle').textContent=titles[h];
+  // show random warm quote before weather loads
   var q=WARM_QUOTES[Math.floor(Math.random()*WARM_QUOTES.length)];
   document.getElementById('greetSub').textContent=q;
 }
@@ -576,7 +596,10 @@ function startListen(){
   setSyncDot('off');
   window._listenAll(roomCode,{
     sec:  function(d){ secData=d;  loadedCount++; setSyncDot('on'); renderAlerts(); renderAppSubtitles(); },
-    inv:  function(d){ invData=d; loadedCount++; renderAlerts(); renderAppSubtitles(); },
+    inv:  function(d){
+      invData=d; loadedCount++;
+      renderAlerts(); renderAppSubtitles();
+    },
     ward: function(d){ wardData=d; loadedCount++; renderAlerts(); renderAppSubtitles(); },
     dash: function(d){
       if(d.todos)  { todos=d.todos; renderTodos(); }
@@ -585,7 +608,7 @@ function startListen(){
       if(d.wishes) { wishes=d.wishes; renderWishes(); }
     }
   });
-  setTimeout(function(){ renderAlerts(); },4000);
+  setTimeout(function(){ document.getElementById('alertLoading').textContent=''; renderAlerts(); },4000);
 }
 
 // ── LOGIN ──
@@ -625,16 +648,17 @@ window.doLogout=function(){
   document.getElementById('roomInput').value='';
 };
 
+
 function updateAppLinks(){
   document.getElementById('link-sec').href  = APP_URLS.sec  + '?code='+roomCode;
   document.getElementById('link-inv').href  = APP_URLS.inv  + '?code='+roomCode;
   document.getElementById('link-ward').href = APP_URLS.ward + '?code='+roomCode;
   document.getElementById('link-pocket').href = APP_URLS.pocket + '?code='+roomCode;
-  document.getElementById('link-wiki').href = APP_URLS.wiki + '?code='+roomCode;
 }
 
-// ── ALERTS ──
+// ── ALERTS → now embedded in app cards ──
 function renderAlerts(){
+  // 紀念日快到時更新問候語
   annis.forEach(function(a){
     var d=daysUntilAnni(a.date);
     if(d===0) document.getElementById('greetSub').textContent='今天是 '+a.name+'！🎉 好好慶祝吧！';
@@ -643,7 +667,10 @@ function renderAlerts(){
 }
 
 function renderAppSubtitles(){
+  // 家務秘書
   if(secData&&secData.items){
+    var act=(secData.items||[]).filter(function(i){return i.type==='sub'&&i.status==='active';}).length;
+    var bills=(secData.items||[]).filter(function(i){return i.type==='bill';}).length;
     var secDue=(secData.items||[]).filter(function(i){
       var dt=i.type==='maint'?(function(){if(!i.lastDate||!i.interval)return i.due;var d=new Date(i.lastDate);d.setDate(d.getDate()+parseInt(i.interval));return d.toISOString().slice(0,10);}()):i.due;
       return dt&&daysUntil(dt)<=7;
@@ -656,6 +683,7 @@ function renderAppSubtitles(){
       al.textContent='🔔 '+secDue+'項費用快到期';al.style.display='block';
     } else { b.style.display='none'; al.style.display='none'; }
   }
+  // 庫存管家
   if(invData&&invData.items){
     var allItems=invData.items||[];
     var low=allItems.filter(function(i){ return i.qty<=(i.minStock!=null?i.minStock:1); });
@@ -667,8 +695,10 @@ function renderAppSubtitles(){
       al.textContent='🔔 '+low.length+'項需補貨';al.style.display='block';
     } else { b.style.display='none'; al.style.display='none'; }
   }
+  // 小嘟衣櫃 - 用 clothes array，顯示當季件數
   if(wardData&&wardData.clothes){
     var clothes=wardData.clothes||[];
+    var cur=clothes.filter(function(c){return c.status==='當季';}).length;
     var fut=clothes.filter(function(c){return c.status==='未來';}).length;
     document.getElementById('sub-ward').textContent='小嘟今天穿什麼呢？👗';
     var al=document.getElementById('alert-ward');
@@ -706,87 +736,17 @@ function showConfirm(msg, cb){ document.getElementById('confirmMsg').textContent
 window.closeConfirm=function(){ document.getElementById('confirmOverlay').classList.remove('show'); confirmCb=null; };
 window.doConfirm=function(){ document.getElementById('confirmOverlay').classList.remove('show'); if(confirmCb)confirmCb(); confirmCb=null; };
 
-// ── DRAG & DROP for todos/wishes ──
-var dragState = { list: null, fromIdx: null };
-
-function setupDrag(listEl, dataArr, dataKey, renderFn) {
-  listEl.addEventListener('touchstart', handleDragStart, {passive:false});
-  listEl.addEventListener('touchmove', handleDragMove, {passive:false});
-  listEl.addEventListener('touchend', handleDragEnd);
-  // Mouse fallback
-  listEl.addEventListener('mousedown', handleDragStart);
-  listEl.addEventListener('mousemove', handleDragMove);
-  listEl.addEventListener('mouseup', handleDragEnd);
-
-  function getItemEl(target) {
-    var el = target.closest ? target.closest('.todo-item') : null;
-    return el;
-  }
-  function getHandleEl(target) {
-    return target.closest ? target.closest('.drag-handle') : null;
-  }
-  function getIdx(el) {
-    var items = listEl.querySelectorAll('.todo-item');
-    for (var i=0; i<items.length; i++) { if(items[i]===el) return i; }
-    return -1;
-  }
-
-  function handleDragStart(e) {
-    var handle = getHandleEl(e.target);
-    if (!handle) return;
-    var item = getItemEl(e.target);
-    if (!item) return;
-    dragState.list = dataKey;
-    dragState.fromIdx = getIdx(item);
-    item.classList.add('dragging');
-    if(e.type==='touchstart') e.preventDefault();
-  }
-  function handleDragMove(e) {
-    if (dragState.list !== dataKey || dragState.fromIdx === null) return;
-    if(e.type==='touchmove') e.preventDefault();
-    var touch = e.touches ? e.touches[0] : e;
-    var el = document.elementFromPoint(touch.clientX, touch.clientY);
-    var overItem = el ? (el.closest ? el.closest('.todo-item') : null) : null;
-    listEl.querySelectorAll('.todo-item').forEach(function(i){i.classList.remove('drag-over');});
-    if (overItem && getIdx(overItem) !== dragState.fromIdx) {
-      overItem.classList.add('drag-over');
-    }
-  }
-  function handleDragEnd(e) {
-    if (dragState.list !== dataKey || dragState.fromIdx === null) return;
-    var touch = e.changedTouches ? e.changedTouches[0] : e;
-    var el = document.elementFromPoint(touch.clientX, touch.clientY);
-    var overItem = el ? (el.closest ? el.closest('.todo-item') : null) : null;
-    var toIdx = overItem ? getIdx(overItem) : -1;
-    listEl.querySelectorAll('.todo-item').forEach(function(i){
-      i.classList.remove('dragging','drag-over');
-    });
-    if (toIdx >= 0 && toIdx !== dragState.fromIdx) {
-      var arr = dataKey === 'todos' ? todos : wishes;
-      var moved = arr.splice(dragState.fromIdx, 1)[0];
-      arr.splice(toIdx, 0, moved);
-      saveDash();
-      renderFn();
-    }
-    dragState.list = null;
-    dragState.fromIdx = null;
-  }
-}
-
 // ── TODOS ──
 function renderTodos(){
   var list=document.getElementById('todoList');
   if(!todos.length){ list.innerHTML='<div class="empty" style="padding:16px;"><p>還沒有待辦事項 🌿</p></div>'; return; }
-  list.innerHTML=todos.map(function(t, idx){
-    return '<div class="todo-item'+(t.done?' done':'')+'" data-idx="'+idx+'">'
-      +'<span class="drag-handle" title="拖曳排序">☰</span>'
+  list.innerHTML=todos.map(function(t){
+    return '<div class="todo-item'+(t.done?' done':'')+'">'
       +'<div class="todo-check'+(t.done?' checked':'')+'" onclick="toggleTodo(\''+t.id+'\')">'+(t.done?'✓':'')+'</div>'
-      +'<span class="todo-text" ondblclick="editTodoInline(\''+t.id+'\',this)">'+esc(t.text)+'</span>'
+      +'<span class="todo-text">'+esc(t.text)+'</span>'
       +'<button class="todo-del" onclick="confirmDelTodo(\''+t.id+'\',\''+esc(t.text)+'\')">🗑️</button>'
       +'</div>';
   }).join('');
-  // Setup drag after render
-  setupDrag(list, todos, 'todos', renderTodos);
 }
 window.addTodo=function(){
   var inp=document.getElementById('todoInput'), text=inp.value.trim();
@@ -803,24 +763,6 @@ window.confirmDelTodo=function(id, text){
     todos=todos.filter(function(t){ return t.id!==id; });
     saveDash(); renderTodos(); showToast('已移除 🗑️');
   });
-};
-// Inline edit
-window.editTodoInline=function(id, el){
-  var t=todos.find(function(x){return x.id===id;});
-  if(!t) return;
-  var inp=document.createElement('input');
-  inp.className='todo-edit-input';
-  inp.value=t.text;
-  el.replaceWith(inp);
-  inp.focus();
-  inp.select();
-  function finish(){
-    var v=inp.value.trim();
-    if(v&&v!==t.text){ t.text=v; saveDash(); }
-    renderTodos();
-  }
-  inp.addEventListener('blur', finish);
-  inp.addEventListener('keydown', function(e){ if(e.key==='Enter') inp.blur(); if(e.key==='Escape'){ inp.value=t.text; inp.blur(); }});
 };
 
 // ── MEMO ──
@@ -903,26 +845,26 @@ window.confirmDelAnni=function(id, name){
 function renderWishes(){
   var list=document.getElementById('wishList');
   if(!wishes.length){ list.innerHTML='<div class="empty" style="padding:16px;"><p>還沒有心願，新增一個吧 🛍️</p></div>'; return; }
+  // 未買的在前，已買的在後
   var pending=wishes.filter(function(w){ return !w.done; });
   var bought=wishes.filter(function(w){ return w.done; });
   var all=pending.concat(bought);
-  list.innerHTML=all.map(function(w, idx){
-    return '<div class="todo-item'+(w.done?' done':'')+'" data-idx="'+idx+'">'
-      +'<span class="drag-handle" title="拖曳排序">☰</span>'
+  list.innerHTML=all.map(function(w){
+    return '<div class="todo-item'+(w.done?' done':'')+'">'
       +'<div class="todo-check'+(w.done?' checked':'')+'" onclick="toggleWish(\''+w.id+'\')">'+(w.done?'✓':'')+'</div>'
       +'<div style="flex:1;min-width:0;">'
-      +'<div class="todo-text" style="'+(w.done?'text-decoration:line-through;color:var(--muted);':'')+'" ondblclick="editWishInline(\''+w.id+'\',this)">'+esc(w.text)+'</div>'
+      +'<div class="todo-text" style="'+(w.done?'text-decoration:line-through;color:var(--muted);':'')+'">'+esc(w.text)+'</div>'
       +(w.note?'<div style="font-size:11px;color:var(--muted);margin-top:1px;">'+esc(w.note)+'</div>':'')
       +'</div>'
       +(w.done?'<span style="font-size:10px;color:var(--gs);margin-right:4px;">買到了！</span>':'')
       +'<button class="todo-del" onclick="confirmDelWish(\''+w.id+'\',\''+esc(w.text)+'\')">🗑️</button>'
       +'</div>';
   }).join('');
-  setupDrag(list, wishes, 'wishes', renderWishes);
 }
 window.addWish=function(){
   var inp=document.getElementById('wishInput'), raw=inp.value.trim();
   if(!raw) return;
+  // 支援「品名 備註」格式
   var text=raw, note='';
   var m=raw.match(/^(.+?)\s{2,}(.+)$/) || raw.match(/^(.+?)（(.+)）$/) || raw.match(/^(.+?)\((.+)\)$/);
   if(m){ text=m[1].trim(); note=m[2].trim(); }
@@ -938,24 +880,6 @@ window.confirmDelWish=function(id, text){
     wishes=wishes.filter(function(w){ return w.id!==id; });
     saveDash(); renderWishes(); showToast('已移除 🗑️');
   });
-};
-// Inline edit wish
-window.editWishInline=function(id, el){
-  var w=wishes.find(function(x){return x.id===id;});
-  if(!w) return;
-  var inp=document.createElement('input');
-  inp.className='todo-edit-input';
-  inp.value=w.text;
-  el.replaceWith(inp);
-  inp.focus();
-  inp.select();
-  function finish(){
-    var v=inp.value.trim();
-    if(v&&v!==w.text){ w.text=v; saveDash(); }
-    renderWishes();
-  }
-  inp.addEventListener('blur', finish);
-  inp.addEventListener('keydown', function(e){ if(e.key==='Enter') inp.blur(); if(e.key==='Escape'){ inp.value=w.text; inp.blur(); }});
 };
 
 // ── TOAST ──
@@ -975,6 +899,5 @@ function showToast(msg){
 var saved=localStorage.getItem('dash_last_room');
 if(saved){ document.getElementById('roomInput').value=saved; roomCode=saved; enterApp(); }
 </script>
-
 </body>
 </html>
