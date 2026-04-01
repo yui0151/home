@@ -68,7 +68,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .greet-text .greet-title{font-family:'Noto Serif TC',serif;font-size:15px;color:var(--deep);font-weight:500;margin-bottom:2px;}
 .greet-text .greet-sub{font-size:12px;color:var(--muted);line-height:1.6;}
 
-/* WEATHER CARD - full width */
+/* WEATHER CARD */
 .weather-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);padding:14px 16px;margin-bottom:4px;}
 .weather-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
 .weather-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.3px;margin-bottom:6px;}
@@ -117,7 +117,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .todo-del{border:none;background:none;color:var(--latte);font-size:15px;cursor:pointer;padding:3px;transition:color .12s;flex-shrink:0;}
 .todo-del:hover{color:var(--rs);}
 
-/* MEMO - sticky note style */
+/* 心願移至待買按鈕 */
+.wish-move-btn{border:none;background:var(--gb);color:#4a8848;font-size:10px;font-weight:700;border-radius:6px;padding:3px 7px;cursor:pointer;flex-shrink:0;white-space:nowrap;font-family:'Zen Kaku Gothic New',sans-serif;}
+.wish-move-btn:active{opacity:.75;}
+
+/* MEMO */
 .memo-card{background:#fdf8e1;border:1px solid #e8d88a;border-radius:var(--rlg);overflow:hidden;box-shadow:2px 3px 10px rgba(180,160,80,.12);}
 .memo-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid rgba(200,180,80,.2);}
 .memo-title-txt{font-size:12px;color:#8a7830;font-weight:600;}
@@ -141,7 +145,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(61,43,26,.42);z-index:200;display:none;align-items:flex-end;backdrop-filter:blur(3px);}
 .modal-overlay.show{display:flex;}
-.modal-sheet{background:var(--white);border-radius:22px 22px 0 0;padding:20px 18px 44px;width:100%;}
+.modal-sheet{background:var(--white);border-radius:22px 22px 0 0;padding:20px 18px 44px;width:100%;max-height:85vh;overflow-y:auto;}
 .modal-handle{width:36px;height:4px;background:var(--latte);border-radius:2px;margin:0 auto 18px;}
 .modal-title{font-family:'Noto Serif TC',serif;font-size:17px;color:var(--deep);margin-bottom:16px;}
 .mfield{margin-bottom:12px;}
@@ -222,6 +226,15 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
   <div class="content">
 
+    <!-- GREETING -->
+    <div class="greeting">
+      <span class="greet-icon" id="greetIcon">🌙</span>
+      <div class="greet-text">
+        <div class="greet-title" id="greetTitle">你好！</div>
+        <div class="greet-sub" id="greetSub">載入中…</div>
+      </div>
+    </div>
+
     <!-- WEATHER -->
     <div class="weather-card">
       <div class="weather-label" id="wLabel">嘟嘟家氣象台 📡</div>
@@ -236,35 +249,36 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div class="weather-hint" id="wHint">☁️ 讀取天氣中...</div>
     </div>
 
-    <!-- APP SHORTCUTS - 提醒整合在卡片內 -->
+    <!-- APP SHORTCUTS -->
+    <!-- ★ 任務4：移除 target="_blank"，改為同頁跳轉 -->
     <div class="sec-hd"><div class="sec-title">快速進入</div></div>
     <div class="app-grid">
-      <a class="app-card" id="link-sec" href="#" target="_blank">
+      <a class="app-card" id="link-sec" href="#">
         <div id="badge-sec" class="app-badge" style="display:none;"></div>
         <div class="app-card-emoji">🐧</div>
         <div class="app-card-name">家務秘書</div>
         <div class="app-card-sub" id="sub-sec">別忘了這些重要的小事喲！</div>
         <div class="app-card-alert" id="alert-sec" style="display:none;"></div>
       </a>
-      <a class="app-card" id="link-inv" href="#" target="_blank">
+      <a class="app-card" id="link-inv" href="#">
         <div id="badge-inv" class="app-badge yellow" style="display:none;"></div>
         <div class="app-card-emoji">🐰</div>
         <div class="app-card-name">庫存管家</div>
         <div class="app-card-sub" id="sub-inv">看看有什麼需要補貨吧¨̮♡︎</div>
         <div class="app-card-alert" id="alert-inv" style="display:none;"></div>
       </a>
-      <a class="app-card" id="link-ward" href="#" target="_blank">
+      <a class="app-card" id="link-ward" href="#">
         <div class="app-card-emoji">👗</div>
         <div class="app-card-name">小嘟衣櫃</div>
         <div class="app-card-sub" id="sub-ward">小嘟今天要穿什麼呢～꒰´꒳`∗꒱</div>
         <div class="app-card-alert" id="alert-ward" style="display:none;"></div>
       </a>
-      <a class="app-card" id="link-pocket" href="#" target="_blank">
+      <a class="app-card" id="link-pocket" href="#">
         <div class="app-card-emoji">🗺️</div>
         <div class="app-card-name">口袋地圖</div>
         <div class="app-card-sub" id="sub-pocket">帶小嘟一起踩點去 👣</div>
       </a>
-      <a class="app-card" id="link-wiki" href="https://yamap610.github.io/mywiki/" target="_blank" style="grid-column:1 / -1;">
+      <a class="app-card" id="link-wiki" href="https://yamap610.github.io/mywiki/" style="grid-column:1 / -1;">
         <div class="app-card-emoji">📖</div>
         <div class="app-card-name">M.Y 小百科</div>
         <div class="app-card-sub">小知識又增加了呢🔍</div>
@@ -283,7 +297,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
     </div>
 
-    <!-- MEMO - sticky note -->
+    <!-- MEMO -->
     <div class="sec-hd"><div class="sec-title">📝 隨手備忘</div></div>
     <div class="memo-card">
       <div class="memo-header">
@@ -294,6 +308,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
 
     <!-- WISHLIST -->
+    <!-- ★ 任務1：心願清單加「移至待買」按鈕 -->
     <div class="sec-hd"><div class="sec-title">🛍️ 心願清單</div></div>
     <div class="todo-card">
       <div class="todo-input-row">
@@ -360,7 +375,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 const app = initializeApp({
   apiKey:"AIzaSyAy0QKDrORa_VSecvEbeUxjMkRU4jd-QEM",
   authDomain:"five-year-diary-d7e00.firebaseapp.com",
@@ -372,20 +387,22 @@ const app = initializeApp({
 const db = getFirestore(app);
 window._fbReady = true;
 window._fbSetDash = (code,data) => setDoc(doc(db,'dashboard_v1',code),data,{merge:true});
+// ★ 任務1：新增庫存寫入函式
+window._fbSetInv  = (code,data) => setDoc(doc(db,'inventory',code),data,{merge:true});
+window._getInvNow = (code) => getDoc(doc(db,'inventory',code));
 window._listenAll = function(code, cbs){
   const u=[];
   u.push(onSnapshot(doc(db,'home_sec_v2',code), s=>{ if(s.exists()) cbs.sec(s.data()); }));
-  // 庫存管家：每次快照都強制更新，不做快取比較
   u.push(onSnapshot(doc(db,'inventory',code), s=>{
     if(s.exists()) cbs.inv(s.data());
     else cbs.inv({items:[]});
   }));
   u.push(onSnapshot(doc(db,'wardrobe_v1',code), s=>{ if(s.exists()) cbs.ward(s.data()); }));
-  u.push(onSnapshot(doc(db,'dashboard_v1',code),s=>{ if(s.exists()) cbs.dash(s.data()); }));
+  u.push(onSnapshot(doc(db,'dashboard_v1',code),s=>{
+    if(s.exists()) cbs.dash(s.data());
+  }));
   return u;
 };
-// 提供單次強制拉取庫存
-window._getInvNow = (code) => getDoc(doc(db,'inventory',code));
 if(window._onFbReady) window._onFbReady();
 </script>
 
@@ -394,6 +411,7 @@ if(window._onFbReady) window._onFbReady();
 var roomCode='', secData=null, invData=null, wardData=null;
 var loadedCount=0, todos=[], annis=[], wishes=[], dashSaveTimer=null;
 var confirmCb=null;
+var _unsubscribers=[];
 
 var APP_URLS={
   sec:'https://yui0151.github.io/secretary/',
@@ -402,7 +420,7 @@ var APP_URLS={
   pocket:'https://yamap610.github.io/pocket-list/'
 };
 
-// ── WARM QUOTES for greeting ──
+// ── WARM QUOTES ──
 var WARM_QUOTES=[
   '家，是世界上最溫暖的地方 🏡',
   '今天記得抱抱身邊的人 🤗',
@@ -421,49 +439,16 @@ var WARM_QUOTES=[
   '睡前互道晚安，是最好的習慣 🌙',
 ];
 
-// ── WEATHER HINTS by condition ──
+// ── WEATHER HINTS ──
 var WEATHER_HINTS={
-  cold:[
-    '外面涼涼的，多穿件衣服喔 🧣',
-    '今天適合抱抱取暖 ☕',
-    '別忘了幫小嘟加件外套！',
-    '涼意來了，記得把棉被拿出來 🛏️',
-    '冷冷的天，來杯熱可可吧 🍫',
-  ],
-  hot:[
-    '今天太陽公公太熱情了 💦',
-    '記得多喝水、做好防曬喔！',
-    '外面熱呼呼，待在室內最舒服 🌬️',
-    '天氣這麼熱，冰箱裡有冰水嗎？ 🧊',
-    '記得幫小嘟防曬，出門抹防曬乳☀️',
-  ],
-  rainy:[
-    '聽，是下雨的聲音 ☂️',
-    '出門記得帶傘，別淋濕了！',
-    '下雨天也要有好心情 🌈',
-    '雨天適合待在家裡喝茶 ☕',
-    '記得把窗戶關好，防止潮濕 🪟',
-  ],
-  sunny:[
-    '陽光真好！今天適合曬棉被 ☀️',
-    '是個適合帶小嘟去散步的好日子 🌿',
-    '今天天氣滿分，出發吧！',
-    '晴空萬里，心情也要晴朗喔 😊',
-    '這麼好的天，把家裡通風一下吧 🌬️',
-  ],
-  cloudy:[
-    '陰天也是舒服的一天 🌥️',
-    '不冷不熱，是出門的好時機 🚶',
-    '雲朵遮住了太陽，但遮不住好心情 ☁️',
-    '帶把傘出門保險一些喔 🌂',
-  ],
-  default:[
-    '不管天氣如何，家裡永遠最溫暖 🏡',
-    '今天也要好好照顧自己和家人 💛',
-  ]
+  cold:['外面涼涼的，多穿件衣服喔 🧣','今天適合抱抱取暖 ☕','別忘了幫小嘟加件外套！','涼意來了，記得把棉被拿出來 🛏️','冷冷的天，來杯熱可可吧 🍫'],
+  hot:['今天太陽公公太熱情了 💦','記得多喝水、做好防曬喔！','外面熱呼呼，待在室內最舒服 🌬️','天氣這麼熱，冰箱裡有冰水嗎？ 🧊','記得幫小嘟防曬，出門抹防曬乳☀️'],
+  rainy:['聽，是下雨的聲音 ☂️','出門記得帶傘，別淋濕了！','下雨天也要有好心情 🌈','雨天適合待在家裡喝茶 ☕','記得把窗戶關好，防止潮濕 🪟'],
+  sunny:['陽光真好！今天適合曬棉被 ☀️','是個適合帶小嘟去散步的好日子 🌿','今天天氣滿分，出發吧！','晴空萬里，心情也要晴朗喔 😊','這麼好的天，把家裡通風一下吧 🌬️'],
+  cloudy:['陰天也是舒服的一天 🌥️','不冷不熱，是出門的好時機 🚶','雲朵遮住了太陽，但遮不住好心情 ☁️','帶把傘出門保險一些喔 🌂'],
+  default:['不管天氣如何，家裡永遠最溫暖 🏡','今天也要好好照顧自己和家人 💛'],
 };
 
-// ── OUTFIT SUGGESTIONS by temperature range ──
 var OUTFITS={
   freezing:['今日穿搭：羽絨衣＋厚毛衣，圍巾帽子都出動 🧥🧣','穿最厚的那件！帽子圍巾手套一起上 ❄️','全副武裝出門，保暖第一 🧤'],
   cold:['今日穿搭：外套＋長袖，記得加一件背心 🧥','穿件薄外套或針織衫，小嘟也要加件外套喔 🌿','建議洋蔥式穿法，早晚溫差大 🧅'],
@@ -471,15 +456,6 @@ var OUTFITS={
   warm:['今日穿搭：短袖、薄長袖都適合 ☀️','穿輕薄舒適的衣服，外出帶件小薄外套備用 🌸','短袖出門沒問題，但備件衣服防冷氣 💨'],
   hot:['今日穿搭：短袖清爽上陣，防曬不能少！☀️','穿最透氣的短袖，出門記得帶防曬乳 🧴','天氣很熱，穿輕薄透氣、出門帶水和防曬喔 💦'],
 };
-
-function getOutfit(maxT, minT){
-  var avg=(maxT+minT)/2;
-  if(avg<10) return getRandHint(OUTFITS.freezing);
-  if(avg<17) return getRandHint(OUTFITS.cold);
-  if(avg<23) return getRandHint(OUTFITS.mild);
-  if(avg<29) return getRandHint(OUTFITS.warm);
-  return getRandHint(OUTFITS.hot);
-}
 
 // ── WEATHER ──
 window._weatherCallback = function(temp, hum, code, maxT, minT, cityName){
@@ -496,9 +472,8 @@ window._weatherCallback = function(temp, hum, code, maxT, minT, cityName){
   else if(temp>=30) hintKey='hot';
   document.getElementById('wIcon').textContent=icon;
   document.getElementById('wTemp').textContent=temp+'°C';
-  document.getElementById('wDesc').textContent=(cityName||'台北')+(hum?'・濕度 '+hum+'%':'');
+  document.getElementById('wDesc').textContent=(cityName||'桃園市')+(hum?'・濕度 '+hum+'%':'');
   document.getElementById('wRange').textContent='最高 '+maxT+'° / 最低 '+minT+'°';
-  // 合併叮嚀＋穿衣 → 交錯輪播
   var hArr=WEATHER_HINTS[hintKey]||WEATHER_HINTS.default;
   var hint=hArr[Math.floor(Math.random()*hArr.length)];
   var avg=(maxT+minT)/2;
@@ -544,13 +519,11 @@ function loadWeather(){
       xhr.onerror=function(){ document.getElementById('wHint').textContent='出門前記得看天氣喔 🌈'; };
       xhr.send();
     }
-    // 嘗試取得使用者位置
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(
         function(pos){
           var lat=pos.coords.latitude.toFixed(4);
           var lon=pos.coords.longitude.toFixed(4);
-          // 用 Open-Meteo 反查地名（簡易）
           var rGeo=new XMLHttpRequest();
           rGeo.open('GET','https://nominatim.openstreetmap.org/reverse?format=json&lat='+lat+'&lon='+lon+'&accept-language=zh-TW');
           rGeo.onload=function(){
@@ -564,11 +537,13 @@ function loadWeather(){
           rGeo.onerror=function(){ fetchWeather(lat, lon, ''); };
           rGeo.send();
         },
-        function(){ fetchWeather(25.05, 121.53, '台北'); }, // 拒絕定位 → 預設台北
+        // ★ 任務1：定位失敗預設桃園市
+        function(){ fetchWeather(24.99, 121.30, '桃園市'); },
         {timeout:5000}
       );
     } else {
-      fetchWeather(25.05, 121.53, '台北');
+      // ★ 任務1：預設桃園市
+      fetchWeather(24.99, 121.30, '桃園市');
     }
   }, 800);
 }
@@ -580,31 +555,32 @@ function renderGreeting(){
   var titles=['夜深了，好好休息','深夜了～','夜深了～','快去睡喔','早安！','早安！新的一天開始','早安！','早安！','早安！','早安！','早安！','午前時光','午安！吃飯了嗎？','午安！','下午好！','下午好！','下午好！','傍晚了～','晚上好！','晚安～','夜晚時光','夜晚時光','深夜了～','夜深了～'];
   document.getElementById('greetIcon').textContent=icons[h];
   document.getElementById('greetTitle').textContent=titles[h];
-  // show random warm quote before weather loads
-  var q=WARM_QUOTES[Math.floor(Math.random()*WARM_QUOTES.length)];
-  document.getElementById('greetSub').textContent=q;
+  document.getElementById('greetSub').textContent=WARM_QUOTES[Math.floor(Math.random()*WARM_QUOTES.length)];
 }
 
 // ── FIREBASE SYNC ──
 function setSyncDot(s){ document.getElementById('syncDot').className='sync-dot'+(s==='off'?' off':s==='err'?' err':''); }
 
+// ★ 任務1：修正 startListen，確保重整後資料正確還原
 function startListen(){
   setSyncDot('off');
-  window._listenAll(roomCode,{
-    sec:  function(d){ secData=d;  loadedCount++; setSyncDot('on'); renderAlerts(); renderAppSubtitles(); },
-    inv:  function(d){
-      invData=d; loadedCount++;
-      renderAlerts(); renderAppSubtitles();
-    },
-    ward: function(d){ wardData=d; loadedCount++; renderAlerts(); renderAppSubtitles(); },
-    dash: function(d){
-      if(d.todos)  { todos=d.todos; renderTodos(); }
-      if(d.memo!==undefined){ document.getElementById('memoTa').value=d.memo; }
-      if(d.annis)  { annis=d.annis; renderAnnis(); }
-      if(d.wishes) { wishes=d.wishes; renderWishes(); }
+  // 先解除舊監聽（防止重複）
+  _unsubscribers.forEach(function(u){ try{ u(); }catch(e){} });
+  _unsubscribers=[];
+  var us = window._listenAll(roomCode,{
+    sec: function(d){ secData=d; setSyncDot('on'); renderAlerts(); renderAppSubtitles(); },
+    inv: function(d){ invData=d; renderAlerts(); renderAppSubtitles(); },
+    ward:function(d){ wardData=d; renderAlerts(); renderAppSubtitles(); },
+    dash:function(d){
+      // ★ 關鍵修正：Firebase 資料永遠優先，覆蓋本地快取
+      if(d.todos  !== undefined){ todos=d.todos;   renderTodos(); }
+      if(d.memo   !== undefined){ document.getElementById('memoTa').value=d.memo; }
+      if(d.annis  !== undefined){ annis=d.annis;   renderAnnis(); }
+      if(d.wishes !== undefined){ wishes=d.wishes; renderWishes(); }
+      setSyncDot('on');
     }
   });
-  setTimeout(function(){ document.getElementById('alertLoading').textContent=''; renderAlerts(); },4000);
+  if(us) _unsubscribers=us;
 }
 
 // ── LOGIN ──
@@ -624,6 +600,7 @@ function enterApp(){
   document.getElementById('codePill').textContent='🏠 '+roomCode.toUpperCase();
   updateAppLinks();
   renderGreeting();
+  // ★ 先顯示本地快取（讓畫面立即有內容），等 Firebase 資料到再覆蓋
   loadDashLocal();
   renderTodos(); renderAnnis(); renderWishes();
   loadWeather();
@@ -637,24 +614,26 @@ window.copyCode=function(){
 };
 
 window.doLogout=function(){
+  // 解除所有 Firebase 監聽
+  _unsubscribers.forEach(function(u){ try{ u(); }catch(e){} });
+  _unsubscribers=[];
   localStorage.removeItem('dash_last_room');
   roomCode=''; secData=null; invData=null; wardData=null;
+  todos=[]; annis=[]; wishes=[];
   document.getElementById('app').style.display='none';
   document.getElementById('loginScreen').style.display='flex';
   document.getElementById('roomInput').value='';
 };
 
-
 function updateAppLinks(){
-  document.getElementById('link-sec').href  = APP_URLS.sec  + '?code='+roomCode;
-  document.getElementById('link-inv').href  = APP_URLS.inv  + '?code='+roomCode;
-  document.getElementById('link-ward').href = APP_URLS.ward + '?code='+roomCode;
+  document.getElementById('link-sec').href    = APP_URLS.sec    + '?code='+roomCode;
+  document.getElementById('link-inv').href    = APP_URLS.inv    + '?code='+roomCode;
+  document.getElementById('link-ward').href   = APP_URLS.ward   + '?code='+roomCode;
   document.getElementById('link-pocket').href = APP_URLS.pocket + '?code='+roomCode;
 }
 
-// ── ALERTS → now embedded in app cards ──
+// ── ALERTS ──
 function renderAlerts(){
-  // 紀念日快到時更新問候語
   annis.forEach(function(a){
     var d=daysUntilAnni(a.date);
     if(d===0) document.getElementById('greetSub').textContent='今天是 '+a.name+'！🎉 好好慶祝吧！';
@@ -663,10 +642,7 @@ function renderAlerts(){
 }
 
 function renderAppSubtitles(){
-  // 家務秘書
   if(secData&&secData.items){
-    var act=(secData.items||[]).filter(function(i){return i.type==='sub'&&i.status==='active';}).length;
-    var bills=(secData.items||[]).filter(function(i){return i.type==='bill';}).length;
     var secDue=(secData.items||[]).filter(function(i){
       var dt=i.type==='maint'?(function(){if(!i.lastDate||!i.interval)return i.due;var d=new Date(i.lastDate);d.setDate(d.getDate()+parseInt(i.interval));return d.toISOString().slice(0,10);}()):i.due;
       return dt&&daysUntil(dt)<=7;
@@ -679,7 +655,6 @@ function renderAppSubtitles(){
       al.textContent='🔔 '+secDue+'項費用快到期';al.style.display='block';
     } else { b.style.display='none'; al.style.display='none'; }
   }
-  // 庫存管家
   if(invData&&invData.items){
     var allItems=invData.items||[];
     var low=allItems.filter(function(i){ return i.qty<=(i.minStock!=null?i.minStock:1); });
@@ -691,10 +666,8 @@ function renderAppSubtitles(){
       al.textContent='🔔 '+low.length+'項需補貨';al.style.display='block';
     } else { b.style.display='none'; al.style.display='none'; }
   }
-  // 小嘟衣櫃 - 用 clothes array，顯示當季件數
   if(wardData&&wardData.clothes){
     var clothes=wardData.clothes||[];
-    var cur=clothes.filter(function(c){return c.status==='當季';}).length;
     var fut=clothes.filter(function(c){return c.status==='未來';}).length;
     document.getElementById('sub-ward').textContent='小嘟今天穿什麼呢？👗';
     var al=document.getElementById('alert-ward');
@@ -705,116 +678,194 @@ function renderAppSubtitles(){
 
 // ── UTILS ──
 function daysUntil(dt){ if(!dt)return 999; var d=new Date(dt),t=new Date(); t.setHours(0,0,0,0);d.setHours(0,0,0,0); return Math.round((d-t)/86400000); }
-function daysUntilAnni(mmdd){ var now=new Date(),y=now.getFullYear(); var p=mmdd.split('-'); var mo=parseInt(p[1]||p[0])-1,d=parseInt(p[2]||p[1]); var next=new Date(y,mo,d); if(next<now)next=new Date(y+1,mo,d); return Math.round((next-now)/86400000); }
+function daysUntilAnni(mmdd){
+  var now=new Date(),y=now.getFullYear();
+  var p=mmdd.split('-');
+  var mo=parseInt(p[1]||p[0])-1,d=parseInt(p[2]||p[1]);
+  var next=new Date(y,mo,d);
+  if(next<now)next=new Date(y+1,mo,d);
+  return Math.round((next-now)/86400000);
+}
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-// ── DASH LOCAL ──
+// ── DASH LOCAL（僅用於初始快取，Firebase 到後覆蓋）──
 function loadDashLocal(){
   try{ todos=JSON.parse(localStorage.getItem('dash_todos_'+roomCode)||'[]'); }catch(e){ todos=[]; }
   try{ annis=JSON.parse(localStorage.getItem('dash_annis_'+roomCode)||'[]'); }catch(e){ annis=[]; }
   try{ wishes=JSON.parse(localStorage.getItem('dash_wishes_'+roomCode)||'[]'); }catch(e){ wishes=[]; }
   document.getElementById('memoTa').value=localStorage.getItem('dash_memo_'+roomCode)||'';
 }
+
 function saveDash(){
   var memo=document.getElementById('memoTa').value;
+  // 更新本地快取
   localStorage.setItem('dash_todos_'+roomCode,JSON.stringify(todos));
   localStorage.setItem('dash_annis_'+roomCode,JSON.stringify(annis));
   localStorage.setItem('dash_wishes_'+roomCode,JSON.stringify(wishes));
   localStorage.setItem('dash_memo_'+roomCode,memo);
+  // 寫入 Firebase
   clearTimeout(dashSaveTimer);
   dashSaveTimer=setTimeout(function(){
-    if(window._fbSetDash) window._fbSetDash(roomCode,{todos:todos,memo:memo,annis:annis,wishes:wishes,updatedAt:Date.now()}).catch(function(){});
-  },800);
+    if(window._fbSetDash){
+      window._fbSetDash(roomCode,{todos:todos,memo:memo,annis:annis,wishes:wishes});
+    }
+  },600);
 }
 
-// ── CONFIRM ──
-function showConfirm(msg, cb){ document.getElementById('confirmMsg').textContent=msg; confirmCb=cb; document.getElementById('confirmOverlay').classList.add('show'); }
-window.closeConfirm=function(){ document.getElementById('confirmOverlay').classList.remove('show'); confirmCb=null; };
-window.doConfirm=function(){ document.getElementById('confirmOverlay').classList.remove('show'); if(confirmCb)confirmCb(); confirmCb=null; };
+window.saveMemo=function(){
+  saveDash();
+  showToast('備忘已儲存 ✓');
+};
 
-// ── TODOS ──
+// ── TODO ──
 function renderTodos(){
-  var list=document.getElementById('todoList');
-  if(!todos.length){ list.innerHTML='<div class="empty" style="padding:16px;"><p>還沒有待辦事項 🌿</p></div>'; return; }
-  list.innerHTML=todos.map(function(t){
-    return '<div class="todo-item'+(t.done?' done':'')+'">'
-      +'<div class="todo-check'+(t.done?' checked':'')+'" onclick="toggleTodo(\''+t.id+'\')">'+(t.done?'✓':'')+'</div>'
-      +'<span class="todo-text">'+esc(t.text)+'</span>'
-      +'<button class="todo-del" onclick="confirmDelTodo(\''+t.id+'\',\''+esc(t.text)+'\')">🗑️</button>'
-      +'</div>';
+  var el=document.getElementById('todoList');
+  if(!todos.length){ el.innerHTML='<div class="empty" style="padding:16px;"><p>還沒有待辦事項 🌿</p></div>'; return; }
+  el.innerHTML=todos.map(function(t,i){
+    return '<div class="todo-item'+(t.done?' done':'')+'">'+
+      '<div class="todo-check'+(t.done?' checked':'')+'" onclick="toggleTodo('+i+')">'+
+        (t.done?'✓':'')+
+      '</div>'+
+      '<span class="todo-text">'+esc(t.text)+'</span>'+
+      '<button class="todo-del" onclick="delTodo('+i+')">×</button>'+
+    '</div>';
   }).join('');
 }
+
 window.addTodo=function(){
-  var inp=document.getElementById('todoInput'), text=inp.value.trim();
-  if(!text) return;
-  todos.push({id:Date.now().toString(),text:text,done:false});
-  inp.value=''; saveDash(); renderTodos(); showToast('待辦已新增 ✓');
+  var inp=document.getElementById('todoInput');
+  var v=inp.value.trim();
+  if(!v) return;
+  todos.push({id:Date.now().toString(),text:v,done:false});
+  inp.value=''; saveDash(); renderTodos();
 };
-window.toggleTodo=function(id){
-  todos=todos.map(function(t){ return t.id===id?Object.assign({},t,{done:!t.done}):t; });
+
+window.toggleTodo=function(i){
+  if(!todos[i]) return;
+  todos[i].done=!todos[i].done;
   saveDash(); renderTodos();
 };
-window.confirmDelTodo=function(id, text){
-  showConfirm('確定要移除「'+text+'」這項待辦嗎？', function(){
-    todos=todos.filter(function(t){ return t.id!==id; });
-    saveDash(); renderTodos(); showToast('已移除 🗑️');
+
+window.delTodo=function(i){
+  showConfirm('刪除「'+todos[i].text+'」？',function(){
+    todos.splice(i,1); saveDash(); renderTodos();
   });
 };
 
 // ── MEMO ──
-window.saveMemo=function(){ saveDash(); showToast('備忘已儲存 ✓'); };
-document.addEventListener('DOMContentLoaded', function(){
-  var ta=document.getElementById('memoTa');
-  if(ta) ta.addEventListener('blur', function(){ saveDash(); });
-});
+// （saveMemo 已在上方定義）
+
+// ── WISHLIST ──
+// ★ 任務1：加入移至待買按鈕
+function renderWishes(){
+  var el=document.getElementById('wishList');
+  if(!wishes.length){ el.innerHTML='<div class="empty" style="padding:16px;"><p>還沒有心願，新增一個吧 🛍️</p></div>'; return; }
+  el.innerHTML=wishes.map(function(w,i){
+    return '<div class="todo-item'+(w.done?' done':'')+'">'+
+      '<div class="todo-check'+(w.done?' checked':'')+'" onclick="toggleWish('+i+')">'+
+        (w.done?'✓':'')+
+      '</div>'+
+      '<span class="todo-text">'+esc(w.text)+'</span>'+
+      '<button class="wish-move-btn" onclick="moveWishToInventory('+i+')" title="移至庫存待買">移至待買</button>'+
+      '<button class="todo-del" onclick="delWish('+i+')">×</button>'+
+    '</div>';
+  }).join('');
+}
+
+window.addWish=function(){
+  var inp=document.getElementById('wishInput');
+  var v=inp.value.trim();
+  if(!v) return;
+  wishes.push({id:Date.now().toString(),text:v,done:false});
+  inp.value=''; saveDash(); renderWishes();
+};
+
+window.toggleWish=function(i){
+  if(!wishes[i]) return;
+  wishes[i].done=!wishes[i].done;
+  saveDash(); renderWishes();
+};
+
+window.delWish=function(i){
+  showConfirm('刪除「'+wishes[i].text+'」？',function(){
+    wishes.splice(i,1); saveDash(); renderWishes();
+  });
+};
+
+// ★ 任務1：心願一鍵移至庫存待買
+window.moveWishToInventory=async function(idx){
+  var w=wishes[idx];
+  if(!w){ showToast('找不到該項目'); return; }
+  if(!window._getInvNow||!window._fbSetInv){ showToast('庫存功能尚未就緒，請稍後再試'); return; }
+  try{
+    var snap=await window._getInvNow(roomCode);
+    var invItems=(snap&&snap.exists()&&snap.data().items)?snap.data().items:[];
+    // 新增待買項目（qty=0 表示需補）
+    var newItem={
+      id: Date.now().toString(),
+      name: w.text,
+      qty: 0,
+      minStock: 1,
+      unit: '個',
+      category: '心願清單',
+      location: '',
+      note: '從心願清單移入',
+      photo: '',
+      emoji: '🛍️',
+      createdAt: new Date().toISOString()
+    };
+    invItems.push(newItem);
+    await window._fbSetInv(roomCode,{items:invItems});
+    // 從心願清單移除
+    wishes.splice(idx,1);
+    saveDash(); renderWishes();
+    showToast('已移至庫存待買！前往庫存管家查看 🐰');
+  }catch(e){
+    console.error('moveWishToInventory error:',e);
+    showToast('移動失敗，請再試一次');
+  }
+};
 
 // ── ANNIVERSARY ──
-var anniExpanded=false;
 function renderAnnis(){
-  var list=document.getElementById('anniList');
-  if(!annis.length){ list.innerHTML='<div class="empty"><p>還沒有紀念日，點右上角新增 🎉</p></div>'; return; }
+  var el=document.getElementById('anniList');
+  if(!annis.length){ el.innerHTML='<div class="empty"><p>還沒有紀念日，點右上角新增 🎉</p></div>'; return; }
   var sorted=annis.slice().sort(function(a,b){ return daysUntilAnni(a.date)-daysUntilAnni(b.date); });
-  var show=anniExpanded?sorted:sorted.slice(0,3);
-  var cards=show.map(function(a){
-    var d=daysUntilAnni(a.date);
-    var cls=d<=7?'soon':d<=30?'coming':'normal';
-    var label=d===0?'🎉 就是今天！':d+'天後';
-    return '<div class="anni-card '+cls+'" onclick="editAnni(\''+a.id+'\')" style="cursor:pointer;">'
-      +'<div class="anni-icon">'+a.icon+'</div>'
-      +'<div class="anni-info"><div class="anni-name">'+esc(a.name)+'</div><div class="anni-date">📅 '+a.date.slice(5).replace('-','/')+'</div></div>'
-      +'<div class="anni-days">'+label+'</div>'
-      +'<button class="anni-del" onclick="event.stopPropagation();confirmDelAnni(\''+a.id+'\',\''+esc(a.name)+'\')">🗑️</button>'
-      +'</div>';
+  el.innerHTML=sorted.map(function(a){
+    var days=daysUntilAnni(a.date);
+    var cls=days<=7?'soon':days<=30?'coming':'normal';
+    var daysStr=days===0?'今天！':days+'天後';
+    return '<div class="anni-card '+cls+'">'+
+      '<span class="anni-icon">'+esc(a.icon||'⭐')+'</span>'+
+      '<div class="anni-info">'+
+        '<div class="anni-name">'+esc(a.name)+'</div>'+
+        '<div class="anni-date">'+esc(a.date)+'</div>'+
+      '</div>'+
+      '<div class="anni-days">'+daysStr+'</div>'+
+      '<button class="anni-del" onclick="delAnni(\''+a.id+'\')">×</button>'+
+    '</div>';
   }).join('');
-  var more='';
-  if(sorted.length>3){
-    if(!anniExpanded){
-      more='<div onclick="anniExpanded=true;renderAnnis();" style="text-align:center;padding:10px;font-size:12px;color:var(--brown);cursor:pointer;background:var(--cream);border-radius:var(--rsm);border:1px solid var(--latte);">還有 '+(sorted.length-3)+' 個，展開 ↓</div>';
-    } else {
-      more='<div onclick="anniExpanded=false;renderAnnis();" style="text-align:center;padding:10px;font-size:12px;color:var(--muted);cursor:pointer;">收起 ↑</div>';
-    }
-  }
-  list.innerHTML=cards+more;
 }
-window.openAnniModal=function(){
-  document.getElementById('anni-edit-id').value='';
-  document.getElementById('anniModalTitle').textContent='🎂 新增紀念日';
+
+window.openAnniModal=function(id){
+  document.getElementById('anni-edit-id').value=id||'';
   document.getElementById('anni-name').value='';
   document.getElementById('anni-date').value='';
   document.getElementById('anni-icon').value='🎂';
-  document.getElementById('anniModal').classList.add('show');
-};
-window.editAnni=function(id){
-  var a=annis.find(function(x){ return x.id===id; });
-  if(!a) return;
-  document.getElementById('anni-edit-id').value=id;
-  document.getElementById('anniModalTitle').textContent='✏️ 編輯紀念日';
-  document.getElementById('anni-name').value=a.name;
-  document.getElementById('anni-date').value=a.date;
-  document.getElementById('anni-icon').value=a.icon||'🎂';
+  document.getElementById('anniModalTitle').textContent='🎂 新增紀念日';
+  if(id){
+    var a=annis.find(function(x){return x.id===id;});
+    if(a){
+      document.getElementById('anni-name').value=a.name||'';
+      document.getElementById('anni-date').value=a.date||'';
+      document.getElementById('anni-icon').value=a.icon||'🎂';
+      document.getElementById('anniModalTitle').textContent='編輯紀念日';
+    }
+  }
   document.getElementById('anniModal').classList.add('show');
 };
 window.closeAnniModal=function(){ document.getElementById('anniModal').classList.remove('show'); };
+
 window.saveAnni=function(){
   var name=document.getElementById('anni-name').value.trim();
   var date=document.getElementById('anni-date').value;
@@ -822,78 +873,51 @@ window.saveAnni=function(){
   var editId=document.getElementById('anni-edit-id').value;
   if(!name||!date){ showToast('請填寫名稱和日期'); return; }
   if(editId){
-    annis=annis.map(function(a){ return a.id===editId?Object.assign({},a,{name:name,date:date,icon:icon}):a; });
-    showToast('紀念日已更新 ✏️');
+    var idx=annis.findIndex(function(a){return a.id===editId;});
+    if(idx>-1){ annis[idx]={id:editId,name:name,date:date,icon:icon}; }
   } else {
     annis.push({id:Date.now().toString(),name:name,date:date,icon:icon});
-    showToast('紀念日已新增 🎉');
   }
   saveDash(); renderAnnis(); closeAnniModal();
+  showToast('紀念日已儲存 🎉');
 };
-window.confirmDelAnni=function(id, name){
-  showConfirm('確定要移除「'+name+'」這個紀念日嗎？', function(){
-    annis=annis.filter(function(a){ return a.id!==id; });
-    saveDash(); renderAnnis(); showToast('已移除 🗑️');
+
+window.delAnni=function(id){
+  var a=annis.find(function(x){return x.id===id;});
+  showConfirm('刪除「'+(a?a.name:id)+'」？',function(){
+    annis=annis.filter(function(x){return x.id!==id;});
+    saveDash(); renderAnnis();
   });
 };
 
-// ── WISHLIST ──
-function renderWishes(){
-  var list=document.getElementById('wishList');
-  if(!wishes.length){ list.innerHTML='<div class="empty" style="padding:16px;"><p>還沒有心願，新增一個吧 🛍️</p></div>'; return; }
-  // 未買的在前，已買的在後
-  var pending=wishes.filter(function(w){ return !w.done; });
-  var bought=wishes.filter(function(w){ return w.done; });
-  var all=pending.concat(bought);
-  list.innerHTML=all.map(function(w){
-    return '<div class="todo-item'+(w.done?' done':'')+'">'
-      +'<div class="todo-check'+(w.done?' checked':'')+'" onclick="toggleWish(\''+w.id+'\')">'+(w.done?'✓':'')+'</div>'
-      +'<div style="flex:1;min-width:0;">'
-      +'<div class="todo-text" style="'+(w.done?'text-decoration:line-through;color:var(--muted);':'')+'">'+esc(w.text)+'</div>'
-      +(w.note?'<div style="font-size:11px;color:var(--muted);margin-top:1px;">'+esc(w.note)+'</div>':'')
-      +'</div>'
-      +(w.done?'<span style="font-size:10px;color:var(--gs);margin-right:4px;">買到了！</span>':'')
-      +'<button class="todo-del" onclick="confirmDelWish(\''+w.id+'\',\''+esc(w.text)+'\')">🗑️</button>'
-      +'</div>';
-  }).join('');
+// ── CONFIRM ──
+function showConfirm(msg,cb){
+  confirmCb=cb;
+  document.getElementById('confirmMsg').textContent=msg;
+  document.getElementById('confirmOverlay').classList.add('show');
 }
-window.addWish=function(){
-  var inp=document.getElementById('wishInput'), raw=inp.value.trim();
-  if(!raw) return;
-  // 支援「品名 備註」格式
-  var text=raw, note='';
-  var m=raw.match(/^(.+?)\s{2,}(.+)$/) || raw.match(/^(.+?)（(.+)）$/) || raw.match(/^(.+?)\((.+)\)$/);
-  if(m){ text=m[1].trim(); note=m[2].trim(); }
-  wishes.push({id:Date.now().toString(), text:text, note:note, done:false});
-  inp.value=''; saveDash(); renderWishes(); showToast('心願已新增 🛍️');
-};
-window.toggleWish=function(id){
-  wishes=wishes.map(function(w){ return w.id===id?Object.assign({},w,{done:!w.done}):w; });
-  saveDash(); renderWishes();
-};
-window.confirmDelWish=function(id, text){
-  showConfirm('確定要移除「'+text+'」這個心願嗎？', function(){
-    wishes=wishes.filter(function(w){ return w.id!==id; });
-    saveDash(); renderWishes(); showToast('已移除 🗑️');
-  });
-};
+window.closeConfirm=function(){ document.getElementById('confirmOverlay').classList.remove('show'); confirmCb=null; };
+window.doConfirm=function(){ closeConfirm(); if(confirmCb) confirmCb(); };
 
 // ── TOAST ──
 function showToast(msg){
   var wrap=document.getElementById('toastWrap');
   var el=document.createElement('div');
   el.className='toast-item';
-  el.innerHTML='<span>🌙</span><span>'+msg+'</span>';
+  el.textContent=msg;
   wrap.appendChild(el);
-  var all=wrap.querySelectorAll('.toast-item');
-  if(all.length>3) all[0].remove();
   requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.classList.add('show'); }); });
-  setTimeout(function(){ el.classList.add('removing'); setTimeout(function(){ if(el.parentNode)el.remove(); },220); },2600);
+  setTimeout(function(){
+    el.classList.add('removing');
+    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); },250);
+  },2800);
 }
 
 // ── INIT ──
-var saved=localStorage.getItem('dash_last_room');
-if(saved){ document.getElementById('roomInput').value=saved; roomCode=saved; enterApp(); }
+(function(){
+  var saved=localStorage.getItem('dash_last_room');
+  if(saved){ roomCode=saved; enterApp(); }
+})();
 </script>
 </body>
 </html>
