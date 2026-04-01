@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="嘟嘟一家">
 <meta name="theme-color" content="#fdf8f3">
-<title>嘟嘟一家 🌙</title>
+<title>🌙 嘟嘟一家</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -19,35 +19,11 @@
   --r:14px;--rsm:10px;--rlg:22px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-/* ── 底部導覽高度 68px，加上安全區域 ── */
-body{font-family:'Zen Kaku Gothic New',sans-serif;background:var(--milk);color:var(--text);min-height:100vh;padding-bottom:calc(68px + env(safe-area-inset-bottom, 0px));}
+body{font-family:'Zen Kaku Gothic New',sans-serif;background:var(--milk);color:var(--text);min-height:100vh;
+  /* 任務7: 底部留白防止底部導覽遮擋，考慮安全區 */
+  padding-bottom:calc(80px + env(safe-area-inset-bottom, 0px));
+}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 8%,rgba(201,169,122,.08),transparent 50%),radial-gradient(ellipse at 85% 92%,rgba(139,99,67,.05),transparent 50%);pointer-events:none;z-index:0;}
-
-/* ══════════════════════════════
-   BOTTOM NAV（Task 0）
-══════════════════════════════ */
-.bottom-nav{
-  position:fixed;bottom:0;left:0;right:0;
-  background:var(--white);
-  border-top:1.5px solid var(--latte);
-  display:flex;
-  z-index:500;
-  box-shadow:0 -2px 16px var(--shadow);
-  padding-bottom:env(safe-area-inset-bottom,0px);
-}
-.bn-item{
-  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:8px 2px 6px;gap:3px;cursor:pointer;
-  text-decoration:none;color:var(--muted);
-  transition:color .15s;
-  font-family:'Zen Kaku Gothic New',sans-serif;
-  border:none;background:none;
-  -webkit-tap-highlight-color:transparent;
-}
-.bn-item.active{color:var(--moon2);}
-.bn-item:active{opacity:.7;}
-.bn-icon{font-size:20px;line-height:1;}
-.bn-label{font-size:9.5px;font-weight:600;letter-spacing:.2px;line-height:1;}
 
 /* LOGIN */
 #loginScreen{position:fixed;inset:0;background:var(--milk);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;}
@@ -86,7 +62,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .sec-title{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:5px;}
 .sec-title::before{content:'';display:block;width:3px;height:12px;background:var(--moon);border-radius:2px;}
 .sec-more{font-size:12px;color:var(--brown);background:none;border:none;cursor:pointer;font-family:'Zen Kaku Gothic New',sans-serif;}
-.loading-txt{font-size:12px;color:var(--muted);}
 
 /* GREETING */
 .greeting{background:linear-gradient(120deg,#fffaf4,var(--cream));border:1px solid var(--latte);border-radius:var(--rlg);padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;overflow:hidden;}
@@ -104,18 +79,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .weather-temp{font-family:'Noto Serif TC',serif;font-size:28px;font-weight:500;color:var(--deep);line-height:1;}
 .weather-desc{font-size:11px;color:var(--muted);margin-top:3px;}
 .weather-hint{font-size:12px;color:var(--brown);background:var(--moon-light);border:1px solid var(--moon-soft);border-radius:var(--rsm);padding:8px 12px;line-height:1.6;font-style:italic;}
-
-/* ALERT CARD */
-.alert-list{display:flex;flex-direction:column;gap:8px;}
-.alert-card{background:var(--white);border:1px solid var(--latte);border-radius:var(--r);padding:13px 15px;display:flex;align-items:center;gap:12px;cursor:pointer;position:relative;overflow:hidden;transition:transform .1s;}
-.alert-card:active{transform:scale(.985);}
-.alert-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;}
-.alert-card.urgent::before{background:var(--rs);}
-.alert-card.warn::before{background:var(--ys);}
-.alert-card.info::before{background:var(--gs);}
-.alert-icon{font-size:24px;flex-shrink:0;}
-.alert-msg{font-size:13px;color:var(--text);line-height:1.5;flex:1;}
-.alert-arrow{font-size:14px;color:var(--latte);flex-shrink:0;}
 
 /* APP CARDS */
 .app-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
@@ -141,8 +104,19 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .todo-check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--latte);background:var(--cream);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--gs);transition:all .15s;}
 .todo-check.checked{background:var(--gb);border-color:var(--gs);}
 .todo-text{flex:1;font-size:13px;color:var(--text);}
-.todo-del{border:none;background:none;color:var(--latte);font-size:15px;cursor:pointer;padding:3px;transition:color .12s;flex-shrink:0;}
-.todo-del:hover{color:var(--rs);}
+
+/* ── 任務1: x 刪除按鈕（取代垃圾桶）── */
+.todo-del{
+  border:none;background:none;
+  color:var(--latte);
+  font-size:14px;font-weight:400;
+  cursor:pointer;padding:3px 6px;
+  transition:color .12s;
+  flex-shrink:0;
+  line-height:1;
+  border-radius:4px;
+}
+.todo-del:hover{color:var(--rs);background:var(--rb);}
 
 /* MEMO */
 .memo-card{background:#fdf8e1;border:1px solid #e8d88a;border-radius:var(--rlg);overflow:hidden;box-shadow:2px 3px 10px rgba(180,160,80,.12);}
@@ -163,12 +137,24 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .anni-name{font-size:13px;font-weight:700;color:var(--text);}
 .anni-date{font-size:11px;color:var(--muted);margin-top:2px;}
 .anni-days{font-size:13px;font-weight:700;color:var(--deep);}
-.anni-del{border:none;background:none;color:var(--latte);font-size:15px;cursor:pointer;padding:3px;}
+
+/* ── 任務1: 紀念日刪除用 x ── */
+.anni-del{
+  border:none;background:none;
+  color:var(--latte);
+  font-size:14px;font-weight:400;
+  cursor:pointer;padding:3px 6px;
+  line-height:1;
+  border-radius:4px;
+  transition:color .12s;
+  flex-shrink:0;
+}
+.anni-del:hover{color:var(--rs);background:var(--rb);}
 
 /* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(61,43,26,.42);z-index:600;display:none;align-items:flex-end;backdrop-filter:blur(3px);}
+.modal-overlay{position:fixed;inset:0;background:rgba(61,43,26,.42);z-index:200;display:none;align-items:flex-end;backdrop-filter:blur(3px);}
 .modal-overlay.show{display:flex;}
-.modal-sheet{background:var(--white);border-radius:22px 22px 0 0;padding:20px 18px 44px;width:100%;max-height:85vh;overflow-y:auto;}
+.modal-sheet{background:var(--white);border-radius:22px 22px 0 0;padding:20px 18px 44px;width:100%;}
 .modal-handle{width:36px;height:4px;background:var(--latte);border-radius:2px;margin:0 auto 18px;}
 .modal-title{font-family:'Noto Serif TC',serif;font-size:17px;color:var(--deep);margin-bottom:16px;}
 .mfield{margin-bottom:12px;}
@@ -180,10 +166,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .mbtn-s{flex:1;padding:12px;border-radius:var(--rsm);font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;background:linear-gradient(135deg,var(--moon),var(--moon2));color:white;}
 
 /* CONFIRM DIALOG */
-.confirm-overlay{position:fixed;inset:0;background:rgba(61,43,26,.42);z-index:700;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(3px);}
+.confirm-overlay{position:fixed;inset:0;background:rgba(61,43,26,.42);z-index:300;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(3px);}
 .confirm-overlay.show{display:flex;}
 .confirm-box{background:var(--white);border-radius:var(--rlg);padding:24px 22px;width:100%;max-width:320px;text-align:center;box-shadow:0 8px 40px var(--shadow);}
-.confirm-icon{font-size:36px;margin-bottom:10px;}
+.confirm-icon{font-size:32px;margin-bottom:10px;}
 .confirm-title{font-family:'Noto Serif TC',serif;font-size:16px;color:var(--deep);font-weight:500;margin-bottom:6px;}
 .confirm-msg{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px;}
 .confirm-btns{display:flex;gap:8px;}
@@ -195,7 +181,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .empty-icon{font-size:28px;display:block;margin-bottom:6px;}
 
 /* TOAST */
-.toast-wrap{position:fixed;bottom:80px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;z-index:800;}
+.toast-wrap{position:fixed;bottom:24px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;z-index:500;}
 .toast-item{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--latte);color:var(--text);font-size:13px;padding:10px 16px 10px 12px;border-radius:24px;box-shadow:0 4px 20px var(--shadow);opacity:0;transform:translateY(16px) scale(.95);transition:all .28s cubic-bezier(.34,1.56,.64,1);pointer-events:none;max-width:calc(100vw - 40px);}
 .toast-item.show{opacity:1;transform:translateY(0) scale(1);}
 .toast-item.removing{opacity:0;transform:translateY(-8px) scale(.95);transition:all .2s ease-in;}
@@ -207,7 +193,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .app-card:nth-child(2){animation-delay:.08s;}
 .app-card:nth-child(3){animation-delay:.12s;}
 .app-card:nth-child(4){animation-delay:.16s;}
-.alert-card{animation:fadeUp .3s ease both;}
 .weather-card{animation:fadeUp .3s ease both;}
 </style>
 </head>
@@ -246,12 +231,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
   <div class="content">
 
-    <!-- GREETING -->
+    <!-- 問候 -->
     <div class="greeting">
       <span class="greet-icon" id="greetIcon">🌙</span>
       <div class="greet-text">
-        <div class="greet-title" id="greetTitle">嗨！</div>
-        <div class="greet-sub" id="greetSub">今天也辛苦了 💛</div>
+        <div class="greet-title" id="greetTitle">歡迎回家</div>
+        <div class="greet-sub" id="greetSub">家，是世界上最溫暖的地方 🏡</div>
       </div>
     </div>
 
@@ -272,37 +257,36 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <!-- APP SHORTCUTS -->
     <div class="sec-hd"><div class="sec-title">快速進入</div></div>
     <div class="app-grid">
-      <!-- 改為 onclick 同分頁跳轉，移除 target="_blank" -->
-      <div class="app-card" id="link-sec" onclick="goApp('sec')">
+      <a class="app-card" id="link-sec" href="#" target="_blank">
         <div id="badge-sec" class="app-badge" style="display:none;"></div>
         <div class="app-card-emoji">🐧</div>
         <div class="app-card-name">家務秘書</div>
         <div class="app-card-sub" id="sub-sec">別忘了這些重要的小事喲！</div>
         <div class="app-card-alert" id="alert-sec" style="display:none;"></div>
-      </div>
-      <div class="app-card" id="link-inv" onclick="goApp('inv')">
+      </a>
+      <a class="app-card" id="link-inv" href="#" target="_blank">
         <div id="badge-inv" class="app-badge yellow" style="display:none;"></div>
         <div class="app-card-emoji">🐰</div>
         <div class="app-card-name">庫存管家</div>
-        <div class="app-card-sub" id="sub-inv">看看有什麼需要補貨吧♡︎</div>
+        <div class="app-card-sub" id="sub-inv">看看有什麼需要補貨吧¨̮♡︎</div>
         <div class="app-card-alert" id="alert-inv" style="display:none;"></div>
-      </div>
-      <div class="app-card" onclick="goApp('ward')">
+      </a>
+      <a class="app-card" id="link-ward" href="#" target="_blank">
         <div class="app-card-emoji">👗</div>
         <div class="app-card-name">小嘟衣櫃</div>
         <div class="app-card-sub" id="sub-ward">小嘟今天要穿什麼呢～꒰´꒳`∗꒱</div>
         <div class="app-card-alert" id="alert-ward" style="display:none;"></div>
-      </div>
-      <div class="app-card" onclick="goApp('pocket')">
+      </a>
+      <a class="app-card" id="link-pocket" href="#" target="_blank">
         <div class="app-card-emoji">🗺️</div>
         <div class="app-card-name">口袋地圖</div>
         <div class="app-card-sub" id="sub-pocket">帶小嘟一起踩點去 👣</div>
-      </div>
-      <div class="app-card" onclick="goApp('wiki')" style="grid-column:1 / -1;">
+      </a>
+      <a class="app-card" id="link-wiki" href="https://yamap610.github.io/mywiki/" target="_blank" style="grid-column:1 / -1;">
         <div class="app-card-emoji">📖</div>
         <div class="app-card-name">M.Y 小百科</div>
         <div class="app-card-sub">小知識又增加了呢🔍</div>
-      </div>
+      </a>
     </div>
 
     <!-- TODO -->
@@ -351,34 +335,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
 </div>
 
-<!-- ══ BOTTOM NAV（Task 0）══ -->
-<nav class="bottom-nav" id="bottomNav" style="display:none;">
-  <button class="bn-item active" onclick="goApp('home')">
-    <span class="bn-icon">🏠</span>
-    <span class="bn-label">首頁</span>
-  </button>
-  <button class="bn-item" onclick="goApp('sec')">
-    <span class="bn-icon">🐧</span>
-    <span class="bn-label">家務</span>
-  </button>
-  <button class="bn-item" onclick="goApp('inv')">
-    <span class="bn-icon">🐰</span>
-    <span class="bn-label">庫存</span>
-  </button>
-  <button class="bn-item" onclick="goApp('ward')">
-    <span class="bn-icon">👗</span>
-    <span class="bn-label">衣櫃</span>
-  </button>
-  <button class="bn-item" onclick="goApp('wiki')">
-    <span class="bn-icon">📖</span>
-    <span class="bn-label">百科</span>
-  </button>
-  <button class="bn-item" onclick="goApp('pocket')">
-    <span class="bn-icon">🗺️</span>
-    <span class="bn-label">地圖</span>
-  </button>
-</nav>
-
 <!-- ANNIVERSARY MODAL -->
 <div class="modal-overlay" id="anniModal" onclick="if(event.target===this)closeAnniModal()">
   <div class="modal-sheet">
@@ -407,7 +363,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- CONFIRM DIALOG -->
 <div class="confirm-overlay" id="confirmOverlay">
   <div class="confirm-box">
-    <div class="confirm-icon">🗑️</div>
+    <div class="confirm-icon">🌿</div>
     <div class="confirm-title">確定要移除嗎？</div>
     <div class="confirm-msg" id="confirmMsg"></div>
     <div class="confirm-btns">
@@ -453,24 +409,12 @@ if(window._onFbReady) window._onFbReady();
 var roomCode='', secData=null, invData=null, wardData=null;
 var loadedCount=0, todos=[], annis=[], wishes=[], dashSaveTimer=null;
 var confirmCb=null;
-// ── Task 1：標記 Firebase 資料是否已載入（防止本機覆蓋雲端）──
-var _dashFromFirebase=false;
 
 var APP_URLS={
-  home:'https://yui0151.github.io/home/',
   sec:'https://yui0151.github.io/secretary/',
   inv:'https://yui0151.github.io/inventory/',
   ward:'https://yui0151.github.io/wardrobe/',
-  pocket:'https://yamap610.github.io/pocket-list/',
-  wiki:'https://yamap610.github.io/mywiki/'
-};
-
-// ── Task 0：同分頁跳轉，帶 roomCode ──
-window.goApp=function(key){
-  if(key==='home') return; // 已在首頁
-  var base=APP_URLS[key];
-  if(!base) return;
-  window.location.href=base+(roomCode?'?code='+roomCode:'');
+  pocket:'https://yamap610.github.io/pocket-list/'
 };
 
 var WARM_QUOTES=[
@@ -508,9 +452,8 @@ var OUTFITS={
   hot:['今日穿搭：短袖清爽上陣，防曬不能少！☀️','穿最透氣的短袖，出門記得帶防曬乳 🧴','天氣很熱，穿輕薄透氣、出門帶水和防曬喔 💦'],
 };
 
-// ── WEATHER ──
-window._weatherCallback=function(temp,hum,code,maxT,minT,cityName){
-  var icon='🌤️',hintKey='cloudy';
+window._weatherCallback = function(temp, hum, code, maxT, minT, cityName){
+  var icon='🌤️', hintKey='cloudy';
   if(code===0){icon='☀️';hintKey='sunny';}
   else if(code<=2){icon='⛅';hintKey='cloudy';}
   else if(code<=3){icon='☁️';hintKey='cloudy';}
@@ -519,11 +462,11 @@ window._weatherCallback=function(temp,hum,code,maxT,minT,cityName){
   else if(code<=77){icon='🌨️';hintKey='cold';}
   else if(code<=82){icon='🌧️';hintKey='rainy';}
   else if(code<=99){icon='⛈️';hintKey='rainy';}
-  if(temp<=19)hintKey='cold';
-  else if(temp>=30)hintKey='hot';
+  if(temp<=19) hintKey='cold';
+  else if(temp>=30) hintKey='hot';
   document.getElementById('wIcon').textContent=icon;
   document.getElementById('wTemp').textContent=temp+'°C';
-  document.getElementById('wDesc').textContent=(cityName||'桃園')+'・濕度 '+(hum||'—')+'%';
+  document.getElementById('wDesc').textContent=(cityName||'台北')+(hum?'・濕度 '+hum+'%':'');
   document.getElementById('wRange').textContent='最高 '+maxT+'° / 最低 '+minT+'°';
   var hArr=WEATHER_HINTS[hintKey]||WEATHER_HINTS.default;
   var hint=hArr[Math.floor(Math.random()*hArr.length)];
@@ -531,14 +474,15 @@ window._weatherCallback=function(temp,hum,code,maxT,minT,cityName){
   var oKey=avg<10?'freezing':avg<17?'cold':avg<23?'mild':avg<29?'warm':'hot';
   var oArr=OUTFITS[oKey];
   var outfit=oArr[Math.floor(Math.random()*oArr.length)];
-  var lines=[hint,outfit];
-  var idx=0,el=document.getElementById('wHint');
+  var lines=[hint, outfit];
+  var idx=0;
+  var el=document.getElementById('wHint');
   el.textContent=lines[0];
   clearInterval(window._wRotate);
   window._wRotate=setInterval(function(){
     idx=(idx+1)%lines.length;
     el.style.opacity='0';
-    setTimeout(function(){el.textContent=lines[idx];el.style.opacity='1';},300);
+    setTimeout(function(){ el.textContent=lines[idx]; el.style.opacity='1'; },300);
   },4000);
   el.style.transition='opacity 0.3s';
   document.getElementById('greetSub').textContent=WARM_QUOTES[Math.floor(Math.random()*WARM_QUOTES.length)];
@@ -546,89 +490,85 @@ window._weatherCallback=function(temp,hum,code,maxT,minT,cityName){
 
 function loadWeather(){
   setTimeout(function(){
-    function fetchWeather(lat,lon,cityName){
+    function fetchWeather(lat, lon, cityName){
       var xhr=new XMLHttpRequest();
-      xhr.open('GET','https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&current=temperature_2m,relative_humidity_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=1');
+      var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&current=temperature_2m,relative_humidity_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=1';
+      xhr.open('GET', url);
       xhr.onload=function(){
         if(xhr.status===200){
           try{
             var d=JSON.parse(xhr.responseText);
-            var cur=d.current||{},daily=d.daily||{};
+            var cur=d.current||{};
+            var daily=d.daily||{};
             var temp=cur.temperature_2m!=null?Math.round(cur.temperature_2m):null;
-            if(temp===null)return;
+            if(temp===null) return;
             var hum=cur.relative_humidity_2m||null;
             var code=cur.weather_code!=null?cur.weather_code:-1;
             var maxT=daily.temperature_2m_max&&daily.temperature_2m_max[0]!=null?Math.round(daily.temperature_2m_max[0]):temp+3;
             var minT=daily.temperature_2m_min&&daily.temperature_2m_min[0]!=null?Math.round(daily.temperature_2m_min[0]):temp-3;
             window._weatherCallback(temp,hum,code,maxT,minT,cityName);
-          }catch(e){document.getElementById('wHint').textContent='出門前記得看天氣喔 🌈';}
+          }catch(e){ document.getElementById('wHint').textContent='出門前記得看天氣喔 🌈'; }
         }
       };
-      // Task 1：定位失敗預設桃園市
-      xhr.onerror=function(){document.getElementById('wHint').textContent='出門前記得看天氣喔 🌈';};
+      xhr.onerror=function(){ document.getElementById('wHint').textContent='出門前記得看天氣喔 🌈'; };
       xhr.send();
     }
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(
         function(pos){
-          var lat=pos.coords.latitude.toFixed(4),lon=pos.coords.longitude.toFixed(4);
+          var lat=pos.coords.latitude.toFixed(4);
+          var lon=pos.coords.longitude.toFixed(4);
           var rGeo=new XMLHttpRequest();
           rGeo.open('GET','https://nominatim.openstreetmap.org/reverse?format=json&lat='+lat+'&lon='+lon+'&accept-language=zh-TW');
           rGeo.onload=function(){
             var city='';
-            try{var geo=JSON.parse(rGeo.responseText);city=geo.address.city||geo.address.town||geo.address.village||geo.address.county||'';}catch(e){}
-            fetchWeather(lat,lon,city);
+            try{ var geo=JSON.parse(rGeo.responseText); city=geo.address.city||geo.address.town||geo.address.village||geo.address.county||''; }catch(e){}
+            fetchWeather(lat, lon, city);
           };
-          rGeo.onerror=function(){fetchWeather(lat,lon,'');};
+          rGeo.onerror=function(){ fetchWeather(lat, lon, ''); };
           rGeo.send();
         },
-        // Task 1：拒絕定位 → 預設桃園市（25.0°N, 121.3°E）
-        function(){fetchWeather(25.00,121.30,'桃園');},
+        function(){ fetchWeather(25.05, 121.53, '台北'); },
         {timeout:5000}
       );
-    }else{
-      fetchWeather(25.00,121.30,'桃園');
+    } else {
+      fetchWeather(25.05, 121.53, '台北');
     }
-  },800);
+  }, 800);
 }
 
-// ── GREETING ──
 function renderGreeting(){
   var h=new Date().getHours();
   var icons=['🌙','⭐','🌙','⭐','🌿','☀️','☀️','☀️','☀️','☀️','☀️','🌿','🍱','🍱','☀️','🌿','🌿','🌿','🌙','🌙','🌙','🌙','🌙','🌙'];
   var titles=['夜深了，好好休息','深夜了～','夜深了～','快去睡喔','早安！','早安！新的一天開始','早安！','早安！','早安！','早安！','早安！','午前時光','午安！吃飯了嗎？','午安！','下午好！','下午好！','下午好！','傍晚了～','晚上好！','晚安～','夜晚時光','夜晚時光','深夜了～','夜深了～'];
   document.getElementById('greetIcon').textContent=icons[h];
   document.getElementById('greetTitle').textContent=titles[h];
-  document.getElementById('greetSub').textContent=WARM_QUOTES[Math.floor(Math.random()*WARM_QUOTES.length)];
+  var q=WARM_QUOTES[Math.floor(Math.random()*WARM_QUOTES.length)];
+  document.getElementById('greetSub').textContent=q;
 }
 
-// ── FIREBASE SYNC ──
-function setSyncDot(s){document.getElementById('syncDot').className='sync-dot'+(s==='off'?' off':s==='err'?' err':'');}
+function setSyncDot(s){ document.getElementById('syncDot').className='sync-dot'+(s==='off'?' off':s==='err'?' err':''); }
 
 function startListen(){
   setSyncDot('off');
   window._listenAll(roomCode,{
-    sec:function(d){secData=d;loadedCount++;setSyncDot('on');renderAlerts();renderAppSubtitles();},
-    inv:function(d){invData=d;loadedCount++;renderAlerts();renderAppSubtitles();},
-    ward:function(d){wardData=d;loadedCount++;renderAlerts();renderAppSubtitles();},
-    // Task 1：收到 Firebase 資料後，以雲端為準（覆蓋本機快取）
-    dash:function(d){
-      _dashFromFirebase=true;
-      if(d.todos){todos=d.todos;renderTodos();}
-      if(d.memo!==undefined){document.getElementById('memoTa').value=d.memo;}
-      if(d.annis){annis=d.annis;renderAnnis();}
-      if(d.wishes){wishes=d.wishes;renderWishes();}
-      setSyncDot('on');
+    sec:  function(d){ secData=d; setSyncDot('on'); renderAlerts(); renderAppSubtitles(); },
+    inv:  function(d){ invData=d; renderAlerts(); renderAppSubtitles(); },
+    ward: function(d){ wardData=d; renderAlerts(); renderAppSubtitles(); },
+    dash: function(d){
+      if(d.todos)  { todos=d.todos; renderTodos(); }
+      if(d.memo!==undefined){ document.getElementById('memoTa').value=d.memo; }
+      if(d.annis)  { annis=d.annis; renderAnnis(); }
+      if(d.wishes) { wishes=d.wishes; renderWishes(); }
     }
   });
 }
 
-// ── LOGIN ──
 function doLogin(){
   var v=document.getElementById('roomInput').value.trim().toLowerCase().replace(/\s+/g,'');
   var err=document.getElementById('loginErr');
-  if(!v||v.length<2){err.textContent='代號至少 2 個字元';return;}
-  err.textContent='';roomCode=v;
+  if(!v||v.length<2){ err.textContent='代號至少 2 個字元'; return; }
+  err.textContent=''; roomCode=v;
   localStorage.setItem('dash_last_room',v);
   enterApp();
 }
@@ -637,37 +577,41 @@ window.doLogin=doLogin;
 function enterApp(){
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('app').style.display='block';
-  document.getElementById('bottomNav').style.display='flex';
   document.getElementById('codePill').textContent='🏠 '+roomCode.toUpperCase();
+  updateAppLinks();
   renderGreeting();
-  // Task 1：先顯示本機資料（備用），等 Firebase 回來再覆蓋
   loadDashLocal();
-  renderTodos();renderAnnis();renderWishes();
+  renderTodos(); renderAnnis(); renderWishes();
   loadWeather();
-  if(window._fbReady)startListen();
+  if(window._fbReady) startListen();
   else window._onFbReady=startListen;
 }
 
 window.copyCode=function(){
-  if(navigator.clipboard)navigator.clipboard.writeText(roomCode).then(function(){showToast('代號已複製！');});
+  if(navigator.clipboard) navigator.clipboard.writeText(roomCode).then(function(){ showToast('代號已複製！'); });
   else showToast('代號：'+roomCode.toUpperCase());
 };
 
 window.doLogout=function(){
   localStorage.removeItem('dash_last_room');
-  roomCode='';secData=null;invData=null;wardData=null;_dashFromFirebase=false;
+  roomCode=''; secData=null; invData=null; wardData=null;
   document.getElementById('app').style.display='none';
-  document.getElementById('bottomNav').style.display='none';
   document.getElementById('loginScreen').style.display='flex';
   document.getElementById('roomInput').value='';
 };
 
-// ── ALERTS ──
+function updateAppLinks(){
+  document.getElementById('link-sec').href  = APP_URLS.sec  + '?code='+roomCode;
+  document.getElementById('link-inv').href  = APP_URLS.inv  + '?code='+roomCode;
+  document.getElementById('link-ward').href = APP_URLS.ward + '?code='+roomCode;
+  document.getElementById('link-pocket').href = APP_URLS.pocket + '?code='+roomCode;
+}
+
 function renderAlerts(){
   annis.forEach(function(a){
     var d=daysUntilAnni(a.date);
-    if(d===0)document.getElementById('greetSub').textContent='今天是 '+a.name+'！🎉 好好慶祝吧！';
-    else if(d<=3)document.getElementById('greetSub').textContent='再 '+d+' 天就是 '+a.name+' 了 🎊';
+    if(d===0) document.getElementById('greetSub').textContent='今天是 '+a.name+'！🎉 好好慶祝吧！';
+    else if(d<=3) document.getElementById('greetSub').textContent='再 '+d+' 天就是 '+a.name+' 了 🎊';
   });
 }
 
@@ -677,103 +621,100 @@ function renderAppSubtitles(){
       var dt=i.type==='maint'?(function(){if(!i.lastDate||!i.interval)return i.due;var d=new Date(i.lastDate);d.setDate(d.getDate()+parseInt(i.interval));return d.toISOString().slice(0,10);}()):i.due;
       return dt&&daysUntil(dt)<=7;
     }).length;
-    document.getElementById('sub-sec').textContent='家裡大小事都交給它 🔔';
-    var b=document.getElementById('badge-sec'),al=document.getElementById('alert-sec');
-    if(secDue>0){b.style.display='block';b.textContent=secDue;al.textContent='🔔 '+secDue+'項費用快到期';al.style.display='block';}
-    else{b.style.display='none';al.style.display='none';}
+    var b=document.getElementById('badge-sec');
+    var al=document.getElementById('alert-sec');
+    if(secDue>0){
+      b.style.display='block';b.textContent=secDue;
+      al.textContent='🔔 '+secDue+'項費用快到期';al.style.display='block';
+    } else { b.style.display='none'; al.style.display='none'; }
   }
   if(invData&&invData.items){
     var allItems=invData.items||[];
-    var low=allItems.filter(function(i){return i.qty<=(i.minStock!=null?i.minStock:1);});
+    var low=allItems.filter(function(i){ return i.qty<=(i.minStock!=null?i.minStock:1); });
     document.getElementById('sub-inv').textContent=allItems.length+'項庫存'+(low.length?'・'+low.length+'需補':'・補貨充足');
-    var b=document.getElementById('badge-inv'),al=document.getElementById('alert-inv');
-    if(low.length>0){b.style.display='block';b.textContent=low.length;al.textContent='🔔 '+low.length+'項需補貨';al.style.display='block';}
-    else{b.style.display='none';al.style.display='none';}
+    var b=document.getElementById('badge-inv');
+    var al=document.getElementById('alert-inv');
+    if(low.length>0){
+      b.style.display='block';b.textContent=low.length;
+      al.textContent='🔔 '+low.length+'項需補貨';al.style.display='block';
+    } else { b.style.display='none'; al.style.display='none'; }
   }
   if(wardData&&wardData.clothes){
     var clothes=wardData.clothes||[];
     var fut=clothes.filter(function(c){return c.status==='未來';}).length;
-    document.getElementById('sub-ward').textContent='小嘟今天穿什麼呢？👗';
     var al=document.getElementById('alert-ward');
-    if(fut>0){al.textContent='📦 '+fut+'件待長大';al.style.display='block';}
-    else{al.style.display='none';}
+    if(fut>0){ al.textContent='📦 '+fut+'件待長大'; al.style.display='block'; }
+    else { al.style.display='none'; }
   }
 }
 
-// ── UTILS ──
-function daysUntil(dt){if(!dt)return 999;var d=new Date(dt),t=new Date();t.setHours(0,0,0,0);d.setHours(0,0,0,0);return Math.round((d-t)/86400000);}
-function daysUntilAnni(mmdd){var now=new Date(),y=now.getFullYear();var p=mmdd.split('-');var mo=parseInt(p[1]||p[0])-1,d=parseInt(p[2]||p[1]);var next=new Date(y,mo,d);if(next<now)next=new Date(y+1,mo,d);return Math.round((next-now)/86400000);}
-function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function daysUntil(dt){ if(!dt)return 999; var d=new Date(dt),t=new Date(); t.setHours(0,0,0,0);d.setHours(0,0,0,0); return Math.round((d-t)/86400000); }
+function daysUntilAnni(mmdd){ var now=new Date(),y=now.getFullYear(); var p=mmdd.split('-'); var mo=parseInt(p[1]||p[0])-1,d=parseInt(p[2]||p[1]); var next=new Date(y,mo,d); if(next<now)next=new Date(y+1,mo,d); return Math.round((next-now)/86400000); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-// ── DASH LOCAL（僅備用，Firebase 回來後會覆蓋）──
 function loadDashLocal(){
-  try{todos=JSON.parse(localStorage.getItem('dash_todos_'+roomCode)||'[]');}catch(e){todos=[];}
-  try{annis=JSON.parse(localStorage.getItem('dash_annis_'+roomCode)||'[]');}catch(e){annis=[];}
-  try{wishes=JSON.parse(localStorage.getItem('dash_wishes_'+roomCode)||'[]');}catch(e){wishes=[];}
+  try{ todos=JSON.parse(localStorage.getItem('dash_todos_'+roomCode)||'[]'); }catch(e){ todos=[]; }
+  try{ annis=JSON.parse(localStorage.getItem('dash_annis_'+roomCode)||'[]'); }catch(e){ annis=[]; }
+  try{ wishes=JSON.parse(localStorage.getItem('dash_wishes_'+roomCode)||'[]'); }catch(e){ wishes=[]; }
   document.getElementById('memoTa').value=localStorage.getItem('dash_memo_'+roomCode)||'';
 }
-
 function saveDash(){
   var memo=document.getElementById('memoTa').value;
-  // 同時更新本機快取
   localStorage.setItem('dash_todos_'+roomCode,JSON.stringify(todos));
   localStorage.setItem('dash_annis_'+roomCode,JSON.stringify(annis));
   localStorage.setItem('dash_wishes_'+roomCode,JSON.stringify(wishes));
   localStorage.setItem('dash_memo_'+roomCode,memo);
-  // 防抖後寫入 Firebase
   clearTimeout(dashSaveTimer);
   dashSaveTimer=setTimeout(function(){
-    if(window._fbSetDash)window._fbSetDash(roomCode,{todos:todos,memo:memo,annis:annis,wishes:wishes,updatedAt:Date.now()}).catch(function(){});
+    if(window._fbSetDash) window._fbSetDash(roomCode,{todos:todos,memo:memo,annis:annis,wishes:wishes,updatedAt:Date.now()}).catch(function(){});
   },800);
 }
 
-// ── CONFIRM ──
-function showConfirm(msg,cb){document.getElementById('confirmMsg').textContent=msg;confirmCb=cb;document.getElementById('confirmOverlay').classList.add('show');}
-window.closeConfirm=function(){document.getElementById('confirmOverlay').classList.remove('show');confirmCb=null;};
-window.doConfirm=function(){document.getElementById('confirmOverlay').classList.remove('show');if(confirmCb)confirmCb();confirmCb=null;};
+function showConfirm(msg, cb){ document.getElementById('confirmMsg').textContent=msg; confirmCb=cb; document.getElementById('confirmOverlay').classList.add('show'); }
+window.closeConfirm=function(){ document.getElementById('confirmOverlay').classList.remove('show'); confirmCb=null; };
+window.doConfirm=function(){ document.getElementById('confirmOverlay').classList.remove('show'); if(confirmCb)confirmCb(); confirmCb=null; };
 
-// ── TODOS ──
+/* ── TODOS (任務1: 刪除按鈕改為 ×) ── */
 function renderTodos(){
   var list=document.getElementById('todoList');
-  if(!todos.length){list.innerHTML='<div class="empty" style="padding:16px;"><p>還沒有待辦事項 🌿</p></div>';return;}
+  if(!todos.length){ list.innerHTML='<div class="empty" style="padding:16px;"><p>還沒有待辦事項 🌿</p></div>'; return; }
   list.innerHTML=todos.map(function(t){
     return '<div class="todo-item'+(t.done?' done':'')+'">'
       +'<div class="todo-check'+(t.done?' checked':'')+'" onclick="toggleTodo(\''+t.id+'\')">'+(t.done?'✓':'')+'</div>'
       +'<span class="todo-text">'+esc(t.text)+'</span>'
-      +'<button class="todo-del" onclick="confirmDelTodo(\''+t.id+'\',\''+esc(t.text)+'\')">🗑️</button>'
+      +'<button class="todo-del" onclick="confirmDelTodo(\''+t.id+'\',\''+esc(t.text)+'\')" title="移除">×</button>'
       +'</div>';
   }).join('');
 }
 window.addTodo=function(){
-  var inp=document.getElementById('todoInput'),text=inp.value.trim();
-  if(!text)return;
+  var inp=document.getElementById('todoInput'), text=inp.value.trim();
+  if(!text) return;
   todos.push({id:Date.now().toString(),text:text,done:false});
-  inp.value='';saveDash();renderTodos();showToast('待辦已新增 ✓');
+  inp.value=''; saveDash(); renderTodos(); showToast('待辦已新增 ✓');
 };
 window.toggleTodo=function(id){
-  todos=todos.map(function(t){return t.id===id?Object.assign({},t,{done:!t.done}):t;});
-  saveDash();renderTodos();
+  todos=todos.map(function(t){ return t.id===id?Object.assign({},t,{done:!t.done}):t; });
+  saveDash(); renderTodos();
 };
-window.confirmDelTodo=function(id,text){
-  showConfirm('確定要移除「'+text+'」這項待辦嗎？',function(){
-    todos=todos.filter(function(t){return t.id!==id;});
-    saveDash();renderTodos();showToast('已移除 🗑️');
+window.confirmDelTodo=function(id, text){
+  showConfirm('確定要移除「'+text+'」這項待辦嗎？', function(){
+    todos=todos.filter(function(t){ return t.id!==id; });
+    saveDash(); renderTodos(); showToast('已移除');
   });
 };
 
-// ── MEMO ──
-window.saveMemo=function(){saveDash();showToast('備忘已儲存 ✓');};
-document.addEventListener('DOMContentLoaded',function(){
+window.saveMemo=function(){ saveDash(); showToast('備忘已儲存 ✓'); };
+document.addEventListener('DOMContentLoaded', function(){
   var ta=document.getElementById('memoTa');
-  if(ta)ta.addEventListener('blur',function(){saveDash();});
+  if(ta) ta.addEventListener('blur', function(){ saveDash(); });
 });
 
-// ── ANNIVERSARY ──
+/* ── ANNIVERSARY (任務1: 刪除按鈕改為 ×) ── */
 var anniExpanded=false;
 function renderAnnis(){
   var list=document.getElementById('anniList');
-  if(!annis.length){list.innerHTML='<div class="empty"><p>還沒有紀念日，點右上角新增 🎉</p></div>';return;}
-  var sorted=annis.slice().sort(function(a,b){return daysUntilAnni(a.date)-daysUntilAnni(b.date);});
+  if(!annis.length){ list.innerHTML='<div class="empty"><p>還沒有紀念日，點右上角新增 🎉</p></div>'; return; }
+  var sorted=annis.slice().sort(function(a,b){ return daysUntilAnni(a.date)-daysUntilAnni(b.date); });
   var show=anniExpanded?sorted:sorted.slice(0,3);
   var cards=show.map(function(a){
     var d=daysUntilAnni(a.date);
@@ -783,14 +724,14 @@ function renderAnnis(){
       +'<div class="anni-icon">'+a.icon+'</div>'
       +'<div class="anni-info"><div class="anni-name">'+esc(a.name)+'</div><div class="anni-date">📅 '+a.date.slice(5).replace('-','/')+'</div></div>'
       +'<div class="anni-days">'+label+'</div>'
-      +'<button class="anni-del" onclick="event.stopPropagation();confirmDelAnni(\''+a.id+'\',\''+esc(a.name)+'\')">🗑️</button>'
+      +'<button class="anni-del" onclick="event.stopPropagation();confirmDelAnni(\''+a.id+'\',\''+esc(a.name)+'\')" title="移除">×</button>'
       +'</div>';
   }).join('');
   var more='';
   if(sorted.length>3){
     if(!anniExpanded){
       more='<div onclick="anniExpanded=true;renderAnnis();" style="text-align:center;padding:10px;font-size:12px;color:var(--brown);cursor:pointer;background:var(--cream);border-radius:var(--rsm);border:1px solid var(--latte);">還有 '+(sorted.length-3)+' 個，展開 ↓</div>';
-    }else{
+    } else {
       more='<div onclick="anniExpanded=false;renderAnnis();" style="text-align:center;padding:10px;font-size:12px;color:var(--muted);cursor:pointer;">收起 ↑</div>';
     }
   }
@@ -805,8 +746,8 @@ window.openAnniModal=function(){
   document.getElementById('anniModal').classList.add('show');
 };
 window.editAnni=function(id){
-  var a=annis.find(function(x){return x.id===id;});
-  if(!a)return;
+  var a=annis.find(function(x){ return x.id===id; });
+  if(!a) return;
   document.getElementById('anni-edit-id').value=id;
   document.getElementById('anniModalTitle').textContent='✏️ 編輯紀念日';
   document.getElementById('anni-name').value=a.name;
@@ -814,35 +755,35 @@ window.editAnni=function(id){
   document.getElementById('anni-icon').value=a.icon||'🎂';
   document.getElementById('anniModal').classList.add('show');
 };
-window.closeAnniModal=function(){document.getElementById('anniModal').classList.remove('show');};
+window.closeAnniModal=function(){ document.getElementById('anniModal').classList.remove('show'); };
 window.saveAnni=function(){
   var name=document.getElementById('anni-name').value.trim();
   var date=document.getElementById('anni-date').value;
   var icon=document.getElementById('anni-icon').value;
   var editId=document.getElementById('anni-edit-id').value;
-  if(!name||!date){showToast('請填寫名稱和日期');return;}
+  if(!name||!date){ showToast('請填寫名稱和日期'); return; }
   if(editId){
-    annis=annis.map(function(a){return a.id===editId?Object.assign({},a,{name:name,date:date,icon:icon}):a;});
+    annis=annis.map(function(a){ return a.id===editId?Object.assign({},a,{name:name,date:date,icon:icon}):a; });
     showToast('紀念日已更新 ✏️');
-  }else{
+  } else {
     annis.push({id:Date.now().toString(),name:name,date:date,icon:icon});
     showToast('紀念日已新增 🎉');
   }
-  saveDash();renderAnnis();closeAnniModal();
+  saveDash(); renderAnnis(); closeAnniModal();
 };
-window.confirmDelAnni=function(id,name){
-  showConfirm('確定要移除「'+name+'」這個紀念日嗎？',function(){
-    annis=annis.filter(function(a){return a.id!==id;});
-    saveDash();renderAnnis();showToast('已移除 🗑️');
+window.confirmDelAnni=function(id, name){
+  showConfirm('確定要移除「'+name+'」這個紀念日嗎？', function(){
+    annis=annis.filter(function(a){ return a.id!==id; });
+    saveDash(); renderAnnis(); showToast('已移除');
   });
 };
 
-// ── WISHLIST ──
+/* ── WISHLIST (任務1: 刪除按鈕改為 ×) ── */
 function renderWishes(){
   var list=document.getElementById('wishList');
-  if(!wishes.length){list.innerHTML='<div class="empty" style="padding:16px;"><p>還沒有心願，新增一個吧 🛍️</p></div>';return;}
-  var pending=wishes.filter(function(w){return !w.done;});
-  var bought=wishes.filter(function(w){return w.done;});
+  if(!wishes.length){ list.innerHTML='<div class="empty" style="padding:16px;"><p>還沒有心願，新增一個吧 🛍️</p></div>'; return; }
+  var pending=wishes.filter(function(w){ return !w.done; });
+  var bought=wishes.filter(function(w){ return w.done; });
   var all=pending.concat(bought);
   list.innerHTML=all.map(function(w){
     return '<div class="todo-item'+(w.done?' done':'')+'">'
@@ -852,31 +793,30 @@ function renderWishes(){
       +(w.note?'<div style="font-size:11px;color:var(--muted);margin-top:1px;">'+esc(w.note)+'</div>':'')
       +'</div>'
       +(w.done?'<span style="font-size:10px;color:var(--gs);margin-right:4px;">買到了！</span>':'')
-      +'<button class="todo-del" onclick="confirmDelWish(\''+w.id+'\',\''+esc(w.text)+'\')">🗑️</button>'
+      +'<button class="todo-del" onclick="confirmDelWish(\''+w.id+'\',\''+esc(w.text)+'\')" title="移除">×</button>'
       +'</div>';
   }).join('');
 }
 window.addWish=function(){
-  var inp=document.getElementById('wishInput'),raw=inp.value.trim();
-  if(!raw)return;
-  var text=raw,note='';
-  var m=raw.match(/^(.+?)\s{2,}(.+)$/)||raw.match(/^(.+?)（(.+)）$/)||raw.match(/^(.+?)\((.+)\)$/);
-  if(m){text=m[1].trim();note=m[2].trim();}
-  wishes.push({id:Date.now().toString(),text:text,note:note,done:false});
-  inp.value='';saveDash();renderWishes();showToast('心願已新增 🛍️');
+  var inp=document.getElementById('wishInput'), raw=inp.value.trim();
+  if(!raw) return;
+  var text=raw, note='';
+  var m=raw.match(/^(.+?)\s{2,}(.+)$/) || raw.match(/^(.+?)（(.+)）$/) || raw.match(/^(.+?)\((.+)\)$/);
+  if(m){ text=m[1].trim(); note=m[2].trim(); }
+  wishes.push({id:Date.now().toString(), text:text, note:note, done:false});
+  inp.value=''; saveDash(); renderWishes(); showToast('心願已新增 🛍️');
 };
 window.toggleWish=function(id){
-  wishes=wishes.map(function(w){return w.id===id?Object.assign({},w,{done:!w.done}):w;});
-  saveDash();renderWishes();
+  wishes=wishes.map(function(w){ return w.id===id?Object.assign({},w,{done:!w.done}):w; });
+  saveDash(); renderWishes();
 };
-window.confirmDelWish=function(id,text){
-  showConfirm('確定要移除「'+text+'」這個心願嗎？',function(){
-    wishes=wishes.filter(function(w){return w.id!==id;});
-    saveDash();renderWishes();showToast('已移除 🗑️');
+window.confirmDelWish=function(id, text){
+  showConfirm('確定要移除「'+text+'」這個心願嗎？', function(){
+    wishes=wishes.filter(function(w){ return w.id!==id; });
+    saveDash(); renderWishes(); showToast('已移除');
   });
 };
 
-// ── TOAST ──
 function showToast(msg){
   var wrap=document.getElementById('toastWrap');
   var el=document.createElement('div');
@@ -884,14 +824,13 @@ function showToast(msg){
   el.innerHTML='<span>🌙</span><span>'+msg+'</span>';
   wrap.appendChild(el);
   var all=wrap.querySelectorAll('.toast-item');
-  if(all.length>3)all[0].remove();
-  requestAnimationFrame(function(){requestAnimationFrame(function(){el.classList.add('show');});});
-  setTimeout(function(){el.classList.add('removing');setTimeout(function(){if(el.parentNode)el.remove();},220);},2600);
+  if(all.length>3) all[0].remove();
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.classList.add('show'); }); });
+  setTimeout(function(){ el.classList.add('removing'); setTimeout(function(){ if(el.parentNode)el.remove(); },220); },2600);
 }
 
-// ── INIT ──
 var saved=localStorage.getItem('dash_last_room');
-if(saved){document.getElementById('roomInput').value=saved;roomCode=saved;enterApp();}
+if(saved){ document.getElementById('roomInput').value=saved; roomCode=saved; enterApp(); }
 </script>
 </body>
 </html>
