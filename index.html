@@ -25,6 +25,31 @@ body{font-family:'Zen Kaku Gothic New',sans-serif;background:var(--milk);color:v
 }
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 8%,rgba(201,169,122,.08),transparent 50%),radial-gradient(ellipse at 85% 92%,rgba(139,99,67,.05),transparent 50%);pointer-events:none;z-index:0;}
 
+/* ══════════════════════════════
+   BOTTOM NAV 底部導覽列
+══════════════════════════════ */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;
+  background:var(--white);
+  border-top:1.5px solid var(--latte);
+  display:flex;
+  z-index:500;
+  box-shadow:0 -2px 16px var(--shadow);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+.bn-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:8px 2px 6px;gap:3px;cursor:pointer;
+  text-decoration:none;color:var(--muted);
+  transition:color .15s;
+  font-family:'Zen Kaku Gothic New',sans-serif;
+  border:none;background:none;
+}
+.bn-item.active{color:var(--moon2);}
+.bn-item:active{opacity:.7;}
+.bn-icon{font-size:20px;line-height:1;}
+.bn-label{font-size:9.5px;font-weight:600;letter-spacing:.2px;line-height:1;}
+  
 /* LOGIN */
 #loginScreen{position:fixed;inset:0;background:var(--milk);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;}
 .login-box{background:var(--white);border-radius:var(--rlg);padding:34px 28px;width:100%;max-width:380px;box-shadow:0 8px 40px var(--shadow);text-align:center;}
@@ -334,7 +359,35 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
   </div>
 </div>
-
+  
+<!-- ══ BOTTOM NAV（Task 0）══ -->
+<nav class="bottom-nav" id="bottomNav" style="display:none;">
+  <button class="bn-item active" onclick="goApp('home')">
+    <span class="bn-icon">🏠</span>
+    <span class="bn-label">首頁</span>
+  </button>
+  <button class="bn-item" onclick="goApp('sec')">
+    <span class="bn-icon">🐧</span>
+    <span class="bn-label">家務</span>
+  </button>
+  <button class="bn-item" onclick="goApp('inv')">
+    <span class="bn-icon">🐰</span>
+    <span class="bn-label">庫存</span>
+  </button>
+  <button class="bn-item" onclick="goApp('ward')">
+    <span class="bn-icon">👗</span>
+    <span class="bn-label">衣櫃</span>
+  </button>
+  <button class="bn-item" onclick="goApp('wiki')">
+    <span class="bn-icon">📖</span>
+    <span class="bn-label">百科</span>
+  </button>
+  <button class="bn-item" onclick="goApp('pocket')">
+    <span class="bn-icon">🗺️</span>
+    <span class="bn-label">地圖</span>
+  </button>
+</nav>
+  
 <!-- ANNIVERSARY MODAL -->
 <div class="modal-overlay" id="anniModal" onclick="if(event.target===this)closeAnniModal()">
   <div class="modal-sheet">
@@ -411,10 +464,20 @@ var loadedCount=0, todos=[], annis=[], wishes=[], dashSaveTimer=null;
 var confirmCb=null;
 
 var APP_URLS={
+  home:'https://yui0151.github.io/home/',
   sec:'https://yui0151.github.io/secretary/',
   inv:'https://yui0151.github.io/inventory/',
   ward:'https://yui0151.github.io/wardrobe/',
-  pocket:'https://yamap610.github.io/pocket-list/'
+  pocket:'https://yamap610.github.io/pocket-list/',
+  wiki:'https://yamap610.github.io/mywiki/'
+};
+
+// 同分頁跳轉，並自動帶入家庭代號
+window.goApp=function(key){
+  if(key==='home') return; // 已在首頁就不跳轉
+  var base=APP_URLS[key];
+  if(!base) return;
+  window.location.href=base+(roomCode?'?code='+roomCode:'');
 };
 
 var WARM_QUOTES=[
@@ -577,6 +640,7 @@ window.doLogin=doLogin;
 function enterApp(){
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('app').style.display='block';
+  document.getElementById('bottomNav').style.display='flex';
   document.getElementById('codePill').textContent='🏠 '+roomCode.toUpperCase();
   updateAppLinks();
   renderGreeting();
@@ -596,6 +660,7 @@ window.doLogout=function(){
   localStorage.removeItem('dash_last_room');
   roomCode=''; secData=null; invData=null; wardData=null;
   document.getElementById('app').style.display='none';
+  document.getElementById('bottomNav').style.display='none';
   document.getElementById('loginScreen').style.display='flex';
   document.getElementById('roomInput').value='';
 };
